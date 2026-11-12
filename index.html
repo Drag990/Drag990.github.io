@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jihad Mohamed Alahiane | SOC &amp; cybersecurity engineering student</title>
+<meta name="description" content="Final-year cybersecurity engineering student at ENSA Kénitra. SOC labs, detection engineering, GRC and network security. Looking for a SOC PFE internship in 2027.">
+<meta name="theme-color" content="#050E1D">
+<meta property="og:title" content="Jihad Mohamed Alahiane | Cybersecurity portfolio">
+<meta property="og:description" content="I build and defend security labs end to end: risk registers and ISO 27001 controls on one side, WAF rules, IDS signatures and SIEM correlation on the other.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<script>
+  // Runs before paint: lets CSS know JS works and whether motion is wanted.
+  (function () {
+    var d = document.documentElement;
+    d.classList.remove('no-js');
+    d.classList.add('js');
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('reduced');
+    } catch (e) {}
+    // Theme: night shift (dark) by default; day shift (light) if chosen before.
+    try {
+      if (localStorage.getItem('jma-theme') === 'light') {
+        d.setAttribute('data-theme', 'light');
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#EEF2F7');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/index.js",
+    "gsap/": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.mjs"
+  }
+}
+</script>
+<script type="module" src="js/main.js"></script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- 3D scene lives behind everything. Decorative only. -->
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="veil" aria-hidden="true"></div>
+<!-- SOC-style world attack map (simulated traffic). Decorative only. -->
+<canvas id="worldmap" aria-hidden="true"></canvas>
+<div class="spot" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="Jihad Mohamed Alahiane, back to top">
+    <svg class="neon-a" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path class="tube" d="M4.5 21 12 3.2 19.5 21M7.6 14.6h8.8"/><path class="core" d="M4.5 21 12 3.2 19.5 21M7.6 14.6h8.8"/></g></svg>
+    <span>Alahiane</span>
+  </a>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Switch to light theme (day shift)" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <mask id="tt-mask"><rect width="24" height="24" fill="#fff"/><circle class="tt-moon" cx="24" cy="3" r="7" fill="#000"/></mask>
+      <circle class="tt-core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#tt-mask)"/>
+      <g class="tt-rays" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 1.8v2.4M12 19.8v2.4M1.8 12h2.4M19.8 12h2.4M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M4.8 19.2l1.7-1.7M17.5 6.5l1.7-1.7"/></g>
+    </svg>
+    <span class="tt-label">Night</span>
+  </button>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" aria-labelledby="hero-name">
+  <!-- Static pyramid, shown when there is no JS or no WebGL -->
+  <svg class="hero-fallback" viewBox="0 0 400 340" aria-hidden="true">
+    <g fill="none" stroke-linejoin="round">
+      <path d="M200 20 380 320H20Z" stroke="#F2A93B" stroke-width="1.6"/>
+      <path d="M200 20 200 320" stroke="#6FC3DF" stroke-width=".8" opacity=".5"/>
+      <path d="M164 80h72" stroke="#B9A6F5" stroke-width="1.4"/>
+      <path d="M128 140h144" stroke="#6FC3DF" stroke-width="1.4"/>
+      <path d="M92 200h216" stroke="#F2A93B" stroke-width="1.4"/>
+      <path d="M56 260h288" stroke="#9FB7FF" stroke-width="1.4"/>
+      <path d="M200 120 260 220H140Z" stroke="#6FC3DF" stroke-width="1" opacity=".7"/>
+      <path d="M200 160 232 214H168Z" stroke="#F2A93B" stroke-width="1" opacity=".7"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner wrap">
+    <p class="status"><span class="dot" aria-hidden="true"></span>Open to a SOC end-of-studies internship (PFE), 2027, Rabat or Casablanca</p>
+
+    <h1 id="hero-name" class="name" aria-label="Jihad Mohamed Alahiane">
+      <span class="name-line" aria-hidden="true" data-text="Jihad">Jihad</span>
+      <span class="name-line" aria-hidden="true" data-text="Mohamed">Mohamed</span>
+      <span class="name-line" aria-hidden="true" data-text="Alahiane">Alahiane</span>
+    </h1>
+
+    <p class="role">Final-year cybersecurity engineering student, ENSA Kénitra</p>
+    <p class="pitch">I build and defend security labs end to end: risk registers and ISO&nbsp;27001 controls on one side, WAF rules, IDS signatures and SIEM correlation on the other.</p>
+
+    <div class="cta">
+      <a class="btn btn-primary magnetic" href="#projects"><span>View projects</span></a>
+      <a class="btn btn-ghost magnetic" href="#contact"><span>Contact me</span></a>
+    </div>
+  </div>
+
+  <!-- The five layers of the pyramid are the five domains. Each one filters the projects. -->
+  <nav class="layers" aria-label="Defense layers, filter projects by domain">
+    <p class="layers-title">Defense in depth</p>
+    <ol>
+      <li><a href="#work" data-layer="grc" style="--dc:var(--d-grc)"><i aria-hidden="true"></i>GRC &amp; IT risk</a></li>
+      <li><a href="#work" data-layer="soc" style="--dc:var(--d-soc)"><i aria-hidden="true"></i>SOC &amp; detection</a></li>
+      <li><a href="#work" data-layer="ot" style="--dc:var(--d-ot)"><i aria-hidden="true"></i>ICS/OT</a></li>
+      <li><a href="#work" data-layer="cloud" style="--dc:var(--d-cloud)"><i aria-hidden="true"></i>Cloud security</a></li>
+      <li><a href="#work" data-layer="net" style="--dc:var(--d-net)"><i aria-hidden="true"></i>Network security</a></li>
+    </ol>
+  </nav>
+
+  <!-- Console frame: corner brackets, a slow scan line and a live cursor readout (desktop) -->
+  <div class="hud" aria-hidden="true">
+    <span class="hud-c tl"></span><span class="hud-c tr"></span><span class="hud-c bl"></span><span class="hud-c br"></span>
+    <span class="hud-scan"></span>
+    <p class="hud-map">Attack map · simulated traffic</p>
+    <p class="hud-read">X <b data-hud="x">0000</b> · Y <b data-hud="y">0000</b> · DEPTH <b data-hud="d">000</b>%</p>
+  </div>
+
+  <p class="scroll-cue" aria-hidden="true"><span></span>Scroll to take the layers apart</p>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats" aria-label="At a glance">
+  <div class="wrap">
+    <dl>
+      <div><dt>Projects</dt><dd><span class="count" data-to="10">10</span></dd></div>
+      <div><dt>Internships</dt><dd><span class="count" data-to="2">2</span></dd></div>
+      <div><dt>CCNA courses completed</dt><dd><span class="count" data-to="3">3</span></dd></div>
+      <div><dt>Security domains</dt><dd><span class="count" data-to="5">5</span></dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ MARQUEE (decorative, same words as the skills list) ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span style="--dc:var(--d-soc)">SOC &amp; threat detection</span>
+    <span class="o" style="--dc:var(--d-soc)">Splunk</span>
+    <span style="--dc:var(--d-grc)">GRC &amp; IT risk</span>
+    <span class="o" style="--dc:var(--d-grc)">ISO/IEC 27001</span>
+    <span style="--dc:var(--d-net)">Network security</span>
+    <span class="o" style="--dc:var(--d-net)">Palo Alto NGFW</span>
+    <span style="--dc:var(--d-ot)">ICS/OT</span>
+    <span class="o" style="--dc:var(--d-ot)">Modbus/TCP</span>
+    <span style="--dc:var(--d-cloud)">Cloud security</span>
+    <span class="o" style="--dc:var(--d-cloud)">AWS</span>
+    <span style="--dc:var(--d-soc)">MITRE ATT&amp;CK</span>
+    <span class="o" style="--dc:var(--d-grc)">NIST CSF 2.0</span>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="about" aria-labelledby="about-h">
+  <div class="wrap about-grid">
+    <h2 id="about-h" class="sec-title">About</h2>
+    <!-- Decorative 3D chess knight (desktop only, js/knight.js) -->
+    <div class="knight" aria-hidden="true"><canvas id="knight"></canvas></div>
+    <div class="about-text">
+      <p class="lead reveal-lines">I learn security by building it.</p>
+      <p class="reveal-lines">My labs run the same chain a real SOC depends on: segmented networks behind a firewall, a WAF and an IDS in front of exposed services, logs forwarded to a SIEM, and alerts tuned until they are worth an analyst's time.</p>
+      <p class="reveal-lines">On the governance side, I work with ISO/IEC&nbsp;27001, ISO&nbsp;27005 and NIST CSF&nbsp;2.0 to decide which risks and controls matter in the first place.</p>
+    </div>
+    <dl class="facts">
+      <div><dt>Program</dt><dd>Networks &amp; Telecommunications Systems (RST), cybersecurity specialization, ENSA Kénitra, Ibn Tofail University</dd></div>
+      <div><dt>Graduation</dt><dd>Expected July 2027</dd></div>
+      <div><dt>Based in</dt><dd>Rabat, Morocco</dd></div>
+      <div><dt>Languages</dt><dd>Arabic (native), French and English (professional)</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ FEATURED SOC PROJECT ============ -->
+<section class="featured" id="projects" aria-labelledby="feat-h">
+  <div class="featured-pin">
+    <div class="wrap">
+      <div class="feat-head">
+        <h2 class="sec-title">Projects</h2>
+        <div>
+          <p class="feat-kicker">Featured. <!-- TODO(confirm): PFA dates "2025–2026" --> Academic project (PFA), carried out at DXC Technology, Rabat, 2025–2026</p>
+          <h3 id="feat-h" class="feat-title">Intelligent SOC: WAF, SIEM &amp; Threat Intelligence</h3>
+        </div>
+        <span class="chip live"><span class="dot" aria-hidden="true"></span>Active</span>
+      </div>
+
+      <div class="feat-stage">
+        <ol class="steps" aria-label="How the lab works, step by step">
+          <li data-step="1"><b>Attack</b> Kali Linux on NET2 fires attacks at the web app.</li>
+          <li data-step="2"><b>Filter</b> pfSense keeps three subnets apart and passes only allowed traffic.</li>
+          <li data-step="3"><b>Inspect</b> ModSecurity v3 with OWASP CRS blocks known web attacks; Suricata 8 watches the same traffic.</li>
+          <li data-step="4"><b>Serve</b> Clean requests reach OWASP Juice Shop on NET1.</li>
+          <li data-step="5"><b>Ship</b> WAF logs and Suricata eve.json reach Splunk through Universal Forwarders.</li>
+          <li data-step="6"><b>Correlate</b> Splunk joins WAF and IDS events into one incident alert, cutting false positives.</li>
+          <li data-step="7" class="planned"><b>Next</b> n8n sends each alert to an AI agent that writes a summary and suggested action back to the dashboard.</li>
+        </ol>
+
+        <figure class="diagram">
+          <p class="swipe-hint">Swipe sideways to see the whole diagram.</p>
+          <div class="diagram-scroll" tabindex="0" role="region" aria-label="SOC lab diagram, scrollable">
+          <svg id="socDiagram" viewBox="0 0 1040 420" role="img" aria-labelledby="diag-title diag-desc">
+            <title id="diag-title">SOC lab data flow</title>
+            <desc id="diag-desc">Traffic from the Kali attacker network passes the pfSense firewall into the WAF VM, where ModSecurity and Suricata inspect it. Clean requests reach OWASP Juice Shop. WAF and IDS logs go to Splunk, which raises a correlated incident alert. An n8n AI triage step is planned.</desc>
+            <defs>
+              <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#9AAEC9"></path>
+              </marker>
+              <marker id="arrPlan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#F2A93B"></path>
+              </marker>
+              <filter id="redGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="6" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- network zones -->
+            <g class="zone" data-step="1"><rect x="10" y="112" width="190" height="136" rx="12"/><text x="22" y="132">NET2 attacker</text></g>
+            <g class="zone" data-step="4"><rect x="798" y="22" width="232" height="136" rx="12"/><text x="810" y="42">NET1 web app</text></g>
+            <g class="zone" data-step="5"><rect x="798" y="218" width="232" height="190" rx="12"/><text x="810" y="238">NET3 SIEM</text></g>
+
+            <!-- edges (drawn on scroll) -->
+            <path class="edge" id="e-attack" data-path="e-attack" data-step="1" d="M190 180 H248" marker-end="url(#arr)"/>
+            <text class="elabel" data-step="1" x="219" y="168" text-anchor="middle">attacks</text>
+            <path class="edge" id="e-allowed" data-path="e-allowed" data-step="2" d="M370 180 H428" marker-end="url(#arr)"/>
+            <text class="elabel" data-step="2" x="399" y="168" text-anchor="middle">allowed</text>
+            <path class="edge" id="e-clean" data-path="e-clean" data-step="4" d="M660 180 H735 V100 H808" marker-end="url(#arr)"/>
+            <text class="elabel" data-step="4" x="744" y="132">clean</text>
+            <text class="elabel" data-step="4" x="744" y="146">requests</text>
+            <path class="edge" id="e-logs" data-path="e-logs" data-step="5" d="M660 232 H735 V300 H808" marker-end="url(#arr)"/>
+            <text class="elabel" data-step="5" x="744" y="256">WAF logs</text>
+            <text class="elabel" data-step="5" x="744" y="270">eve.json</text>
+            <text class="elabel" data-step="5" x="744" y="284">via UF</text>
+            <path class="edge plan" id="e-plan" data-step="7" d="M810 378 H662" marker-end="url(#arrPlan)"/>
+            <text class="elabel plan" data-step="7" x="736" y="368" text-anchor="middle">webhook</text>
+
+            <!-- nodes -->
+            <g class="node attacker" data-step="1">
+              <rect x="20" y="140" width="170" height="96" rx="8"/>
+              <text class="t" x="36" y="172">Attacker</text>
+              <text class="s" x="36" y="192">Kali Linux</text>
+              <text class="s mono" x="36" y="222">192.168.40.0/24</text>
+            </g>
+            <g class="node" data-step="2">
+              <rect x="250" y="100" width="120" height="160" rx="8"/>
+              <text class="t" x="310" y="134" text-anchor="middle">pfSense</text>
+              <text class="s" x="310" y="154" text-anchor="middle">firewall</text>
+              <text class="s" x="310" y="226" text-anchor="middle">segmentation</text>
+              <text class="s" x="310" y="244" text-anchor="middle">3 subnets</text>
+            </g>
+            <g class="node waf" data-step="3">
+              <rect x="430" y="95" width="230" height="170" rx="8"/>
+              <text class="t" x="446" y="124">WAF VM</text>
+              <text class="s" x="446" y="145">Nginx, ModSecurity v3</text>
+              <text class="s" x="446" y="162">OWASP CRS</text>
+              <line class="lane" x1="430" y1="180" x2="660" y2="180"/>
+              <text class="s" x="446" y="214">Suricata 8, ET Open rules</text>
+              <text class="s" x="446" y="232">systemd watchdog on capture</text>
+            </g>
+            <g class="node" data-step="4">
+              <rect x="810" y="54" width="210" height="92" rx="8"/>
+              <text class="t" x="826" y="84">OWASP Juice Shop</text>
+              <text class="s" x="826" y="104">vulnerable web app</text>
+              <text class="s mono" x="826" y="130">192.168.20.0/24</text>
+            </g>
+            <g class="node siem" data-step="5">
+              <rect x="810" y="250" width="210" height="148" rx="8"/>
+              <text class="t" x="826" y="278">Splunk Enterprise</text>
+              <text class="s" x="826" y="297">index=security, dashboard</text>
+              <text class="s mono" x="826" y="316">192.168.30.0/24</text>
+            </g>
+            <g class="badge" data-step="6" data-origin="915 357">
+              <rect x="822" y="330" width="186" height="54" rx="6"/>
+              <text class="b1" x="836" y="352">Correlated alert</text>
+              <text class="b2" x="836" y="372">WAF + IDS incident</text>
+            </g>
+            <g class="node plan" data-step="7">
+              <rect x="430" y="345" width="230" height="62" rx="8"/>
+              <text class="t" x="446" y="372">n8n, AI triage</text>
+              <text class="s" x="446" y="392">summary + suggested action (planned)</text>
+            </g>
+
+            <g id="packets" class="packets"></g>
+          </svg>
+          </div>
+          <!-- Phone version of the same diagram: top-to-bottom, so it fits a narrow screen without sideways scrolling. -->
+          <svg class="soc-v" viewBox="0 0 360 734" role="img" aria-label="SOC lab data flow, vertical view: the Kali attacker sends traffic through the pfSense firewall into the WAF VM, where ModSecurity and Suricata inspect it. Clean requests reach OWASP Juice Shop; WAF logs and Suricata eve.json go to Splunk, which raises a correlated WAF and IDS incident alert. An n8n AI triage step is planned.">
+            <!-- zones -->
+            <g class="zone" data-step="1"><rect x="10" y="8" width="340" height="104" rx="12"/><text x="22" y="26">NET2 attacker</text></g>
+            <g class="zone" data-step="4"><rect x="10" y="440" width="166" height="118" rx="12"/><text x="22" y="458">NET1 web app</text></g>
+            <g class="zone" data-step="5"><rect x="184" y="440" width="166" height="198" rx="12"/><text x="196" y="458">NET3 SIEM</text></g>
+
+            <!-- edges -->
+            <path class="edge" data-step="1" data-path="e-attack" d="M180 102 V144"/>
+            <text class="elabel" data-step="1" x="190" y="128">attacks</text>
+            <path class="edge" data-step="2" data-path="e-allowed" d="M180 212 V254"/>
+            <text class="elabel" data-step="2" x="190" y="238">allowed</text>
+            <path class="edge" data-step="4" data-path="e-clean" d="M150 390 V470"/>
+            <text class="elabel" data-step="4" x="142" y="412" text-anchor="end">clean</text>
+            <text class="elabel" data-step="4" x="142" y="426" text-anchor="end">requests</text>
+            <path class="edge" data-step="5" data-path="e-logs" d="M320 390 V470"/>
+            <text class="elabel" data-step="5" x="312" y="406" text-anchor="end">WAF logs</text>
+            <text class="elabel" data-step="5" x="312" y="420" text-anchor="end">eve.json</text>
+            <text class="elabel" data-step="5" x="312" y="434" text-anchor="end">via UF</text>
+            <path class="edge plan" data-step="7" d="M267 638 V666"/>
+            <text class="elabel plan" data-step="7" x="277" y="657">webhook</text>
+            <!-- arrowheads (no SVG markers: ids would clash with the desktop diagram) -->
+            <path class="ah" data-step="1" d="M175 136 L180 144 L185 136 z"/>
+            <path class="ah" data-step="2" d="M175 246 L180 254 L185 246 z"/>
+            <path class="ah" data-step="4" d="M145 462 L150 470 L155 462 z"/>
+            <path class="ah" data-step="5" d="M315 462 L320 470 L325 462 z"/>
+            <path class="ah plan" data-step="7" d="M262 658 L267 666 L272 658 z"/>
+
+            <!-- nodes -->
+            <g class="node attacker" data-step="1">
+              <rect x="20" y="34" width="320" height="68" rx="8"/>
+              <text class="t" x="36" y="62">Attacker</text>
+              <text class="s" x="36" y="82">Kali Linux</text>
+              <text class="s mono" x="324" y="82" text-anchor="end">192.168.40.0/24</text>
+            </g>
+            <g class="node" data-step="2">
+              <rect x="20" y="146" width="320" height="66" rx="8"/>
+              <text class="t" x="36" y="174">pfSense</text>
+              <text class="s" x="36" y="194">firewall, segmentation, 3 subnets</text>
+            </g>
+            <g class="node waf" data-step="3">
+              <rect x="20" y="256" width="320" height="134" rx="8"/>
+              <text class="t" x="36" y="284">WAF VM</text>
+              <text class="s" x="36" y="304">Nginx, ModSecurity v3, OWASP CRS</text>
+              <line class="lane" x1="20" y1="320" x2="340" y2="320"/>
+              <text class="s" x="36" y="346">Suricata 8, ET Open rules</text>
+              <text class="s" x="36" y="364">systemd watchdog on capture</text>
+            </g>
+            <g class="node" data-step="4">
+              <rect x="20" y="472" width="146" height="76" rx="8"/>
+              <text class="t" x="32" y="496">Juice Shop</text>
+              <text class="s" x="32" y="513">OWASP, vulnerable app</text>
+              <text class="s mono" x="32" y="536">192.168.20.0/24</text>
+            </g>
+            <g class="node siem" data-step="5">
+              <rect x="194" y="472" width="146" height="156" rx="8"/>
+              <text class="t" x="206" y="496">Splunk</text>
+              <text class="s" x="206" y="513">index=security</text>
+              <text class="s mono" x="206" y="534">192.168.30.0/24</text>
+            </g>
+            <g class="badge" data-step="6" data-origin="267 584">
+              <rect x="202" y="552" width="130" height="64" rx="6"/>
+              <text class="b1" x="212" y="576">Correlated alert</text>
+              <text class="b2" x="212" y="596">WAF + IDS</text>
+              <text class="b2" x="212" y="609">incident</text>
+            </g>
+            <g class="node plan" data-step="7">
+              <rect x="20" y="668" width="320" height="58" rx="8"/>
+              <text class="t" x="36" y="692">n8n, AI triage</text>
+              <text class="s" x="36" y="712">summary + suggested action (planned)</text>
+            </g>
+
+            <g class="packets"></g>
+          </svg>
+          <figcaption>
+            <span class="legend"><i style="--c:var(--alert)"></i>attack traffic</span>
+            <span class="legend"><i style="--c:var(--ink)"></i>clean request</span>
+            <span class="legend"><i style="--c:var(--signal)"></i>log event</span>
+            <span class="legend"><i class="dashed" style="--c:var(--amber)"></i>planned</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap feat-body">
+    <div>
+      <h4>Built</h4>
+      <ul>
+        <li>Three segmented networks behind pfSense: NET1 web app (192.168.20.0/24, OWASP Juice Shop), NET2 attacker (192.168.40.0/24, Kali Linux), NET3 SIEM (192.168.30.0/24, Splunk Enterprise).</li>
+        <li>WAF VM with Nginx, ModSecurity v3 and OWASP CRS in front of Juice Shop, plus Suricata 8 with ET Open rules and a systemd watchdog on capture.</li>
+        <li>WAF logs and Suricata eve.json shipped to Splunk through Universal Forwarders (<code>index=security</code>).</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Detected</h4>
+      <ul>
+        <li>A correlated WAF + IDS incident alert to cut false positives.</li>
+        <li>Alerts for port scans, WAF bypass, low-and-slow scanning, backend errors and ingest health.</li>
+        <li>Detections mapped to MITRE ATT&amp;CK, shown in a Splunk Dashboard Studio dashboard.</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Next</h4>
+      <ul>
+        <li>An n8n workflow that sends each alert to an AI agent, which writes a summary and suggested action back to the dashboard.</li>
+        <li>MISP integration.</li>
+      </ul>
+    </div>
+    <!-- TODO(confirm): MITRE IDs T1190, T1046 -->
+    <ul class="tags" aria-label="Tags">
+      <li class="tag mitre">T1190 Exploit Public-Facing App</li>
+      <li class="tag mitre">T1046 Network Service Discovery</li>
+      <li class="tag">Splunk</li><li class="tag">Suricata</li><li class="tag">ModSecurity</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ ALL PROJECTS ============ -->
+<section class="work" id="work" aria-labelledby="work-h">
+  <div class="wrap">
+    <div class="work-head">
+      <h2 id="work-h" class="sec-sub">More projects</h2>
+      <div class="filters" role="group" aria-label="Filter projects by domain">
+        <button type="button" class="filter" data-filter="all" aria-pressed="true">All <span class="n">9</span></button>
+        <button type="button" class="filter" data-filter="soc" aria-pressed="false" style="--dc:var(--d-soc)"><i aria-hidden="true"></i>SOC <span class="n">2</span></button>
+        <button type="button" class="filter" data-filter="grc" aria-pressed="false" style="--dc:var(--d-grc)"><i aria-hidden="true"></i>GRC <span class="n">2</span></button>
+        <button type="button" class="filter" data-filter="net" aria-pressed="false" style="--dc:var(--d-net)"><i aria-hidden="true"></i>Network <span class="n">2</span></button>
+        <button type="button" class="filter" data-filter="ot" aria-pressed="false" style="--dc:var(--d-ot)"><i aria-hidden="true"></i>ICS/OT <span class="n">1</span></button>
+        <button type="button" class="filter" data-filter="cloud" aria-pressed="false" style="--dc:var(--d-cloud)"><i aria-hidden="true"></i>Cloud <span class="n">2</span></button>
+      </div>
+    </div>
+    <p class="sr-only" id="filterStatus" aria-live="polite"></p>
+
+    <div class="grid" id="projectGrid">
+
+      <!-- 2. ISO 27001 -->
+      <article class="card" data-domain="grc" style="--dc:var(--d-grc)" aria-labelledby="p-iso">
+        <div class="card-glow" aria-hidden="true"></div>
+        <p class="card-meta"><span class="dom">GRC &amp; IT risk</span><span>Personal project, simulation</span></p>
+        <h3 id="p-iso">ISO/IEC 27001:2022 ISMS Implementation &amp; Gap Analysis</h3>
+        <p class="sum">An information security management system for a fictional organization, from gap analysis to roadmap.</p>
+        <ul class="tags"><li class="tag">ISO/IEC 27001:2022</li><li class="tag">Annex A</li><li class="tag">Clause 6.1.3 SoA</li></ul>
+        <button type="button" class="open" aria-haspopup="dialog">Read details<span class="sr-only">: ISO/IEC 27001 ISMS project</span></button>
+        <div class="detail">
+          <ul>
+            <li>Compliance gap analysis against ISO/IEC 27001:2022.</li>
+            <!-- TODO(confirm): number of Annex A controls and whether the project is finished -->
+            <li>Assessment of the Annex A controls.</li>
+            <li>Statement of Applicability (clause 6.1.3), security policies and an implementation roadmap.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 3. IT risk -->
+      <article class="card" data-domain="grc" style="--dc:var(--d-grc)" aria-labelledby="p-risk">
+        <div class="card-glow" aria-hidden="true"></div>
+        <p class="card-meta"><span class="dom">GRC &amp; IT risk</span><span>Personal project, simulation</span></p>
+        <h3 id="p-risk">IT Risk Assessment &amp; Management</h3>
+        <p class="sum">A full risk cycle following ISO 27005 and ISO 31000, from asset inventory to the indicators that track residual risk.</p>
+        <ul class="tags"><li class="tag">ISO 27005</li><li class="tag">ISO 31000</li><li class="tag">KRI</li></ul>
+        <button type="button" class="open" aria-haspopup="dialog">Read details<span class="sr-only">: IT risk assessment project</span></button>
+        <div class="detail">
+          <ul>
+            <li>Asset, threat and vulnerability identification; impact and likelihood assessment.</li>
+            <li>Inherent and residual risk, risk register and heat map.</li>
+            <li>Treatment strategies, risk owners and Key Risk Indicators (KRI).</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 4. AD -->
+      <article class="card" data-domain="soc" style="--dc:var(--d-soc)" aria-labelledby="p-ad">
+        <div class="card-glow" aria-hidden="true"></div>
+        <p class="card-meta"><span class="dom">SOC &amp; detection</span><span>Lab project</span></p>
+        <h3 id="p-ad">Active Directory Attack &amp; Threat Hunting Lab</h3>
+        <p class="sum">A Windows domain attacked on purpose, then investigated from the SIEM side.</p>
+        <!-- TODO(confirm): MITRE ID T1558.001 -->
+        <ul class="tags"><li class="tag mitre">T1558.001 Golden Ticket</li><li class="tag">Kerberos</li><li class="tag">Splunk</li></ul>
+        <button type="button" class="open" aria-haspopup="dialog">Read details<span class="sr-only">: Active Directory lab</span></button>
+        <div class="detail">
+          <ul>
+            <li>Lab Active Directory on Windows Server with Kerberos attack scenarios (Golden Ticket).</li>
+            <li>Threat hunting in Splunk across Windows Server, Ubuntu and Kali Linux hosts.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 5. CTI -->
+      <article class="card" data-domain="soc" style="--dc:var(--d-soc)" aria-labelledby="p-cti">
+        <div class="card-glow" aria-hidden="true"></div>
+        <p class="card-meta"><span class="dom">SOC &amp; detection</span><span>Personal project, ongoing</span></p>
+        <h3 id="p-cti">Cyber Threat Intelligence &amp; Security Automation</h3>
+        <p class="sum">Connecting threat intelligence and response tooling so alerts arrive with context.</p>
+        <ul class="tags"><li class="tag">MISP</li><li class="tag">n8n</li><li class="tag">TheHive</li><li class="tag">Cortex</li></ul>
+        <button type="button" class="open" aria-haspopup="dialog">Read details<span class="sr-only">: threat intelligence project</span></button>
+        <div class="detail">
+          <ul>
+            <li>MISP for indicator sharing and correlation.</li>
+            <li>n8n workflows for alert enrichment and reporting.</li>
+            <li>Splunk SOAR, TheHive and Cortex integrations under development.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 6. GRFICS -->
+      <article class="card" data-domain="ot" style="--dc:var(--d-ot)" aria-labelledby="p-ot">
+        <div class="card-glow" aria-hidden="true"></div>
+        <p class="card-meta"><span class="dom">ICS/OT</span><span>Academic project (Projet 2A), in progress</span></p>
+        <h3 id="p-ot">Industrial Cybersecurity Lab: GRFICSv3 Blue Team</h3>
+        <p class="sum">Detection and defense for a simulated chemical plant, where an alert can mean a valve was moved.</p>
+        <!-- TODO(confirm): MITRE ID T0855 -->
+        <ul class="tags"><li class="tag mitre">T0855 Unauthorized Command Message</li><li class="tag">Modbus/TCP</li><li class="tag">NIST CSF 2.0</li></ul>
+        <button type="button" class="open" aria-haspopup="dialog">Read details<span class="sr-only">: GRFICSv3 industrial lab</span></button>
+        <div class="detail">
+          <p>Following a phased plan (phases A to J), started November 2026.</p>
+          <ul>
+            <li>Wazuh SIEM and custom Suricata rules for Modbus/TCP (port 502).</li>
+            <li>Network segmentation and firewall hardening around OpenPLC and Scada-LTS.</li>
+            <li>Modbus traffic analysis in Wireshark; mapped to NIST CSF 2.0.</li>
+          </ul>
+          <!-- Architecture diagram. Simplified view built only from the bullets above; zone names are illustrative.
+               TODO(confirm): check the layout matches your lab once the phases are done. -->
+          <figure class="arch">
+            <div class="arch-scroll" tabindex="0" role="region" aria-label="GRFICSv3 lab diagram, scrollable">
+            <svg viewBox="0 0 760 420" role="img" aria-label="GRFICSv3 blue team architecture: Scada-LTS talks Modbus/TCP on port 502 through a hardened firewall to OpenPLC, which drives the simulated chemical plant. Suricata inspects the Modbus traffic with custom rules and sends alerts to the Wazuh SIEM, which raises a T0855 unauthorized command message alert. Wireshark is used for Modbus traffic analysis. The work is mapped to NIST CSF 2.0.">
+              <!-- zones -->
+              <g class="zone" style="--i:0"><rect x="10" y="20" width="230" height="180" rx="12"/><text x="22" y="40">supervisory zone</text></g>
+              <g class="zone" style="--i:0"><rect x="420" y="20" width="330" height="180" rx="12"/><text x="432" y="40">control zone</text></g>
+
+              <!-- edges -->
+              <path class="edge" style="--i:1" pathLength="1" d="M215 115 H268"/>
+              <path class="ah" style="--i:1" d="M260 111 L268 115 L260 119 z"/>
+              <path class="edge" style="--i:2" pathLength="1" d="M382 115 H433"/>
+              <path class="ah" style="--i:2" d="M425 111 L433 115 L425 119 z"/>
+              <text class="elabel" style="--i:2" x="326" y="40" text-anchor="middle">Modbus/TCP</text>
+              <text class="elabel sig" style="--i:2" x="326" y="56" text-anchor="middle">port 502</text>
+              <path class="edge" style="--i:3" pathLength="1" d="M577 115 H598"/>
+              <path class="ah" style="--i:3" d="M590 111 L598 115 L590 119 z"/>
+              <path class="edge dash" style="--i:4" d="M408 115 V215 H310 V248"/>
+              <path class="ah" style="--i:4" d="M306 240 L310 248 L314 240 z"/>
+              <text class="elabel" style="--i:4" x="318" y="236">inspects Modbus traffic</text>
+              <path class="edge dash" style="--i:4" d="M242 115 V215 H95 V268"/>
+              <path class="ah" style="--i:4" d="M91 260 L95 268 L99 260 z"/>
+              <text class="elabel" style="--i:4" x="104" y="240">captures</text>
+              <path class="edge" style="--i:5" pathLength="1" d="M420 310 H478"/>
+              <path class="ah" style="--i:5" d="M470 306 L478 310 L470 314 z"/>
+              <text class="elabel" style="--i:5" x="449" y="300" text-anchor="middle">alerts</text>
+
+              <!-- nodes -->
+              <g class="node" style="--i:1"><rect x="25" y="60" width="190" height="110" rx="8"/>
+                <text class="t" x="41" y="92">Scada-LTS</text><text class="s" x="41" y="112">SCADA / HMI</text></g>
+              <g class="node fw" style="--i:2"><rect x="270" y="70" width="112" height="90" rx="8"/>
+                <text class="t" x="326" y="102" text-anchor="middle">Firewall</text><text class="s" x="326" y="124" text-anchor="middle">segmentation,</text><text class="s" x="326" y="141" text-anchor="middle">hardened rules</text></g>
+              <g class="node" style="--i:3"><rect x="435" y="60" width="142" height="110" rx="8"/>
+                <text class="t" x="451" y="92">OpenPLC</text><text class="s" x="451" y="112">PLC runtime</text></g>
+              <g class="node plant" style="--i:3"><rect x="600" y="60" width="138" height="110" rx="8"/>
+                <text class="t" x="616" y="92">Chemical plant</text><text class="s" x="616" y="112">GRFICSv3</text><text class="s" x="616" y="129">simulation</text></g>
+              <g class="node dashed" style="--i:4"><rect x="20" y="270" width="150" height="80" rx="8"/>
+                <text class="t" x="36" y="300">Wireshark</text><text class="s" x="36" y="320">Modbus traffic</text><text class="s" x="36" y="336">analysis</text></g>
+              <g class="node ids" style="--i:4"><rect x="200" y="250" width="220" height="120" rx="8"/>
+                <text class="t" x="216" y="280">Suricata IDS</text><text class="s" x="216" y="300">custom Modbus/TCP rules</text><text class="s mono" x="216" y="350">tcp/502</text></g>
+              <g class="node siem" style="--i:5"><rect x="480" y="250" width="258" height="140" rx="8"/>
+                <text class="t" x="496" y="280">Wazuh SIEM</text><text class="s" x="496" y="300">Suricata alerts + Wazuh agents</text></g>
+              <g class="badge" style="--i:6"><rect x="494" y="318" width="230" height="56" rx="6"/>
+                <text class="b1" x="508" y="341">Modbus alert</text><text class="b2" x="508" y="361">T0855 unauthorized command</text></g>
+              <text class="foot" style="--i:6" x="10" y="410">mapped to NIST CSF 2.0</text>
+            </svg>
+            </div>
+            <!-- Phone version (top to bottom) -->
+            <svg class="arch-v" viewBox="0 0 340 700" role="img" aria-label="GRFICSv3 blue team architecture, vertical view: Scada-LTS talks Modbus/TCP on port 502 through a hardened firewall to OpenPLC, which drives the simulated chemical plant. Suricata inspects the Modbus traffic with custom rules and sends alerts to the Wazuh SIEM, which raises a T0855 unauthorized command message alert. Wireshark captures Modbus traffic for analysis. Mapped to NIST CSF 2.0.">
+              <g class="zone" style="--i:0"><rect x="10" y="8" width="320" height="96" rx="12"/><text x="22" y="26">supervisory zone</text></g>
+              <g class="zone" style="--i:0"><rect x="10" y="222" width="320" height="112" rx="12"/><text x="318" y="240" text-anchor="end">control zone</text></g>
+
+              <path class="edge" style="--i:1" pathLength="1" d="M110 94 V138"/>
+              <path class="ah" style="--i:1" d="M106 130 L110 138 L114 130 z"/>
+              <text class="elabel" style="--i:1" x="120" y="113">Modbus/TCP</text>
+              <text class="elabel sig" style="--i:1" x="120" y="127">port 502</text>
+              <path class="edge" style="--i:2" pathLength="1" d="M110 196 V246"/>
+              <path class="ah" style="--i:2" d="M106 238 L110 246 L114 238 z"/>
+              <path class="edge" style="--i:3" pathLength="1" d="M166 284 H184"/>
+              <path class="ah" style="--i:3" d="M176 280 L184 284 L176 288 z"/>
+              <path class="edge dash" style="--i:4" d="M110 212 H18 V398 H30"/>
+              <path class="ah" style="--i:4" d="M22 394 L30 398 L22 402 z"/>
+              <text class="elabel" style="--i:4" x="34" y="358">inspects Modbus traffic</text>
+              <path class="edge dash" style="--i:4" d="M18 398 V640 H30"/>
+              <path class="ah" style="--i:4" d="M22 636 L30 640 L22 644 z"/>
+              <path class="edge" style="--i:5" pathLength="1" d="M170 440 V474"/>
+              <path class="ah" style="--i:5" d="M166 466 L170 474 L174 466 z"/>
+              <text class="elabel" style="--i:5" x="180" y="461">alerts</text>
+
+              <g class="node" style="--i:1"><rect x="30" y="34" width="286" height="60" rx="8"/>
+                <text class="t" x="46" y="60">Scada-LTS</text><text class="s" x="46" y="80">SCADA / HMI</text></g>
+              <g class="node fw" style="--i:2"><rect x="30" y="140" width="286" height="56" rx="8"/>
+                <text class="t" x="46" y="164">Firewall</text><text class="s" x="46" y="184">segmentation, hardened rules</text></g>
+              <g class="node" style="--i:3"><rect x="30" y="248" width="136" height="72" rx="8"/>
+                <text class="t" x="44" y="274">OpenPLC</text><text class="s" x="44" y="294">PLC runtime</text></g>
+              <g class="node plant" style="--i:3"><rect x="186" y="248" width="130" height="72" rx="8"/>
+                <text class="t" x="198" y="274">Chemical plant</text><text class="s" x="198" y="292">GRFICSv3</text><text class="s" x="198" y="308">simulation</text></g>
+              <g class="node ids" style="--i:4"><rect x="30" y="370" width="286" height="70" rx="8"/>
+                <text class="t" x="46" y="394">Suricata IDS</text><text class="s" x="46" y="414">custom Modbus/TCP rules</text><text class="s mono" x="302" y="394" text-anchor="end">tcp/502</text></g>
+              <g class="node siem" style="--i:5"><rect x="30" y="476" width="286" height="118" rx="8"/>
+                <text class="t" x="46" y="500">Wazuh SIEM</text><text class="s" x="46" y="518">Suricata alerts + Wazuh agents</text></g>
+              <g class="badge" style="--i:6"><rect x="44" y="530" width="258" height="52" rx="6"/>
+                <text class="b1" x="58" y="552">Modbus alert</text><text class="b2" x="58" y="570">T0855 unauthorized command</text></g>
+              <g class="node dashed" style="--i:4"><rect x="30" y="612" width="286" height="56" rx="8"/>
+                <text class="t" x="46" y="636">Wireshark</text><text class="s" x="46" y="655">captures Modbus traffic for analysis</text></g>
+              <text class="foot" style="--i:6" x="10" y="692">mapped to NIST CSF 2.0</text>
+            </svg>
+            <figcaption>Simplified architecture (in progress).</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- 7. Palo Alto -->
+      <article class="card" data-domain="net" style="--dc:var(--d-net)" aria-labelledby="p-pa">
+        <div class="card-glow" aria-hidden="true"></div>
+        <p class="card-meta"><span class="dom">Network</span><span>Academic project, 2025–2026</span></p>
+        <h3 id="p-pa">Multi-Site Palo Alto NGFW &amp; Route-Based IPsec VPN (EVE-NG)</h3>
+        <p class="sum">Two sites joined by an encrypted tunnel across a simulated ISP, each behind a Palo Alto VM-Series firewall.</p>
+        <ul class="tags"><li class="tag">Palo Alto NGFW</li><li class="tag">IPsec/IKEv2</li><li class="tag">EVE-NG</li><li class="tag">Zero Trust zones</li></ul>
+        <button type="button" class="open" aria-haspopup="dialog">Read details<span class="sr-only">: Palo Alto VPN project</span></button>
+        <div class="detail">
+          <p>Supervised by Mme Chaimae Kissi.</p>
+          <ul>
+            <li>Two sites connected over a simulated public ISP backbone (Cisco 7206VXR as the ISP core), each protected by a Palo Alto VM-Series NGFW, built in EVE-NG with management through the Cloud0 bridge.</li>
+            <li>Route-based site-to-site IPsec VPN using tunnel interfaces (tunnel.1, zone <code>VPN</code>): IKEv2, AES-256, SHA-256.</li>
+            <li>Zone-based security with Trust, Untrust and VPN zones and granular least-privilege permit rules for cross-site traffic.</li>
+            <li>Interface Management Profiles limiting HTTPS, SSH and Ping to specific interfaces, protecting the control plane.</li>
+            <li>Virtual router separating underlay (ISP reachability) from overlay (tunnel) routing; static and default routes force internal traffic through the encryption engine.</li>
+            <li>LAN 1 <code>10.1.1.0/24</code> to LAN 2 <code>20.1.1.0/24</code> across the tunnel.</li>
+          </ul>
+          <figure class="topo">
+            <a href="assets/topologies/paloalto-site-to-site-vpn.png" target="_blank" rel="noopener">
+              <img src="assets/topologies/paloalto-site-to-site-vpn.png" loading="lazy" width="714" height="272" alt="EVE-NG topology: LAN 1 (10.1.1.0/24) and LAN 2 (20.1.1.0/24), each behind a router and a Palo Alto VM-Series firewall, connected through a Cisco 7206VXR ISP core router by a site-to-site IPsec VPN; each firewall also has a management access link.">
+            </a>
+            <figcaption>EVE-NG topology of the two sites and the IPsec tunnel. Open the image to see it full size.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- 8. AWS -->
+      <article class="card" data-domain="cloud" style="--dc:var(--d-cloud)" aria-labelledby="p-aws">
+        <div class="card-glow" aria-hidden="true"></div>
+        <p class="card-meta"><span class="dom">Cloud</span><span>Academic project, 2025–2026</span></p>
+        <h3 id="p-aws">Secure Static Hosting on AWS (S3 + CloudFront + OAC)</h3>
+        <p class="sum">A static website served only through CloudFront, with the S3 origin kept private and encrypted.</p>
+        <ul class="tags"><li class="tag">AWS S3</li><li class="tag">CloudFront</li><li class="tag">OAC</li><li class="tag">IAM</li><li class="tag">Least privilege</li></ul>
+        <button type="button" class="open" aria-haspopup="dialog">Read details<span class="sr-only">: AWS secure hosting project</span></button>
+        <div class="detail">
+          <p>Supervised by Mme Chaimae Kissi. The goal was to go beyond simple hosting and apply cloud-security principles to a static HTML/CSS website.</p>
+          <ul>
+            <li>Amazon S3 as a private origin: Block All Public Access, ACLs disabled (bucket-owner enforced), default server-side encryption at rest.</li>
+            <li>Amazon CloudFront as the only public entry point, hiding the origin and caching at the edge.</li>
+            <li>Origin Access Control (OAC) and a JSON bucket policy so only the CloudFront distribution can read the bucket. Tested: the direct S3 URL returns access denied, the CloudFront URL serves the site with no errors.</li>
+            <li>HTTPS enforced (HTTP to HTTPS redirect via the Viewer Protocol Policy) for encryption in transit.</li>
+            <li>IAM least privilege: a dedicated IAM user with only S3 and CloudFront permissions and a forced password reset; the root account is no longer used for daily work.</li>
+            <li>Operations: default root object <code>index.html</code>, CloudFront cache invalidation for updates.</li>
+          </ul>
+          <p class="note">Next step: AWS WAF in front of the distribution (left off on purpose, as it is a paid feature).</p>
+          <!-- Architecture diagram built only from the bullets above. No custom domain is shown on purpose (see CLAUDE.md, To confirm). -->
+          <figure class="arch">
+            <div class="arch-scroll" tabindex="0" role="region" aria-label="AWS hosting diagram, scrollable">
+            <svg viewBox="0 0 760 400" role="img" aria-label="AWS secure static hosting architecture: the visitor reaches Amazon CloudFront over HTTPS, with HTTP redirected to HTTPS. CloudFront is the only public entry point and reads the private, encrypted S3 bucket through Origin Access Control and a bucket policy. A request to the direct S3 URL gets access denied. A dedicated least-privilege IAM user manages S3 and CloudFront. AWS WAF is a planned next step.">
+              <!-- zone -->
+              <g class="zone" style="--i:0"><rect x="230" y="20" width="520" height="316" rx="12"/><text x="738" y="40" text-anchor="end">AWS</text></g>
+
+              <!-- edges -->
+              <path class="edge" style="--i:1" pathLength="1" d="M150 160 H248"/>
+              <path class="ah" style="--i:1" d="M240 156 L248 160 L240 164 z"/>
+              <text class="elabel sig" style="--i:1" x="199" y="148" text-anchor="middle">HTTPS</text>
+              <text class="elabel" style="--i:1" x="199" y="180" text-anchor="middle">HTTP → HTTPS</text>
+              <path class="edge" style="--i:2" pathLength="1" d="M440 160 H538"/>
+              <path class="ah" style="--i:2" d="M530 156 L538 160 L530 164 z"/>
+              <text class="elabel sig" style="--i:2" x="489" y="148" text-anchor="middle">OAC</text>
+              <text class="elabel" style="--i:2" x="489" y="180" text-anchor="middle">read</text>
+              <path class="edge plan" style="--i:5" d="M345 89 V105"/>
+              <path class="edge dash" style="--i:4" d="M345 252 V217"/>
+              <path class="ah" style="--i:4" d="M341 225 L345 217 L349 225 z"/>
+              <path class="edge dash" style="--i:4" d="M440 287 H600 V234"/>
+              <path class="ah" style="--i:4" d="M596 242 L600 234 L604 242 z"/>
+              <text class="elabel" style="--i:4" x="452" y="278">manages</text>
+              <path class="edge deny" style="--i:3" d="M85 200 V370 H685 V320"/>
+              <path class="ah deny" style="--i:3" d="M681 328 L685 320 L689 328 z"/>
+              <text class="elabel deny" style="--i:3" x="100" y="362">direct S3 URL</text>
+
+              <!-- nodes -->
+              <g class="node" style="--i:1"><rect x="20" y="120" width="130" height="80" rx="8"/>
+                <text class="t" x="36" y="152">Visitor</text><text class="s" x="36" y="172">web browser</text></g>
+              <g class="node cdn" style="--i:2"><rect x="250" y="105" width="190" height="112" rx="8"/>
+                <text class="t" x="266" y="134">Amazon CloudFront</text><text class="s" x="266" y="154">only public entry point</text><text class="s" x="266" y="171">edge cache, hides origin</text><text class="s mono" x="266" y="202">root: index.html</text></g>
+              <g class="node plan" style="--i:5"><rect x="250" y="45" width="190" height="44" rx="8"/>
+                <text class="s" x="266" y="72">AWS WAF (next step)</text></g>
+              <g class="node s3" style="--i:2"><rect x="540" y="90" width="196" height="144" rx="8"/>
+                <text class="t" x="556" y="118">Amazon S3 (private)</text><text class="s" x="556" y="140">Block All Public Access</text><text class="s" x="556" y="157">ACLs disabled</text><text class="s" x="556" y="174">encrypted at rest</text><text class="s mono" x="556" y="212">policy: CloudFront only</text></g>
+              <g class="node" style="--i:4"><rect x="250" y="252" width="190" height="72" rx="8"/>
+                <text class="t" x="266" y="278">IAM user</text><text class="s" x="266" y="298">S3 + CloudFront only;</text><text class="s" x="266" y="314">root not used day to day</text></g>
+              <g class="badge" style="--i:6"><rect x="626" y="284" width="118" height="34" rx="6"/>
+                <text class="b1" x="685" y="306" text-anchor="middle">Access denied</text></g>
+            </svg>
+            </div>
+            <!-- Phone version (top to bottom) -->
+            <svg class="arch-v" viewBox="0 0 340 596" role="img" aria-label="AWS secure static hosting architecture, vertical view: the visitor reaches Amazon CloudFront over HTTPS, with HTTP redirected to HTTPS. CloudFront is the only public entry point and reads the private, encrypted S3 bucket through Origin Access Control. A request to the direct S3 URL gets access denied. A least-privilege IAM user manages S3 and CloudFront. AWS WAF is a planned next step.">
+              <g class="zone" style="--i:0"><rect x="26" y="118" width="304" height="470" rx="12"/><text x="318" y="582" text-anchor="end">AWS</text></g>
+
+              <path class="edge" style="--i:1" pathLength="1" d="M120 66 V178"/>
+              <path class="ah" style="--i:1" d="M116 170 L120 178 L124 170 z"/>
+              <text class="elabel sig" style="--i:1" x="130" y="90">HTTPS</text>
+              <text class="elabel" style="--i:1" x="130" y="104">HTTP → HTTPS</text>
+              <path class="edge plan" style="--i:5" d="M257 168 V180"/>
+              <path class="edge" style="--i:2" pathLength="1" d="M120 276 V324"/>
+              <path class="ah" style="--i:2" d="M116 316 L120 324 L124 316 z"/>
+              <text class="elabel sig" style="--i:2" x="130" y="297">OAC</text>
+              <text class="elabel" style="--i:2" x="130" y="311">read</text>
+              <path class="edge deny" style="--i:3" d="M40 38 H8 V469 H38"/>
+              <path class="ah deny" style="--i:3" d="M30 465 L38 469 L30 473 z"/>
+              <text class="elabel deny" style="--i:3" x="22" y="300" text-anchor="middle" transform="rotate(-90 22 300)">direct S3 URL</text>
+              <path class="edge dash" style="--i:4" d="M240 500 V446"/>
+              <path class="ah" style="--i:4" d="M236 454 L240 446 L244 454 z"/>
+              <text class="elabel" style="--i:4" x="250" y="481">manages</text>
+              <path class="edge dash" style="--i:4" d="M310 537 H320 V228 H312"/>
+              <path class="ah" style="--i:4" d="M320 224 L312 228 L320 232 z"/>
+
+              <g class="node" style="--i:1"><rect x="40" y="10" width="270" height="56" rx="8"/>
+                <text class="t" x="56" y="34">Visitor</text><text class="s" x="56" y="52">web browser</text></g>
+              <g class="node plan" style="--i:5"><rect x="205" y="126" width="105" height="42" rx="8"/>
+                <text class="s" x="217" y="143">AWS WAF</text><text class="s" x="217" y="159">(next step)</text></g>
+              <g class="node cdn" style="--i:2"><rect x="40" y="180" width="270" height="96" rx="8"/>
+                <text class="t" x="56" y="206">Amazon CloudFront</text><text class="s" x="56" y="224">only public entry point</text><text class="s" x="56" y="240">edge cache, hides origin</text><text class="s mono" x="56" y="264">root: index.html</text></g>
+              <g class="node s3" style="--i:2"><rect x="40" y="326" width="270" height="118" rx="8"/>
+                <text class="t" x="56" y="352">Amazon S3 (private)</text><text class="s" x="56" y="372">Block All Public Access</text><text class="s" x="56" y="388">ACLs disabled</text><text class="s" x="56" y="404">encrypted at rest</text><text class="s mono" x="56" y="430">policy: CloudFront only</text></g>
+              <g class="badge" style="--i:6"><rect x="40" y="454" width="124" height="30" rx="6"/>
+                <text class="b1" x="102" y="474" text-anchor="middle">Access denied</text></g>
+              <g class="node" style="--i:4"><rect x="40" y="500" width="270" height="74" rx="8"/>
+                <text class="t" x="56" y="524">IAM user</text><text class="s" x="56" y="544">S3 + CloudFront only;</text><text class="s" x="56" y="560">root not used day to day</text></g>
+            </svg>
+            <figcaption>Only CloudFront can read the bucket: the direct S3 URL is refused.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- 9. Hospital -->
+      <article class="card" data-domain="net" style="--dc:var(--d-net)" aria-labelledby="p-hosp">
+        <div class="card-glow" aria-hidden="true"></div>
+        <p class="card-meta"><span class="dom">Network</span><span>Academic team project</span></p>
+        <h3 id="p-hosp">Hospital City Network Design (Cisco Packet Tracer)</h3>
+        <p class="sum">One secure, redundant network for a medical city of four hospitals, designed for a Ministry of Health scenario.</p>
+        <ul class="tags"><li class="tag">OSPF</li><li class="tag">VLANs</li><li class="tag">IPsec VPN</li><li class="tag">Cisco ASA</li><li class="tag">Port security</li><li class="tag">PAT</li></ul>
+        <button type="button" class="open" aria-haspopup="dialog">Read details<span class="sr-only">: hospital network project</span></button>
+        <div class="detail">
+          <p>Team of four, supervised by Mme Kissi. A national health plan funds a medical city with four hospitals (General, 582 beds; Maternity &amp; Children, 347; High-Security Forensic Psychiatry, 100; Physiotherapy &amp; Rehabilitation, 150), and the Ministry of Health needs one secure network across all sites.</p>
+          <ul>
+            <li>Hierarchical, redundant design: each site has a core router, two multilayer (L3) switches and access switches per department; HQ and branch linked over serial WAN; dual ISP with a main default route and a floating backup static route.</li>
+            <li>One VLAN and subnet per department with VLSM: /25 for departments of about 100 hosts, /27 for about 25, /28 for the server segment, /30 for point-to-point links.</li>
+            <li>OSPF (area 0) on routers and L3 switches, inter-VLAN routing on the L3 switches, DHCP servers in the server room with <code>ip helper-address</code>, static IPs for servers.</li>
+            <li>SSH only on routers and L3 switches (RSA keys, local login, <code>transport input ssh</code>), <code>service password-encryption</code> and banners.</li>
+            <li>Port security on the server-department switch: sticky MAC, one device maximum, shutdown on violation.</li>
+            <li>Site-to-site IPsec VPN with an extended ACL between HQ and branch; PAT and ACLs on the edge routers.</li>
+            <li>A Cisco ASA firewall between locations with security levels (trusted 100, untrusted 50), static routes, ACLs and ICMP inspection.</li>
+            <li>A wireless network per department.</li>
+            <li>Second part: a healthcare-segment design (private ward, general ward, clinical area, IT department, entrance reception, lobby, parking and cafeteria) with VLSM and DHCP, DNS, HTTP(S), SMTP, FTP and Wi-Fi services.</li>
+          </ul>
+          <figure class="topo">
+            <a href="assets/topologies/hospital-network-packet-tracer.png" target="_blank" rel="noopener">
+              <img src="assets/topologies/hospital-network-packet-tracer.png" loading="lazy" width="1412" height="452" alt="Cisco Packet Tracer topology of the healthcare segment: private ward, general ward, clinical area and IT department, each with a switch and a router linked by serial WAN links; an entrance reception area; a wireless lobby, parking and cafeteria area; and HTTP/DNS and SMTP/FTP servers in the IT department.">
+            </a>
+            <figcaption>Packet Tracer topology of the healthcare segment (second part). Open the image to see it full size.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- 10. Azure CSPM -->
+      <article class="card" data-domain="cloud" style="--dc:var(--d-cloud)" aria-labelledby="p-az">
+        <div class="card-glow" aria-hidden="true"></div>
+        <p class="card-meta"><span class="dom">Cloud</span><span>Engineering project, starting</span></p>
+        <h3 id="p-az">Azure Cloud Security Posture Management (CSPM)</h3>
+        <p class="sum">A read-only platform that inspects an Azure subscription for misconfigurations: it observes and reports, it never writes.</p>
+        <ul class="tags"><li class="tag">Azure</li><li class="tag">CSPM</li><li class="tag">PowerShell</li></ul>
+        <button type="button" class="open" aria-haspopup="dialog">Read details<span class="sr-only">: Azure CSPM project</span></button>
+        <div class="detail">
+          <ul>
+            <li>Read-only by design: the platform observes and reports, it never writes.</li>
+            <li>Being built step by step from an engineering handbook, on Windows with PowerShell.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section class="experience" id="experience" aria-labelledby="exp-h">
+  <div class="wrap">
+    <h2 id="exp-h" class="sec-title">Experience</h2>
+    <p class="sec-note">Education, leadership and internships, most recent first.</p>
+    <ol class="timeline">
+      <li class="tl">
+        <p class="when">In progress, graduating Jul 2027</p>
+        <div class="tl-body">
+          <h3>Engineering degree, Networks &amp; Telecommunications Systems (RST)</h3>
+          <p class="org">ENSA Kénitra, Ibn Tofail University, cybersecurity specialization</p>
+        </div>
+      </li>
+      <li class="tl">
+        <p class="when">Sep 2025 – Sep 2026</p>
+        <div class="tl-body">
+          <h3>President, CRIS Cybersecurity Club</h3>
+          <p class="org">ENSA Kénitra</p>
+          <ul>
+            <li>Organized technical workshops and cybersecurity events, including CTF competitions.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="tl">
+        <p class="when">Jul 2026 – Aug 2026</p>
+        <div class="tl-body">
+          <h3>Assistant Engineer Intern (Ingénieur adjoint), SOC team</h3>
+          <p class="org">DXC Technology, Security Department, Rabat</p>
+          <ul>
+            <li>Built a SOC lab for web threat detection with a ModSecurity WAF, Suricata IDS and Splunk Enterprise SIEM, tested with simulated attacks from Kali Linux.</li>
+            <li>Created and tuned Splunk correlation alerts (WAF bypass, port scan) to reduce false positives and support incident analysis; mapped detections to MITRE ATT&amp;CK and built a security monitoring dashboard.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="tl">
+        <p class="when">Jul 2025 – Aug 2025</p>
+        <div class="tl-body">
+          <h3>Technical Intern, Network Infrastructure &amp; Firewall Security</h3>
+          <p class="org">ONDA (Office National des Aéroports), SITA office, Marrakech</p>
+          <ul>
+            <li>Studied enterprise network infrastructure and firewall security with Fortinet FortiGate, including the IPsec VPN architecture used for secure communications.</li>
+            <li>Simulated network topologies in EVE-NG, ran controlled security tests and produced the technical documentation.</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="skills" id="skills" aria-labelledby="skills-h">
+  <div class="wrap">
+    <h2 id="skills-h" class="sec-title">Skills</h2>
+    <p class="sec-note">Stacked the way a defense is: governance on top, the network underneath everything.</p>
+
+    <div class="ziggurat">
+      <div class="tier" style="--dc:var(--d-grc); --w:64%">
+        <h3>GRC &amp; IT risk</h3>
+        <ul class="tags"><li class="tag">ISO/IEC 27001:2022</li><li class="tag">ISO 27005</li><li class="tag">ISO 31000</li><li class="tag">NIST CSF 2.0</li><li class="tag">ISMS</li><li class="tag">Risk assessment &amp; treatment</li><li class="tag">Risk register</li><li class="tag">Gap analysis</li><li class="tag">Statement of Applicability</li><li class="tag">Controls &amp; compliance assessment</li><li class="tag">Internal audit fundamentals</li><li class="tag">Security policies</li></ul>
+      </div>
+      <div class="tier" style="--dc:var(--d-soc); --w:72%">
+        <h3>SOC &amp; detection</h3>
+        <ul class="tags"><li class="tag">Splunk Enterprise (SIEM)</li><li class="tag">Wazuh</li><li class="tag">Suricata IDS</li><li class="tag">ModSecurity WAF</li><li class="tag">OWASP CRS</li><li class="tag">Nginx</li><li class="tag">Log analysis</li><li class="tag">Alert correlation &amp; tuning</li><li class="tag">Threat hunting</li><li class="tag">Detection engineering</li><li class="tag">Incident response</li><li class="tag">MITRE ATT&amp;CK</li><li class="tag">OWASP Top 10</li><li class="tag">AD &amp; Kerberos security</li></ul>
+      </div>
+      <div class="tier" style="--dc:var(--signal); --w:79%">
+        <h3>Threat intel &amp; automation</h3>
+        <ul class="tags"><li class="tag">MISP</li><li class="tag">n8n</li><li class="tag">Splunk SOAR</li><li class="tag">TheHive</li><li class="tag">Cortex</li></ul>
+      </div>
+      <div class="tier" style="--dc:var(--d-ot); --w:86%">
+        <h3>ICS/OT</h3>
+        <ul class="tags"><li class="tag">GRFICSv3</li><li class="tag">OpenPLC</li><li class="tag">Scada-LTS</li><li class="tag">Modbus/TCP</li></ul>
+      </div>
+      <div class="tier" style="--dc:var(--d-cloud); --w:93%">
+        <h3>Cloud, systems &amp; code</h3>
+        <ul class="tags"><li class="tag">AWS (S3, CloudFront, OAC, IAM)</li><li class="tag">Azure</li><li class="tag">Windows Server</li><li class="tag">Ubuntu</li><li class="tag">Kali Linux</li><li class="tag">Python</li><li class="tag">C/C++</li><li class="tag">PHP</li><li class="tag">HTML/CSS</li><li class="tag">PowerShell</li></ul>
+      </div>
+      <div class="tier" style="--dc:var(--d-net); --w:100%">
+        <h3>Networking &amp; security</h3>
+        <ul class="tags"><li class="tag">TCP/IP</li><li class="tag">VLANs</li><li class="tag">OSPF</li><li class="tag">ACLs</li><li class="tag">NAT/PAT</li><li class="tag">Palo Alto NGFW</li><li class="tag">Fortinet FortiGate</li><li class="tag">pfSense</li><li class="tag">Cisco ASA</li><li class="tag">IPsec/IKEv2 VPN</li><li class="tag">Segmentation</li><li class="tag">Port security</li><li class="tag">EVE-NG</li><li class="tag">Cisco Packet Tracer</li><li class="tag">Wireshark</li><li class="tag">Cisco IOS</li></ul>
+      </div>
+    </div>
+
+    <div class="creds">
+      <div>
+        <h3>Certifications</h3>
+        <ul>
+          <li><b>CCNA 1</b> Introduction to Networks</li>
+          <li><b>CCNA 2</b> Switching, Routing and Wireless Essentials</li>
+          <li><b>CCNA 3</b> Enterprise Networking, Security and Automation</li>
+        </ul>
+        <p class="creds-src">Cisco Networking Academy</p>
+      </div>
+      <div>
+        <h3>Languages</h3>
+        <ul>
+          <li><b>Arabic</b> Native</li>
+          <li><b>French</b> Professional</li>
+          <li><b>English</b> Professional</li>
+        </ul>
+      </div>
+      <div>
+        <h3>How I work</h3>
+        <ul>
+          <li><b>Rigor</b> Phased plans, validated step by step</li>
+          <li><b>Communication</b> Reports and presentations in French and English</li>
+          <li><b>Leadership</b> Club president and workshop organizer</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CURRENTLY ============ -->
+<section class="now" aria-labelledby="now-h">
+  <div class="wrap">
+    <h2 id="now-h" class="sec-title">Currently</h2>
+    <p class="sec-note">On my bench in November 2026.</p>
+    <ul class="now-list">
+      <li style="--dc:var(--d-ot)"><span class="now-dom">ICS/OT</span><h3>Hardening the GRFICSv3 plant</h3><p>Wazuh agents, Modbus-aware Suricata rules and tighter segmentation.</p></li>
+      <li style="--dc:var(--d-soc)"><span class="now-dom">SOC</span><h3>Adding AI triage to the SOC lab</h3><p>n8n turns each Splunk alert into a short explanation and a suggested next step.</p></li>
+      <li style="--dc:var(--d-net)"><span class="now-dom">Network</span><h3>Cisco Networking Academy</h3><p>Continuing the CCNA track.</p></li>
+      <li style="--dc:var(--amber)"><span class="now-dom">Career</span><h3>Looking for my PFE</h3><p>An end-of-studies internship in a SOC team, starting 2027, in Rabat or Casablanca.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact" aria-labelledby="contact-h">
+  <div class="wrap contact-grid">
+    <div>
+      <h2 id="contact-h" class="contact-title">Need an analyst on shift?</h2>
+      <p>I am looking for a PFE internship in a SOC team from 2027, in Rabat or Casablanca. Email is the fastest way to reach me. I reply in French or English.</p>
+    </div>
+    <ul class="channels">
+      <li>
+        <span class="lbl">Email</span>
+        <a class="val magnetic" href="mailto:jihadalahiane99@gmail.com">jihadalahiane99@gmail.com</a>
+        <button type="button" class="copy" data-copy="jihadalahiane99@gmail.com">Copy</button>
+      </li>
+      <li>
+        <span class="lbl">LinkedIn</span>
+        <a class="val magnetic" href="https://www.linkedin.com/in/jihad-mohamed-alahiane" target="_blank" rel="noopener">linkedin.com/in/jihad-mohamed-alahiane</a>
+      </li>
+      <li>
+        <span class="lbl">Location</span>
+        <span class="val">Rabat, Morocco</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Jihad Mohamed Alahiane</span>
+    <span>ENSA Kénitra, cybersecurity</span>
+  </div>
+</footer>
+
+<dialog class="modal" id="projectModal" aria-labelledby="modalTitle" data-lenis-prevent>
+  <div class="modal-inner">
+    <button type="button" class="modal-close" aria-label="Close details">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <p class="card-meta" id="modalMeta"></p>
+    <h3 id="modalTitle"></h3>
+    <div id="modalBody"></div>
+  </div>
+</dialog>
+
+<div class="cursor" aria-hidden="true"><span class="cursor-ring"></span><span class="cursor-dot"></span></div>
+</body>
+</html>
