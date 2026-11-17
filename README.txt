@@ -1,28 +1,32 @@
 Jihad Mohamed Alahiane: portfolio site
 ======================================
 
-Open it locally (modules need a server, double-clicking index.html will not load the 3D):
+Open it locally:
   npx serve .                      (from this folder)
   python -m http.server 8000       (then open http://localhost:8000)
+Double-clicking the HTML files also works; everything is plain HTML/CSS/JS.
 
-Deploy: upload this whole folder to GitHub Pages or Netlify. No build step.
+Deploy: push this folder to GitHub Pages. No build step, no external scripts (only Google Fonts).
 
-Files
-  index.html        all content (works without JavaScript)
-  css/main.css      design tokens, layout, components
-  js/main.js        start-up: WebGL check, scroll values, loads GSAP/Lenis
-  js/scene.js       Three.js hero (pyramid layers + floating field)
-  js/scroll.js      GSAP ScrollTrigger timelines (SOC diagram, timeline, skills)
-  js/ui.js          boot screen, name decrypt, cursor, filters, modal, counters
-  js/theme.js       night (dark) / day (light) theme switch, circular reveal
-  js/fx.js          extra motion: title scramble, marquee, spotlight, HUD, click ping
-  js/worldmap.js    background attack map (simulated): dotted world map, missiles, impacts
+Pages
+  index.html        Home: portrait, name, one line, two buttons, strip of the 3 main projects
+  projects.html     3 main projects with inline SVG architecture diagrams (reveal on scroll, tap to enlarge),
+                    then 7 more projects with filters and a details dialog
+  about.html        About, illustrated timeline (ENSA, ONDA, DXC, next PFE), skills and certifications
+
+Shared
+  css/style.css     the whole design (palette tokens on :root at the top)
+  js/cover.js       Home only: the book cover intro (once per browser session; skipped with reduced motion)
+  js/site.js        menu, frosted top bar, scroll reveal, clouds/leaves, filters, dialogs, diagram reveal + enlarge, timeline
   assets/           favicon + the two topology images
-
-Libraries (pinned, jsDelivr): three@0.170.0, gsap@3.13.0, lenis@1.1.20, topojson-client@3.1.0 + world-atlas@2.0.2 (map data)
+  images/           painted illustrations: portrait.webp, project-*.webp, timeline-*.webp; og-image.jpg is the link-preview image (1200x630, cut from project-soc)
 
 Tips
-  - Boot screen shows once per browser. To see it again: localStorage.removeItem('jma-boot')
-  - Theme is remembered per browser. To reset: localStorage.removeItem('jma-theme')
-  - Add ?debug to the URL to expose window.__lenis for testing.
-  - Search the HTML for "TODO(confirm)" to find facts waiting for confirmation.
+  - Background music: add your track as audio/ambient.mp3 (a royalty-free loop). The music button only appears once that file exists; it is off by default and nothing downloads until a visitor turns it on.
+  - The pause button in the nav stops all ambient motion (birds, leaves, tree sway, fireflies, clouds, diagram dots) and is remembered per browser.
+  - To see the book cover again: sessionStorage.removeItem("jma-cover") in the console, or open a new tab.
+  - Page turns use cross-document view transitions (Chrome/Edge 126+, Safari 18.2+); other browsers just load the page.
+  - Link straight to a main project: projects.html#soc-lab, #grfics, #aws. Other projects open their dialog: #p-ad, #p-cti, #p-iso, #p-risk, #p-pa, #p-hosp, #p-az
+  - View on GitHub buttons stay hidden while href is #: paste the repo URL and remove the hidden attribute.
+  - Search the HTML for "TODO" to find facts waiting for confirmation and the missing GitHub links.
+  - The nav and footer are identical on the three pages: change all three if you edit them.

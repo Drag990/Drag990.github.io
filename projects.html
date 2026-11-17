@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects</title>
+<meta name="description" content="Cybersecurity projects by Jihad Mohamed Alahiane: SOC lab, ICS/OT blue team lab, secure AWS hosting, GRC and network security.">
+<meta name="theme-color" content="#F6EFE0">
+<meta property="og:title" content="Jihad Mohamed Alahiane | Cybersecurity portfolio">
+<meta property="og:description" content="Cybersecurity engineering student at ENSA Kénitra, focused on SOC and blue team work.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://drag990.github.io/images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Painted watchtower with glowing monitors overlooking a valley village at sunset">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<script>
+  // Before paint: tell the CSS that JS runs and whether motion is welcome.
+  (function () {
+    var d = document.documentElement;
+    d.classList.remove('no-js'); d.classList.add('js');
+    try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion'); } catch (e) {}
+    // Pause animations (WCAG 2.2.2): the visitor's saved choice applies before anything moves.
+    try { if (localStorage.getItem('jma-calm') === '1') d.classList.add('calm'); } catch (e) { /* not remembered */ }
+    // Home: the stacked-text intro plays once per session (after the cover, if the cover shows).
+    // intro-on hides the hero copy until js/site.js has played it; the timer is a safety net.
+    if ((location.pathname.split('/').pop() === '' || location.pathname.split('/').pop() === 'index.html') && d.classList.contains('motion')) {
+      try {
+        if (!sessionStorage.getItem('jma-intro')) {
+          sessionStorage.setItem('jma-intro', '1');
+          d.classList.add('intro-on');
+          setTimeout(function () { d.classList.remove('intro-on'); }, 5000);
+        }
+      } catch (e) { /* storage blocked: no intro */ }
+    }
+    // Home: decide now whether the book cover shows (once per session, never with reduced motion).
+    // cover-wait paints a plain cover-coloured screen until js/cover.js builds the real cover;
+    // if that script never runs, the safety timer below shows the page anyway.
+    var last = location.pathname.split('/').pop();
+    if ((last === '' || last === 'index.html') && d.classList.contains('motion')) {
+      try {
+        if (!sessionStorage.getItem('jma-cover')) {
+          sessionStorage.setItem('jma-cover', '1');
+          d.classList.add('cover-wait', 'cover-on');
+          setTimeout(function () { d.classList.remove('cover-wait', 'cover-on'); }, 2500);
+        }
+      } catch (e) { /* storage blocked: no cover */ }
+    }
+    // Page turns: forward in book order (Home, Projects, About) turns the page forward, back turns it back.
+    var ORDER = ['index', 'projects', 'about'];
+    var pos = function (u) {
+      var p = new URL(u, location.href).pathname.split('/').pop().replace(/\.html$/, '') || 'index';
+      return Math.max(0, ORDER.indexOf(p));
+    };
+    window.addEventListener('pagereveal', function (e) {
+      if (!e.viewTransition) return;
+      try {
+        var from = (window.navigation && navigation.activation && navigation.activation.from) ? navigation.activation.from.url : document.referrer;
+        if (from) { var dir = pos(location.href) < pos(from) ? 'backward' : 'forward'; d.setAttribute('data-turn', dir); e.viewTransition.types.add(dir); }
+      } catch (x) { /* no transition types: the default forward turn is used */ }
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..650&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous" defer></script>
+<script src="js/site.js" defer></script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<!-- Decorative background. The sky changes from morning to golden hour to dusk as the page scrolls
+     (three fixed layers crossfaded with opacity); clouds, hills and the sun move in depth (js/site.js). -->
+<div class="sky-time" aria-hidden="true">
+  <div class="st st-morning"></div>
+  <div class="st st-golden"></div>
+  <div class="st st-dusk"></div>
+</div>
+<div class="sky" aria-hidden="true">
+  <svg class="cloud c1" viewBox="0 0 220 80"><use href="#cloud"/></svg>
+  <svg class="cloud c2" viewBox="0 0 220 80"><use href="#cloud"/></svg>
+  <svg class="cloud c3" viewBox="0 0 220 80"><use href="#cloud"/></svg>
+  <svg class="cloud c4" viewBox="0 0 220 80"><use href="#cloud"/></svg>
+  <div class="rays"><i style="--a:16deg;--w:70px;--rd:0s"></i><i style="--a:27deg;--w:130px;--rd:-3.5s"></i><i style="--a:39deg;--w:48px;--rd:-6s"></i></div>
+</div>
+<!-- birds cross the whole window, behind the content -->
+<div class="birds" aria-hidden="true"></div>
+<div class="leaves" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="wash" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5"/>
+    </filter>
+    <symbol id="cloud" viewBox="0 0 220 80">
+      <path d="M28 66c-14 0-22-8-22-17 0-10 9-17 21-16 3-13 15-21 29-19 7-10 20-15 33-12 13 3 21 12 23 22 6-5 15-6 22-2 7 4 10 10 10 16 13-1 25 6 25 15 0 8-8 13-19 13Z"/>
+    </symbol>
+<symbol id="seal" viewBox="0 0 64 64"><path stroke="currentColor" d="M61.75 32.00L61.31 35.86L60.37 39.60L59.07 43.21L57.39 46.66L55.26 49.85L52.65 52.65L49.61 54.96L46.33 56.82L42.92 58.36L39.41 59.67L35.78 60.70L32.00 61.27L28.15 61.21L24.37 60.48L20.74 59.18L17.30 57.47L14.04 55.41L11.04 52.96L8.45 50.07L6.44 46.76L5.04 43.17L4.16 39.46L3.62 35.74L3.35 32.00L3.41 28.24L3.96 24.49L5.11 20.86L6.81 17.46L8.93 14.30L11.35 11.35L14.06 8.62L17.13 6.24L20.57 4.40L24.30 3.26L28.16 2.80L32.00 2.87L35.78 3.31L39.48 4.07L43.09 5.23L46.50 6.89L49.59 9.08L52.33 11.67L54.78 14.52L57.01 17.56L59.00 20.82L60.57 24.34L61.52 28.11Z" fill="none" stroke-width="2.2"/><path stroke="currentColor" d="M58.25 32.00L57.93 35.41L57.25 38.77L56.17 42.01L54.60 45.05L52.57 47.78L50.18 50.18L47.58 52.30L44.82 54.21L41.90 55.90L38.76 57.25L35.44 58.10L32.00 58.36L28.57 58.08L25.20 57.37L21.93 56.31L18.80 54.87L15.90 52.99L13.36 50.64L11.28 47.90L9.63 44.92L8.30 41.81L7.23 38.64L6.44 35.36L6.05 32.00L6.17 28.60L6.83 25.26L7.94 22.04L9.40 18.95L11.16 16.01L13.27 13.27L15.80 10.89L18.72 9.00L21.92 7.67L25.25 6.82L28.62 6.34L32.00 6.16L35.38 6.33L38.71 6.95L41.91 8.08L44.90 9.66L47.67 11.57L50.27 13.73L52.69 16.12L54.83 18.82L56.53 21.84L57.66 25.13L58.20 28.55Z" fill="none" stroke-width="0.9"/><path fill="currentColor" d="M27.41 38.67L27.41 38.67Q27.41 40.51 25.85 41.61Q24.29 42.71 21.65 42.71L21.65 42.71Q19.20 42.71 17.87 41.74Q16.53 40.77 16.53 39.20L16.53 39.20Q16.53 38.21 17.07 37.59Q17.61 36.98 18.57 36.98L18.57 36.98Q19.35 36.98 19.85 37.55Q20.36 38.12 20.36 39.13L20.36 39.13L20.36 40.25Q20.36 41.02 20.72 41.46Q21.08 41.90 21.90 41.90L21.90 41.90Q22.76 41.90 23.30 41.36Q23.84 40.82 23.84 39.81L23.84 39.81Q23.84 39.06 23.50 38.38Q23.16 37.69 22.70 36.92Q22.25 36.16 21.90 35.18Q21.56 34.20 21.56 32.87L21.56 32.87L21.56 23.12Q21.56 22.80 21.41 22.62Q21.27 22.43 20.96 22.39L20.96 22.39L19.79 22.20Q19.53 22.14 19.42 22.03Q19.31 21.92 19.31 21.73L19.31 21.73Q19.31 21.52 19.45 21.40Q19.59 21.29 19.88 21.29L19.88 21.29L27.51 21.29Q27.81 21.29 27.95 21.40Q28.10 21.52 28.10 21.71L28.10 21.71Q28.10 22.04 27.59 22.19L27.59 22.19L26.63 22.39Q26.31 22.46 26.15 22.62Q26.00 22.77 26.00 23.04L26.00 23.04L26.00 32.69Q26.00 33.73 26.21 34.50Q26.42 35.27 26.70 35.91Q26.99 36.56 27.20 37.21Q27.41 37.87 27.41 38.67ZM31.82 34.94L31.91 33.95L40.22 33.95L40.28 34.94L31.82 34.94ZM33.25 41.87L33.25 41.87Q33.25 42.05 33.11 42.17Q32.98 42.29 32.69 42.29L32.69 42.29L27.95 42.29Q27.67 42.29 27.53 42.17Q27.40 42.05 27.40 41.87L27.40 41.87Q27.40 41.72 27.49 41.62Q27.58 41.52 27.77 41.44L27.77 41.44L28.30 41.24Q28.76 41.05 29.11 40.61Q29.47 40.17 29.78 39.19L29.78 39.19L34.60 23.69Q34.79 23.06 34.66 22.74Q34.54 22.41 34.04 22.23L34.04 22.23Q33.74 22.10 33.61 21.99Q33.47 21.88 33.47 21.71L33.47 21.71Q33.47 21.50 33.61 21.39Q33.76 21.29 34.04 21.29L34.04 21.29L40.70 21.29Q40.99 21.29 41.13 21.39Q41.27 21.50 41.27 21.71L41.27 21.71Q41.27 21.88 41.14 22.00Q41.02 22.11 40.73 22.22L40.73 22.22Q40.34 22.31 40.27 22.50Q40.19 22.68 40.34 23.14L40.34 23.14L45.86 40.14Q46.04 40.70 46.30 40.98Q46.55 41.26 46.99 41.36L46.99 41.36Q47.27 41.46 47.37 41.58Q47.47 41.69 47.47 41.87L47.47 41.87Q47.47 42.05 47.32 42.17Q47.18 42.29 46.90 42.29L46.90 42.29L40.28 42.29Q40.00 42.29 39.85 42.17Q39.71 42.05 39.71 41.87L39.71 41.87Q39.71 41.70 39.82 41.61Q39.92 41.51 40.15 41.44L40.15 41.44L40.94 41.28Q41.32 41.16 41.35 40.93Q41.39 40.70 41.23 40.20L41.23 40.20L35.71 22.98L36.14 22.48L31.00 39.08Q30.80 39.70 30.88 40.12Q30.95 40.53 31.28 40.80Q31.61 41.08 32.18 41.28L32.18 41.28L32.83 41.44Q33.04 41.51 33.14 41.61Q33.25 41.70 33.25 41.87Z"/></symbol>
+
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9.1 6.2c.2 3.9.1 7.8-.1 11.6M15 6c-.1 4-.1 8 .1 12"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.4 6.1c3.4 1.7 6.6 3.7 9.5 5.9-2.9 2.1-6 4-9.4 5.8-.3-3.9-.3-7.8-.1-11.7Z"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4.1 9.6c1.3-.1 2.4-.1 3.6 0L12 5.9c.3 4.1.3 8.1 0 12.2l-4.3-3.6c-1.2.1-2.4.1-3.6 0-.2-1.7-.2-3.3 0-4.9Z"/><path d="M15.4 9.1c1.2 1.9 1.2 4 0 5.8M18.1 6.7c2.4 3.4 2.4 7.2-.1 10.6"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4.1 9.6c1.3-.1 2.4-.1 3.6 0L12 5.9c.3 4.1.3 8.1 0 12.2l-4.3-3.6c-1.2.1-2.4.1-3.6 0-.2-1.7-.2-3.3 0-4.9Z"/><path d="M15.7 9.6c1.6 1.5 3.1 3.1 4.6 4.8M20.3 9.5c-1.5 1.6-2.9 3.3-4.4 4.9"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3.8 6.6c5.5-.4 11-.4 16.5 0 .3 3.6.3 7.2 0 10.8-5.5.4-11 .4-16.5 0-.3-3.6-.3-7.2 0-10.8Z"/><path d="M4.4 7.4c2.6 2.2 5 3.9 7.6 5.4 2.6-1.5 5-3.2 7.6-5.4"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M4.3 4.5c5.1-.3 10.2-.3 15.3 0 .3 5 .3 10 0 15-5.1.3-10.2.3-15.3 0-.3-5-.3-10 0-15Z"/><path d="M8.2 10.6c.1 2 .1 4.1 0 6.1M8.2 7.6v.1M11.9 16.7c.1-2 .1-4 0-6M11.9 13.2c.2-1.8 1.4-2.7 2.7-2.6 1.3.1 2 1 2 2.8.1 1.1.1 2.2 0 3.3"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19.2c-3.6 1-3.8-1.6-5.4-2.1M15 21v-3.4c0-1 .1-1.5-.5-2.1 2.7-.3 5.4-1.3 5.4-5.9 0-1.2-.4-2.3-1.2-3.2.1-1 .1-2.1-.2-3.1 0 0-1.1-.3-3.4 1.3a11.6 11.6 0 0 0-6.1 0C7.6 3 6.6 3.3 6.6 3.3c-.4 1-.4 2.1-.2 3.1-.8.9-1.2 2-1.2 3.2 0 4.6 2.7 5.6 5.4 5.9-.6.6-.6 1.2-.5 2.1V21"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.4 6.2c3.8 3.9 7.4 7.7 11.2 11.6M17.7 6.3c-3.9 3.8-7.6 7.6-11.3 11.4"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4.5 7.2c5-.3 10-.2 15 .1M4.4 12c5 .2 10.1.1 15.1-.1M4.6 16.9c5-.2 10-.2 15 .1"/></symbol>
+    <symbol id="i-sprig" viewBox="0 0 24 24"><path d="M12.2 20.4c.2-5.3 2.3-10.4 6.6-14.4-5.6.4-9.7 4.2-10.1 9.4M12.2 20.4c-.7-3.5-2.9-6.4-6.4-7.7"/></symbol>
+    <symbol id="i-enlarge" viewBox="0 0 24 24"><path d="M4.6 9.4c-.1-1.6-.1-3.2 0-4.8 1.6-.1 3.2-.1 4.8 0M19.4 9.4c.1-1.6.1-3.2 0-4.8-1.6-.1-3.2-.1-4.8 0M4.6 14.6c-.1 1.6-.1 3.2 0 4.8 1.6.1 3.2.1 4.8 0M19.4 14.6c.1 1.6.1 3.2 0 4.8-1.6.1-3.2.1-4.8 0"/></symbol>
+    <symbol id="leaf" viewBox="0 0 24 24">
+      <path d="M4 20C4 10 10 4 21 3c0 11-6 17-16 17Z"/>
+      <path class="vein" d="M5 19 16 8" fill="none"/>
+    </symbol>
+    <!-- arrowheads for the architecture diagrams -->
+    <marker id="ar-attack" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#A6512A"/></marker>
+    <marker id="ar-clean" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#3E3A33"/></marker>
+    <marker id="ar-log" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#2F5F7A"/></marker>
+    <marker id="ar-plan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#D07A45"/></marker>
+    <marker id="ar-deny" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#A6512A"/></marker>
+    <marker id="ar-thin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#6B6459"/></marker>
+  </defs>
+</svg>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" aria-hidden="true" focusable="false"><use href="#seal"/></svg>
+      <span>Jihad Alahiane</span>
+    </a>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav" hidden>
+      <svg class="ic ic-menu" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg><svg class="ic ic-x" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>
+      <span class="menu-label">Menu</span>
+    </button>
+    <div class="nav-tools">
+      <button type="button" class="tool-btn calm-btn" aria-pressed="false" aria-label="Pause animations" title="Pause animations" hidden>
+        <svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg>
+      </button>
+      <button type="button" class="tool-btn music-btn" aria-pressed="false" aria-label="Background music" title="Background music" hidden>
+        <svg class="ic ic-on" aria-hidden="true" focusable="false"><use href="#i-sound"/></svg><svg class="ic ic-off" aria-hidden="true" focusable="false"><use href="#i-mute"/></svg>
+      </button>
+    </div>
+    <nav id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" aria-current="page">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="page-head" aria-labelledby="page-h">
+  <div class="container">
+    <h1 id="page-h">Projects</h1>
+    <p class="lead">Ten projects across SOC, GRC, network, ICS/OT and cloud security. The first three include a map of how the lab fits together.</p>
+  </div>
+
+  <div class="hills hills-page" aria-hidden="true">
+    <div class="hl hl-far"><svg class="hl-shape" viewBox="0 0 1440 220" preserveAspectRatio="none" focusable="false"><path filter="url(#wash)" d="M-20 150C120 92 260 84 420 112s300 40 460 4 330-70 580-18V240H-20Z"/></svg><svg class="tree" viewBox="0 0 30 90" style="left:15%;bottom:54%;--ts:0.4;--sd:7.9s;--sdl:-2.7s;--tk:0.6" focusable="false"><g class="sway">
+    <path class="tk" d="M13.6 90c.4-6 .4-10 .2-14h2.4c-.2 4-.2 8 .2 14z"/>
+    <path class="c1" d="M15 3c8 14 11 33 10 51-1 14-5 21-10 23-5-2-9-9-10-23C4 36 7 17 15 3z"/>
+    <path class="c2" d="M15 10c5 12 7 28 6 43-1 10-3 16-6 18 4-9 4-22 2-36-1-10-2-18-2-25z"/>
+    <path class="c3" d="M13 14c-3 10-4 22-3 32 1-10 2-20 5-30z"/></g></svg></div>
+    <div class="hl hl-mid"><svg class="hl-shape" viewBox="0 0 1440 220" preserveAspectRatio="none" focusable="false"><path filter="url(#wash)" d="M-20 178c170-50 330-58 520-28s320 34 520 6 290-30 440-6V240H-20Z"/></svg><svg class="tree" viewBox="0 0 70 90" style="left:86%;bottom:37%;--ts:0.42;--sd:6.9s;--sdl:-4.8s;--tk:0.8" focusable="false"><g class="sway">
+    <path class="tk" d="M33 90c.6-12 .5-22 0-30h4.6c-.6 8-.6 18 .2 30z"/><path class="tk" d="M35 66c-5-4-9-8-12-14l2-1c3 5 7 9 11 12z"/>
+    <ellipse class="c1" cx="24" cy="44" rx="17" ry="15"/><ellipse class="c1" cx="44" cy="36" rx="20" ry="18"/>
+    <ellipse class="c2" cx="50" cy="46" rx="13" ry="10"/><ellipse class="c2" cx="18" cy="36" rx="10" ry="8"/>
+    <ellipse class="c3" cx="40" cy="25" rx="9" ry="7"/><ellipse class="c3" cx="21" cy="33" rx="6" ry="5"/></g></svg><svg class="tree flower" viewBox="0 0 40 50" style="left:30%;bottom:26%;--ts:0.34;--sd:6s;--sdl:-1s;--tk:1.6" focusable="false"><g class="sway">
+    <path class="fl-stem" d="M9 50c0-12-1-22-1-32M19 50c0-10 1-19 2-26M30 50c0-14 1-26 2-36"/>
+    <path class="fl-leaf" d="M11 50c-1-6-4-9-8-10 2 3 5 6 6 10zM21 50c2-6 5-9 9-9-3 2-6 5-7 9z"/>
+    <g class="fl-lav"><ellipse cx="8" cy="15" rx="1.8" ry="2.6"/><ellipse cx="8" cy="19.5" rx="2" ry="2.6"/><ellipse cx="8" cy="24" rx="2.1" ry="2.6"/>
+    <ellipse cx="32" cy="10" rx="1.8" ry="2.6"/><ellipse cx="32" cy="14.5" rx="2" ry="2.6"/><ellipse cx="31.8" cy="19" rx="2.1" ry="2.6"/></g>
+    <circle class="fl-cup" cx="21" cy="22" r="3.6"/><circle class="fl-eye" cx="21" cy="22" r="1.3"/></g></svg><svg class="tree flower" viewBox="0 0 40 50" style="left:62%;bottom:24%;--ts:0.32;--sd:5.5s;--sdl:-2s;--tk:1.6" focusable="false"><g class="sway">
+    <path class="fl-stem" d="M10 50c0-10-1-20-2-28M22 50c0-12 0-22 2-32M31 50c0-8-1-14-3-20"/>
+    <path class="fl-leaf" d="M12 50c-2-7-6-10-10-10 3 3 6 6 8 10zM24 50c2-8 6-12 11-12-4 3-7 7-9 12z"/>
+    <path class="fl-poppy" d="M3 21c0-4 3-6 5-6s5 2 5 6c0 3-2 5-5 5s-5-2-5-5z"/><circle class="fl-dark" cx="8" cy="21" r="1.4"/>
+    <path class="fl-poppy" d="M18 18c0-5 3-7 6-7s6 2 6 7c0 3-3 6-6 6s-6-3-6-6z"/><circle class="fl-dark" cx="24" cy="18" r="1.7"/>
+    <path class="fl-poppy" d="M26 27c0-3 2-5 4-5s3 2 3 5c0 2-1 3-3 3s-4-1-4-3z"/></g></svg><svg class="tree flower" viewBox="0 0 40 50" style="left:74%;bottom:25%;--ts:0.28;--sd:6.3s;--sdl:-3s;--tk:1.6" focusable="false"><g class="sway">
+    <path class="fl-stem" d="M9 50c0-12-1-22-1-32M19 50c0-10 1-19 2-26M30 50c0-14 1-26 2-36"/>
+    <path class="fl-leaf" d="M11 50c-1-6-4-9-8-10 2 3 5 6 6 10zM21 50c2-6 5-9 9-9-3 2-6 5-7 9z"/>
+    <g class="fl-lav"><ellipse cx="8" cy="15" rx="1.8" ry="2.6"/><ellipse cx="8" cy="19.5" rx="2" ry="2.6"/><ellipse cx="8" cy="24" rx="2.1" ry="2.6"/>
+    <ellipse cx="32" cy="10" rx="1.8" ry="2.6"/><ellipse cx="32" cy="14.5" rx="2" ry="2.6"/><ellipse cx="31.8" cy="19" rx="2.1" ry="2.6"/></g>
+    <circle class="fl-cup" cx="21" cy="22" r="3.6"/><circle class="fl-eye" cx="21" cy="22" r="1.3"/></g></svg></div>
+    <div class="hl hl-near"><svg class="hl-shape" viewBox="0 0 1440 220" preserveAspectRatio="none" focusable="false"><path filter="url(#wash)" d="M-20 206c210-30 420-34 640-14s420 18 600 2 180-8 240-4V760H-20Z"/></svg></div>
+  </div>
+</section>
+
+<section class="section work" aria-labelledby="work-h">
+  <div class="container">
+    <div class="sec-head work-head">
+      <h2 id="work-h" class="visually-hidden">All projects</h2>
+      <div class="filters" role="group" aria-label="Filter projects by domain">
+        <button type="button" class="filter" data-filter="all" aria-pressed="true">All <span class="n">10</span></button>
+        <button type="button" class="filter" data-filter="soc" aria-pressed="false" style="--dc:var(--d-soc)">SOC <span class="n">3</span></button>
+        <button type="button" class="filter" data-filter="grc" aria-pressed="false" style="--dc:var(--d-grc)">GRC <span class="n">2</span></button>
+        <button type="button" class="filter" data-filter="net" aria-pressed="false" style="--dc:var(--d-net)">Network <span class="n">2</span></button>
+        <button type="button" class="filter" data-filter="ot" aria-pressed="false" style="--dc:var(--d-ot)">ICS/OT <span class="n">1</span></button>
+        <button type="button" class="filter" data-filter="cloud" aria-pressed="false" style="--dc:var(--d-cloud)">Cloud <span class="n">2</span></button>
+      </div>
+    </div>
+    <p class="visually-hidden" id="filterStatus" aria-live="polite"></p>
+    <div class="grid grid-3" id="projectGrid">
+
+      <article class="card" data-domain="soc" style="--dc:var(--d-soc)" aria-labelledby="c-soc-h" data-reveal>
+        <figure class="card-art"><img src="images/project-soc.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of a wooden watchtower with glowing monitors overlooking a walled valley village at sunset, representing the SOC lab"></figure>
+        <div class="card-body">
+          <h3 id="c-soc-h">Intelligent SOC: WAF, SIEM &amp; Threat Intelligence</h3>
+          <p class="out">WAF and IDS events become one Splunk alert, triaged by AI.</p>
+          <ul class="tags"><li class="tag">Splunk</li><li class="tag">Suricata</li><li class="tag">ModSecurity</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#soc" aria-haspopup="dialog">Open project<span class="visually-hidden">: Intelligent SOC</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-domain="ot" style="--dc:var(--d-ot)" aria-labelledby="c-grfics-h" data-reveal>
+        <figure class="card-art"><img src="images/project-grfics.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of a small chemical plant with storage tanks, pipes and a chimney beside a stone water mill, representing the industrial control lab"></figure>
+        <div class="card-body">
+          <h3 id="c-grfics-h">Industrial Cybersecurity Lab: GRFICSv3 Blue Team</h3>
+          <p class="out">Defending a simulated chemical plant with segmentation and Wazuh.</p>
+          <ul class="tags"><li class="tag">Modbus/TCP</li><li class="tag">Wazuh</li><li class="tag">NIST CSF 2.0</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#grfics" aria-haspopup="dialog">Open project<span class="visually-hidden">: Industrial Cybersecurity Lab</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-domain="cloud" style="--dc:var(--d-cloud)" aria-labelledby="c-aws-h" data-reveal>
+        <figure class="card-art"><img src="images/project-aws.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of a stone vault marked with a cloud and a padlock, standing on a cliff above the clouds and reached by a bridge, representing secure hosting on AWS"></figure>
+        <div class="card-body">
+          <h3 id="c-aws-h">Secure Static Hosting on AWS (S3 + CloudFront + OAC)</h3>
+          <p class="out">A static site served only through CloudFront, its origin kept private.</p>
+          <ul class="tags"><li class="tag">CloudFront</li><li class="tag">Origin Access Control</li><li class="tag">IAM</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#aws" aria-haspopup="dialog">Open project<span class="visually-hidden">: Secure Static Hosting on AWS</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-domain="soc" style="--dc:var(--d-soc)" aria-labelledby="c-ad-h" data-reveal>
+        <figure class="card-art"><img src="images/project-ad-lab.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of a stone castle with a golden key on its gate and a guard with a lantern on the walls, representing the Active Directory lab"></figure>
+        <div class="card-body">
+          <h3 id="c-ad-h">Active Directory Attack &amp; Threat Hunting Lab</h3>
+          <p class="out">Golden Ticket attacks on a lab domain, then hunted in Splunk.</p>
+          <ul class="tags"><li class="tag mitre">T1558.001 Golden Ticket</li><li class="tag">Kerberos</li><li class="tag">Splunk</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#ad" aria-haspopup="dialog">Open project<span class="visually-hidden">: Active Directory Attack and Threat Hunting Lab</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-domain="soc" style="--dc:var(--d-soc)" aria-labelledby="c-cti-h" data-reveal>
+        <figure class="card-art"><img src="images/project-cti.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of a young man sorting sealed messages delivered by pigeons, in front of a world map, representing security automation"></figure>
+        <div class="card-body">
+          <h3 id="c-cti-h">Cyber Threat Intelligence &amp; Security Automation</h3>
+          <p class="out">n8n workflows that enrich alerts and produce reports.</p>
+          <ul class="tags"><li class="tag">n8n</li><li class="tag">Splunk SOAR</li><li class="tag">TheHive</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#cti" aria-haspopup="dialog">Open project<span class="visually-hidden">: Cyber Threat Intelligence and Security Automation</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-domain="grc" style="--dc:var(--d-grc)" aria-labelledby="c-iso-h" data-reveal>
+        <figure class="card-art"><img src="images/project-iso27001.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of a quiet study with shelves of binders and archive boxes, an open notebook and a globe, representing the ISO/IEC 27001 work"></figure>
+        <div class="card-body">
+          <h3 id="c-iso-h">ISO/IEC 27001:2022 ISMS Implementation &amp; Gap Analysis</h3>
+          <p class="out">Gap analysis, Statement of Applicability and roadmap for an ISMS.</p>
+          <ul class="tags"><li class="tag">ISO/IEC 27001:2022</li><li class="tag">Annex A</li><li class="tag">Clause 6.1.3 SoA</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#iso" aria-haspopup="dialog">Open project<span class="visually-hidden">: ISO/IEC 27001</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-domain="grc" style="--dc:var(--d-grc)" aria-labelledby="c-risk-h" data-reveal>
+        <figure class="card-art"><img src="images/project-risk.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of an observer with a telescope and a weather station on a hilltop, watching a storm approach a village, representing IT risk assessment"></figure>
+        <div class="card-body">
+          <h3 id="c-risk-h">IT Risk Assessment &amp; Management</h3>
+          <p class="out">A full ISO 27005 risk cycle, from assets to risk indicators.</p>
+          <ul class="tags"><li class="tag">ISO 27005</li><li class="tag">ISO 31000</li><li class="tag">KRI</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#risk" aria-haspopup="dialog">Open project<span class="visually-hidden">: IT Risk Assessment and Management</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-domain="net" style="--dc:var(--d-net)" aria-labelledby="c-paloalto-h" data-reveal>
+        <figure class="card-art"><img src="images/project-paloalto.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of a covered wooden bridge between two walled villages, with a guard post at each end, representing the VPN between two firewalls"></figure>
+        <div class="card-body">
+          <h3 id="c-paloalto-h">Multi-Site Palo Alto NGFW &amp; Route-Based IPsec VPN (EVE-NG)</h3>
+          <p class="out">Two sites joined by a route-based IPsec tunnel between firewalls.</p>
+          <ul class="tags"><li class="tag">Palo Alto NGFW</li><li class="tag">IPsec/IKEv2</li><li class="tag">EVE-NG</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#paloalto" aria-haspopup="dialog">Open project<span class="visually-hidden">: Multi-Site Palo Alto NGFW and Route-Based IPsec VPN</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-domain="net" style="--dc:var(--d-net)" aria-labelledby="c-hospital-h" data-reveal>
+        <figure class="card-art"><img src="images/project-hospital.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of a hospital with a blue cross, an ambulance and lantern-lit garden paths, representing the hospital city network"></figure>
+        <div class="card-body">
+          <h3 id="c-hospital-h">Hospital City Network Design (Cisco Packet Tracer)</h3>
+          <p class="out">One redundant, secure network for a four-hospital medical city.</p>
+          <ul class="tags"><li class="tag">OSPF</li><li class="tag">IPsec VPN</li><li class="tag">Cisco ASA</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#hospital" aria-haspopup="dialog">Open project<span class="visually-hidden">: Hospital City Network Design</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-domain="cloud" style="--dc:var(--d-cloud)" aria-labelledby="c-azure-h" data-reveal>
+        <figure class="card-art"><img src="images/project-azure-cspm.webp" width="1200" height="751" loading="lazy" alt="Painted illustration of a lighthouse on a sea cliff sweeping its beam across floating islands, representing cloud security posture monitoring"></figure>
+        <div class="card-body">
+          <h3 id="c-azure-h">Azure Cloud Security Posture Management (CSPM)</h3>
+          <p class="out">A read-only platform that inspects Azure for misconfigurations.</p>
+          <ul class="tags"><li class="tag">Azure</li><li class="tag">CSPM</li><li class="tag">PowerShell</li></ul>
+          <div class="card-actions">
+            <a class="btn btn-secondary btn-sm open" href="#azure" aria-haspopup="dialog">Open project<span class="visually-hidden">: Azure Cloud Security Posture Management</span></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section pd-store" aria-labelledby="pd-store-h">
+  <div class="container">
+    <h2 id="pd-store-h">Project details</h2>
+
+      <article class="pd" id="soc" aria-labelledby="soc-h" style="--dc:var(--d-soc)">
+        <header class="pd-head">
+          <h2 id="soc-h">Intelligent SOC: WAF, SIEM &amp; Threat Intelligence</h2>
+          <!-- TODO(confirm): PFA dates "2025–2026" -->
+          <p class="pd-meta">Academic project (PFA) carried out at DXC Technology, Rabat, 2025 to 2026. Active.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">Three segmented networks behind pfSense: Kali attacks OWASP Juice Shop through an Nginx WAF with ModSecurity v3 and the OWASP CRS, while Suricata 8 and Zeek watch the same traffic. Universal Forwarders ship the logs to Splunk, which correlates WAF and IDS events into one incident alert, mapped to MITRE ATT&amp;CK on a Dashboard Studio dashboard. When an alert fires, n8n sends it to an AI agent (Claude API) and adds its short description and suggested action to the dashboard; it is advisory only, the analyst decides. n8n also proposes new rows for the ATT&amp;CK mapping, which I approve one by one, and regenerates the Navigator layer.</p>
+          <figure class="dg" id="soc-dg">
+            <div class="dg-frame">
+          <svg class="dg-wide" viewBox="0 40 1000 726" role="group" aria-labelledby="socw-t socw-d">
+            <title id="socw-t">Intelligent SOC lab architecture</title>
+            <desc id="socw-d">Kali Linux on NET2 (192.168.40.0/24) attacks through the pfSense firewall into the WAF VM, where Nginx with ModSecurity v3 and the OWASP Core Rule Set filters web traffic and Suricata 8 with ET Open rules and Zeek watch it. Clean requests reach OWASP Juice Shop on NET1 (192.168.20.0/24). Splunk Universal Forwarders ship the WAF, IDS and Zeek logs to Splunk Enterprise on NET3 (192.168.30.0/24), which raises correlated WAF and IDS alerts mapped to MITRE ATT&CK on a Dashboard Studio dashboard read by the SOC analyst. Each alert also goes to an n8n workflow, which sends it to an AI agent (Claude API) and adds its short description and suggested action to the dashboard; the AI is advisory only and the analyst decides. n8n also regenerates the ATT&CK Navigator layer from mapping rows that are approved one by one.</desc>
+            <g class="paper-ink">
+      <g class="z z-attack" style="--i:0"><rect class="wash" x="6" y="62" width="218" height="186" rx="16"/>
+        <g class="ztag"><rect x="16" y="72" width="212.6" height="22" rx="4"/><text x="24" y="87.5">NET2 attacker, 192.168.40.0/24</text></g></g>
+      <g class="z z-cool" style="--i:0"><rect class="wash" x="784" y="52" width="206" height="170" rx="16"/>
+        <g class="ztag"><rect x="794" y="62" width="203.2" height="22" rx="4"/><text x="802" y="77.5">NET1 web app, 192.168.20.0/24</text></g></g>
+      <g class="z z-violet" style="--i:0"><rect class="wash" x="400" y="392" width="400" height="214" rx="16"/>
+        <g class="ztag"><rect x="410" y="402" width="200.6" height="22" rx="4"/><text x="418" y="417.5">NET3 SIEM, 192.168.30.0/24</text></g></g>
+      <g class="n n-attack" style="--i:1" tabindex="0" role="img" aria-label="Kali Linux. Kali Linux on NET2 runs the simulated attacks against the web app." data-tip="Kali Linux on NET2 runs the simulated attacks against the web app.">
+        <rect x="16" y="112" width="192" height="104" rx="10"/>
+        <use href="#dgi-hood" x="26" y="142" width="44" height="44"/>
+        <text class="nt" x="80" y="139">Kali Linux</text><text class="ns" x="80" y="159">attacker,</text><text class="ns" x="80" y="176">simulated attacks</text></g>
+      <path class="e e-attack e-draw" style="--i:2" pathLength="1" d="M208 164 H260" marker-end="url(#ar-attack)"/>
+      <g class="et et-attack" style="--i:2"><rect x="206.5" y="129.0" width="57.0" height="22" rx="4"/><text x="235.0" y="145.0" text-anchor="middle">attacks</text></g>
+      <g class="n n-fw" style="--i:2" tabindex="0" role="img" aria-label="pfSense. pfSense keeps the three subnets apart and passes only allowed traffic." data-tip="pfSense keeps the three subnets apart and passes only allowed traffic.">
+        <rect x="262" y="110" width="172" height="108" rx="10"/>
+        <use href="#dgi-gate" x="272" y="142" width="44" height="44"/>
+        <text class="nt" x="326" y="137">pfSense</text><text class="ns" x="326" y="157">firewall,</text><text class="ns" x="326" y="174">3 subnets apart</text></g>
+      <path class="e e-attack e-draw" style="--i:3" pathLength="1" d="M434 164 H492" marker-end="url(#ar-attack)"/>
+      <g class="et et-attack" style="--i:3"><rect x="435.5" y="129.0" width="57.0" height="22" rx="4"/><text x="464.0" y="145.0" text-anchor="middle">allowed</text></g>
+      <g class="n n-waf" style="--i:3" tabindex="0" role="img" aria-label="WAF VM. Nginx with ModSecurity v3 and the OWASP Core Rule Set blocks known web attacks; Suricata 8 (ET Open rules) and Zeek watch the same traffic." data-tip="Nginx with ModSecurity v3 and the OWASP Core Rule Set blocks known web attacks; Suricata 8 (ET Open rules) and Zeek watch the same traffic.">
+        <rect x="494" y="86" width="252" height="156" rx="10"/>
+        <use href="#dgi-castle" x="504" y="142" width="44" height="44"/>
+        <text class="nt" x="558" y="113">WAF VM</text><text class="ns" x="558" y="133">Nginx + ModSecurity v3</text><text class="ns" x="558" y="150">OWASP Core Rule Set</text><text class="ns" x="558" y="167">Suricata 8, ET Open rules</text><text class="ns" x="558" y="184">Zeek</text></g>
+      <path class="e e-clean e-draw" style="--i:4" pathLength="1" d="M746 140 H802" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:4"><rect x="740.4" y="93.5" width="63.2" height="37" rx="4"/><text x="772.0" y="109.5" text-anchor="middle">clean</text><text x="772.0" y="124.5" text-anchor="middle">requests</text></g>
+      <g class="n n-app" style="--i:4" tabindex="0" role="img" aria-label="Juice Shop. OWASP Juice Shop, the deliberately vulnerable web app on NET1." data-tip="OWASP Juice Shop, the deliberately vulnerable web app on NET1.">
+        <rect x="804" y="98" width="176" height="104" rx="10"/>
+        <use href="#dgi-house" x="814" y="128" width="44" height="44"/>
+        <text class="nt" x="868" y="125">Juice Shop</text><text class="ns" x="868" y="145">OWASP, a</text><text class="ns" x="868" y="162">vulnerable app</text></g>
+      <path class="e e-log e-draw" style="--i:5" pathLength="1" d="M620 242 V438" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:5"><rect x="608.9" y="301.5" width="162.2" height="37" rx="4"/><text x="690.0" y="317.5" text-anchor="middle">WAF, IDS and Zeek logs</text><text x="690.0" y="332.5" text-anchor="middle">via Universal Forwarders</text></g>
+      <g class="n n-siem" style="--i:5" tabindex="0" role="img" aria-label="Splunk Enterprise. Splunk Enterprise on NET3 (index=security) correlates WAF and IDS events into one incident alert, mapped to MITRE ATT&CK, on a Dashboard Studio dashboard." data-tip="Splunk Enterprise on NET3 (index=security) correlates WAF and IDS events into one incident alert, mapped to MITRE ATT&CK, on a Dashboard Studio dashboard.">
+        <rect x="416" y="440" width="368" height="150" rx="10"/>
+        <use href="#dgi-tower" x="426" y="493" width="44" height="44"/>
+        <text class="nt" x="480" y="467">Splunk Enterprise</text><text class="ns" x="480" y="487">index=security</text><text class="ns" x="480" y="504">correlated WAF + IDS alerts</text><text class="ns" x="480" y="521">MITRE ATT&amp;CK mapping</text><text class="ns" x="480" y="538">Dashboard Studio dashboard</text></g>
+      <path class="e e-log e-draw" style="--i:6" pathLength="1" d="M784 500 H830" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:6"><rect x="781.6" y="463.0" width="50.9" height="22" rx="4"/><text x="807.0" y="479.0" text-anchor="middle">alerts</text></g>
+      <g class="n n-person" style="--i:6" tabindex="0" role="img" aria-label="SOC analyst. The analyst reads the dashboard and makes the call; the AI notes are advice only." data-tip="The analyst reads the dashboard and makes the call; the AI notes are advice only.">
+        <rect x="832" y="446" width="158" height="112" rx="10"/>
+        <use href="#dgi-person" x="842" y="488" width="28" height="28"/>
+        <text class="nt" x="880" y="473">SOC analyst</text><text class="ns" x="880" y="493">reads the</text><text class="ns" x="880" y="510">dashboard,</text><text class="ns" x="880" y="527">decides</text></g>
+      <g class="n n-auto" style="--i:7" tabindex="0" role="img" aria-label="n8n workflow. n8n sends each alert to the AI agent and adds the reply to the dashboard; it also proposes new ATT&CK mapping rows, each approved before it is applied." data-tip="n8n sends each alert to the AI agent and adds the reply to the dashboard; it also proposes new ATT&CK mapping rows, each approved before it is applied.">
+        <rect x="20" y="420" width="330" height="152" rx="10"/>
+        <use href="#dgi-mill" x="30" y="474" width="44" height="44"/>
+        <text class="nt" x="84" y="447">n8n workflow</text><text class="ns" x="84" y="467">sends each alert to the AI agent</text><text class="ns" x="84" y="484">adds its reply to the dashboard</text><text class="ns" x="84" y="501">proposes ATT&amp;CK mapping rows</text><text class="ns" x="84" y="518">I approve each one</text></g>
+      <path class="e e-log e-draw" style="--i:7" pathLength="1" d="M414 466 H352" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:7"><rect x="360.6" y="437.0" width="44.7" height="22" rx="4"/><text x="383.0" y="453.0" text-anchor="middle">alert</text></g>
+      <path class="e e-log e-draw" style="--i:7" pathLength="1" d="M352 540 H414" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:7"><rect x="352.1" y="551.5" width="61.8" height="37" rx="4"/><text x="383.0" y="567.5" text-anchor="middle">summary</text><text x="383.0" y="582.5" text-anchor="middle">+ action</text></g>
+      <g class="n n-auto" style="--i:8" tabindex="0" role="img" aria-label="AI agent (Claude API). The AI agent (Claude API) returns a short description of the alert and a suggested action." data-tip="The AI agent (Claude API) returns a short description of the alert and a suggested action.">
+        <rect x="20" y="640" width="330" height="104" rx="10"/>
+        <use href="#dgi-scroll" x="30" y="670" width="44" height="44"/>
+        <text class="nt" x="84" y="667">AI agent (Claude API)</text><text class="ns" x="84" y="687">short description +</text><text class="ns" x="84" y="704">suggested action, advisory</text></g>
+      <path class="e e-log e-draw" style="--i:8" pathLength="1" d="M120 574 V638" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:8"><rect x="97.6" y="595.0" width="44.7" height="22" rx="4"/><text x="120.0" y="611.0" text-anchor="middle">alert</text></g>
+      <path class="e e-log e-draw" style="--i:8" pathLength="1" d="M250 638 V574" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:8"><rect x="218.4" y="595.0" width="63.2" height="22" rx="4"/><text x="250.0" y="611.0" text-anchor="middle">response</text></g>
+      <g class="n n-auto" style="--i:9" tabindex="0" role="img" aria-label="ATT&CK Navigator. n8n regenerates the ATT&CK Navigator layer from the approved mapping rows." data-tip="n8n regenerates the ATT&CK Navigator layer from the approved mapping rows.">
+        <rect x="520" y="650" width="300" height="100" rx="10"/>
+        <use href="#dgi-map" x="530" y="678" width="44" height="44"/>
+        <text class="nt" x="584" y="677">ATT&amp;CK Navigator</text><text class="ns" x="584" y="697">layer regenerated by n8n</text><text class="ns" x="584" y="714">from approved mapping rows</text></g>
+      <path class="e e-log e-draw" style="--i:9" pathLength="1" d="M335 574 V612 H670 V648" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:9"><rect x="459.2" y="601.0" width="81.6" height="22" rx="4"/><text x="500.0" y="617.0" text-anchor="middle">regenerates</text></g></g>
+          </svg>
+          <svg class="dg-tall" viewBox="0 0 380 1590" role="group" aria-labelledby="soct-t soct-d">
+            <title id="soct-t">Intelligent SOC lab architecture</title>
+            <desc id="soct-d">Kali Linux on NET2 (192.168.40.0/24) attacks through the pfSense firewall into the WAF VM, where Nginx with ModSecurity v3 and the OWASP Core Rule Set filters web traffic and Suricata 8 with ET Open rules and Zeek watch it. Clean requests reach OWASP Juice Shop on NET1 (192.168.20.0/24). Splunk Universal Forwarders ship the WAF, IDS and Zeek logs to Splunk Enterprise on NET3 (192.168.30.0/24), which raises correlated WAF and IDS alerts mapped to MITRE ATT&CK on a Dashboard Studio dashboard read by the SOC analyst. Each alert also goes to an n8n workflow, which sends it to an AI agent (Claude API) and adds its short description and suggested action to the dashboard; the AI is advisory only and the analyst decides. n8n also regenerates the ATT&CK Navigator layer from mapping rows that are approved one by one.</desc>
+            <g class="paper-ink">
+      <g class="z z-attack" style="--i:0"><rect class="wash" x="10" y="10" width="360" height="150" rx="16"/>
+        <g class="ztag"><rect x="20" y="20" width="212.6" height="22" rx="4"/><text x="28" y="35.5">NET2 attacker, 192.168.40.0/24</text></g></g>
+      <g class="n n-attack" style="--i:1" tabindex="0" role="img" aria-label="Kali Linux. Kali Linux on NET2 runs the simulated attacks against the web app." data-tip="Kali Linux on NET2 runs the simulated attacks against the web app.">
+        <rect x="24" y="44" width="332" height="100" rx="10"/>
+        <use href="#dgi-hood" x="34" y="72" width="44" height="44"/>
+        <text class="nt" x="88" y="71">Kali Linux</text><text class="ns" x="88" y="91">attacker,</text><text class="ns" x="88" y="108">simulated attacks</text></g>
+      <path class="e e-attack e-draw" style="--i:2" pathLength="1" d="M190 160 V206" marker-end="url(#ar-attack)"/>
+      <g class="et et-attack" style="--i:2"><rect x="207.5" y="172.0" width="57.0" height="22" rx="4"/><text x="236.0" y="188.0" text-anchor="middle">attacks</text></g>
+      <g class="n n-fw" style="--i:2" tabindex="0" role="img" aria-label="pfSense. pfSense keeps the three subnets apart and passes only allowed traffic." data-tip="pfSense keeps the three subnets apart and passes only allowed traffic.">
+        <rect x="24" y="208" width="332" height="92" rx="10"/>
+        <use href="#dgi-gate" x="34" y="232" width="44" height="44"/>
+        <text class="nt" x="88" y="235">pfSense</text><text class="ns" x="88" y="255">firewall,</text><text class="ns" x="88" y="272">keeps 3 subnets apart</text></g>
+      <path class="e e-attack e-draw" style="--i:3" pathLength="1" d="M190 300 V346" marker-end="url(#ar-attack)"/>
+      <g class="et et-attack" style="--i:3"><rect x="207.5" y="312.0" width="57.0" height="22" rx="4"/><text x="236.0" y="328.0" text-anchor="middle">allowed</text></g>
+      <g class="n n-waf" style="--i:3" tabindex="0" role="img" aria-label="WAF VM. Nginx with ModSecurity v3 and the OWASP Core Rule Set blocks known web attacks; Suricata 8 (ET Open rules) and Zeek watch the same traffic." data-tip="Nginx with ModSecurity v3 and the OWASP Core Rule Set blocks known web attacks; Suricata 8 (ET Open rules) and Zeek watch the same traffic.">
+        <rect x="24" y="348" width="332" height="140" rx="10"/>
+        <use href="#dgi-castle" x="34" y="396" width="44" height="44"/>
+        <text class="nt" x="88" y="375">WAF VM</text><text class="ns" x="88" y="395">Nginx + ModSecurity v3</text><text class="ns" x="88" y="412">OWASP Core Rule Set</text><text class="ns" x="88" y="429">Suricata 8, ET Open rules</text><text class="ns" x="88" y="446">Zeek</text></g>
+      <path class="e e-clean e-draw" style="--i:4" pathLength="1" d="M200 488 V560" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:4"><rect x="151.4" y="498.0" width="97.1" height="22" rx="4"/><text x="200.0" y="514.0" text-anchor="middle">clean requests</text></g>
+      <g class="z z-cool" style="--i:0"><rect class="wash" x="10" y="530" width="220" height="160" rx="16"/>
+        <g class="ztag"><rect x="20" y="540" width="158.0" height="22" rx="4"/><text x="28" y="555.5">NET1, 192.168.20.0/24</text></g></g>
+      <g class="n n-app" style="--i:4" tabindex="0" role="img" aria-label="Juice Shop. OWASP Juice Shop, the deliberately vulnerable web app on NET1." data-tip="OWASP Juice Shop, the deliberately vulnerable web app on NET1.">
+        <rect x="22" y="562" width="196" height="112" rx="10"/>
+        <use href="#dgi-house" x="32" y="601" width="34" height="34"/>
+        <text class="nt" x="76" y="589">Juice Shop</text><text class="ns" x="76" y="609">OWASP, a</text><text class="ns" x="76" y="626">vulnerable app</text></g>
+      <path class="e e-log e-draw" style="--i:5" pathLength="1" d="M300 488 V752" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:5"><rect x="260.6" y="569.0" width="78.7" height="82" rx="4"/><text x="300.0" y="585.0" text-anchor="middle">WAF, IDS</text><text x="300.0" y="600.0" text-anchor="middle">and Zeek</text><text x="300.0" y="615.0" text-anchor="middle">logs via</text><text x="300.0" y="630.0" text-anchor="middle">Universal</text><text x="300.0" y="645.0" text-anchor="middle">Forwarders</text></g>
+      <g class="z z-violet" style="--i:0"><rect class="wash" x="10" y="722" width="360" height="214" rx="16"/>
+        <g class="ztag"><rect x="20" y="732" width="200.6" height="22" rx="4"/><text x="28" y="747.5">NET3 SIEM, 192.168.30.0/24</text></g></g>
+      <g class="n n-siem" style="--i:5" tabindex="0" role="img" aria-label="Splunk Enterprise. Splunk Enterprise on NET3 (index=security) correlates WAF and IDS events into one incident alert, mapped to MITRE ATT&CK, on a Dashboard Studio dashboard." data-tip="Splunk Enterprise on NET3 (index=security) correlates WAF and IDS events into one incident alert, mapped to MITRE ATT&CK, on a Dashboard Studio dashboard.">
+        <rect x="24" y="754" width="332" height="164" rx="10"/>
+        <use href="#dgi-tower" x="34" y="814" width="44" height="44"/>
+        <text class="nt" x="88" y="781">Splunk Enterprise</text><text class="ns" x="88" y="801">index=security</text><text class="ns" x="88" y="818">correlated WAF + IDS</text><text class="ns" x="88" y="835">alerts, MITRE ATT&amp;CK</text><text class="ns" x="88" y="852">mapping, Dashboard</text><text class="ns" x="88" y="869">Studio dashboard</text></g>
+      <path class="e e-log e-draw" style="--i:6" pathLength="1" d="M110 936 V1000" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:6"><rect x="87.6" y="957.0" width="44.7" height="22" rx="4"/><text x="110.0" y="973.0" text-anchor="middle">alert</text></g>
+      <path class="e e-log e-draw" style="--i:6" pathLength="1" d="M300 936 V1000" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:6"><rect x="274.6" y="957.0" width="50.9" height="22" rx="4"/><text x="300.0" y="973.0" text-anchor="middle">alerts</text></g>
+      <path class="e e-log e-draw" style="--i:6" pathLength="1" d="M160 1000 V938" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:6"><rect x="176.5" y="957.0" width="57.0" height="22" rx="4"/><text x="205.0" y="973.0" text-anchor="middle">summary</text></g>
+      <g class="n n-auto" style="--i:7" tabindex="0" role="img" aria-label="n8n. n8n sends each alert to the AI agent and adds the reply to the dashboard; it also proposes new ATT&CK mapping rows, each approved before it is applied." data-tip="n8n sends each alert to the AI agent and adds the reply to the dashboard; it also proposes new ATT&CK mapping rows, each approved before it is applied.">
+        <rect x="10" y="1002" width="206" height="196" rx="10"/>
+        <use href="#dgi-mill" x="20" y="1083" width="34" height="34"/>
+        <text class="nt" x="64" y="1029">n8n</text><text class="ns" x="64" y="1049">sends each alert</text><text class="ns" x="64" y="1066">to the AI agent,</text><text class="ns" x="64" y="1083">adds its reply to</text><text class="ns" x="64" y="1100">the dashboard,</text><text class="ns" x="64" y="1117">proposes mapping</text><text class="ns" x="64" y="1134">rows I approve</text></g>
+      <g class="n n-person" style="--i:6" tabindex="0" role="img" aria-label="Analyst. The analyst reads the dashboard and makes the call; the AI notes are advice only." data-tip="The analyst reads the dashboard and makes the call; the AI notes are advice only.">
+        <rect x="226" y="1002" width="144" height="128" rx="10"/>
+        <use href="#dgi-person" x="236" y="1051" width="30" height="30"/>
+        <text class="nt" x="276" y="1029">Analyst</text><text class="ns" x="276" y="1049">reads the</text><text class="ns" x="276" y="1066">dashboard,</text><text class="ns" x="276" y="1083">decides</text></g>
+      <path class="e e-log e-draw" style="--i:8" pathLength="1" d="M70 1198 V1262" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:8"><rect x="47.6" y="1219.0" width="44.7" height="22" rx="4"/><text x="70.0" y="1235.0" text-anchor="middle">alert</text></g>
+      <path class="e e-log e-draw" style="--i:8" pathLength="1" d="M160 1262 V1200" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:8"><rect x="128.4" y="1219.0" width="63.2" height="22" rx="4"/><text x="160.0" y="1235.0" text-anchor="middle">response</text></g>
+      <g class="n n-auto" style="--i:8" tabindex="0" role="img" aria-label="AI agent (Claude API). The AI agent (Claude API) returns a short description of the alert and a suggested action." data-tip="The AI agent (Claude API) returns a short description of the alert and a suggested action.">
+        <rect x="10" y="1264" width="348" height="104" rx="10"/>
+        <use href="#dgi-scroll" x="20" y="1294" width="44" height="44"/>
+        <text class="nt" x="74" y="1291">AI agent (Claude API)</text><text class="ns" x="74" y="1311">short description +</text><text class="ns" x="74" y="1328">suggested action, advisory</text></g>
+      <path class="e e-log e-draw" style="--i:9" pathLength="1" d="M216 1166 H371 V1492 H362" marker-end="url(#ar-log)"/>
+      <g class="et et-log" style="--i:9"><rect x="255.2" y="1155.0" width="81.6" height="22" rx="4"/><text x="296.0" y="1171.0" text-anchor="middle">regenerates</text></g>
+      <g class="n n-auto" style="--i:9" tabindex="0" role="img" aria-label="ATT&CK Navigator. n8n regenerates the ATT&CK Navigator layer from the approved mapping rows." data-tip="n8n regenerates the ATT&CK Navigator layer from the approved mapping rows.">
+        <rect x="10" y="1440" width="348" height="104" rx="10"/>
+        <use href="#dgi-map" x="20" y="1470" width="44" height="44"/>
+        <text class="nt" x="74" y="1467">ATT&amp;CK Navigator</text><text class="ns" x="74" y="1487">layer regenerated by n8n</text><text class="ns" x="74" y="1504">from approved mapping rows</text></g></g>
+          </svg>
+              <p class="dg-tip" aria-hidden="true" hidden></p>
+            </div>
+            <figcaption>
+              <span class="dg-legend"><span class="lg"><i class="lg-attack"></i>attack traffic</span><span class="lg"><i class="lg-clean"></i>clean request</span><span class="lg"><i class="lg-log"></i>log event</span></span>
+              <span class="dg-note">Point at or tap a part of the map to read what it does.</span>
+            </figcaption>
+          </figure>
+          <!-- TODO(confirm): MITRE IDs T1190, T1046 -->
+          <ul class="tags" aria-label="Tools"><li class="tag">Splunk Enterprise</li><li class="tag">ModSecurity v3</li><li class="tag">OWASP Core Rule Set</li><li class="tag">Suricata 8</li><li class="tag">Zeek</li><li class="tag">pfSense</li><li class="tag">n8n</li><li class="tag">Claude API</li><li class="tag">MITRE ATT&amp;CK</li><li class="tag mitre">T1190</li><li class="tag mitre">T1046</li></ul>
+          <div class="btn-row">
+            <!-- TODO: SOC repo URL -->
+          <!-- The button stays hidden while href is "#". Paste the repo URL and remove "hidden". -->
+          <a class="btn btn-primary" href="#" target="_blank" rel="noopener" hidden>View on GitHub<span class="visually-hidden">: Intelligent SOC</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pd" id="grfics" aria-labelledby="grfics-h" style="--dc:var(--d-ot)">
+        <header class="pd-head">
+          <h2 id="grfics-h">Industrial Cybersecurity Lab: GRFICSv3 Blue Team</h2>
+          
+          <p class="pd-meta">Academic project (Projet 2A), in progress, following a phased plan (phases A to J), started November 2026.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">The GRFICSv3 plant runs as containers on two networks: a DMZ with the Scada-LTS HMI, Kali and Caldera, and an ICS network with OpenPLC, the process simulation and the engineering workstation. The router between them is the SSH-hardened firewall, and Wazuh collects alerts from three agents. Custom Suricata rules for Modbus/TCP are the next phase.</p>
+          <figure class="dg" id="grfics-dg">
+            <div class="dg-frame">
+          <svg class="dg-wide" viewBox="0 0 1000 650" role="group" aria-labelledby="otw-t otw-d">
+            <title id="otw-t">GRFICSv3 blue team lab architecture</title>
+            <desc id="otw-d">Two Docker networks from the GRFICSv3 compose file. The DMZ, c-dmz-net 192.168.90.0/24, holds the Scada-LTS HMI (.107), the Kali attacker (.6) and Caldera (.250). The ICS network, b-ics-net 192.168.95.0/24, holds OpenPLC (.2), the chemical plant simulation (.45) and the engineering workstation (.5). The router container sits between them as an SSH-hardened firewall; the HMI talks Modbus/TCP on port 502 to OpenPLC through it. Wazuh collects alerts from three agents. Planned: Suricata with custom Modbus rules on the router, sending alerts to Wazuh.</desc>
+            <g class="paper-ink">
+      <g class="z z-cool" style="--i:0"><rect class="wash" x="15" y="36" width="330" height="420" rx="16"/>
+        <g class="ztag"><rect x="25" y="46" width="209.4" height="22" rx="4"/><text x="33" y="61.5">DMZ: c-dmz-net, 192.168.90.0/24</text></g></g>
+      <g class="z z-green" style="--i:0"><rect class="wash" x="655" y="36" width="330" height="420" rx="16"/>
+        <g class="ztag"><rect x="665" y="46" width="209.4" height="22" rx="4"/><text x="673" y="61.5">ICS: b-ics-net, 192.168.95.0/24</text></g></g>
+      <g class="n n-hmi" style="--i:1" tabindex="0" role="img" aria-label="Scada-LTS. Scada-LTS, the HMI operators use, at 192.168.90.107 in the DMZ." data-tip="Scada-LTS, the HMI operators use, at 192.168.90.107 in the DMZ.">
+        <rect x="30" y="82" width="300" height="94" rx="10"/>
+        <use href="#dgi-board" x="40" y="107" width="44" height="44"/>
+        <text class="nt" x="94" y="109">Scada-LTS</text><text class="ns" x="94" y="129">HMI, operator screens</text><text class="nip" x="318" y="109" text-anchor="end">.107</text></g>
+      <g class="n n-attack" style="--i:1" tabindex="0" role="img" aria-label="Kali Linux. Kali Linux, the attacker workstation, at 192.168.90.6." data-tip="Kali Linux, the attacker workstation, at 192.168.90.6.">
+        <rect x="30" y="206" width="300" height="94" rx="10"/>
+        <use href="#dgi-hood" x="40" y="231" width="44" height="44"/>
+        <text class="nt" x="94" y="233">Kali Linux</text><text class="ns" x="94" y="253">attacker workstation</text><text class="nip" x="318" y="233" text-anchor="end">.6</text></g>
+      <g class="n n-" style="--i:1" tabindex="0" role="img" aria-label="Caldera. MITRE Caldera for adversary emulation, at 192.168.90.250." data-tip="MITRE Caldera for adversary emulation, at 192.168.90.250.">
+        <rect x="30" y="330" width="300" height="94" rx="10"/>
+        <use href="#dgi-cauldron" x="40" y="355" width="44" height="44"/>
+        <text class="nt" x="94" y="357">Caldera</text><text class="ns" x="94" y="377">adversary emulation</text><text class="nip" x="318" y="357" text-anchor="end">.250</text></g>
+      <g class="n n-fw" style="--i:2" tabindex="0" role="img" aria-label="router. The router container is the firewall between the DMZ and the ICS network, with SSH hardened." data-tip="The router container is the firewall between the DMZ and the ICS network, with SSH hardened.">
+        <rect x="392" y="186" width="216" height="138" rx="10"/>
+        <use href="#dgi-signpost" x="402" y="233" width="44" height="44"/>
+        <text class="nt" x="456" y="213">router</text><text class="ns" x="456" y="233">firewall between</text><text class="ns" x="456" y="250">DMZ and ICS,</text><text class="ns" x="456" y="267">SSH hardened</text></g>
+      <path class="e e-clean e-draw" style="--i:4" pathLength="1" d="M330 129 H360 V222 H390" marker-end="url(#ar-clean)"/>
+      <path class="e e-clean e-draw" style="--i:4" pathLength="1" d="M608 222 H638 V129 H668" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:4"><rect x="428.9" y="139.0" width="142.3" height="22" rx="4"/><text x="500.0" y="155.0" text-anchor="middle">Modbus/TCP, port 502</text></g>
+      <path class="e e-attack e-draw" style="--i:5" pathLength="1" d="M330 270 H390" marker-end="url(#ar-attack)"/>
+      <g class="et et-attack" style="--i:5"><rect x="331.5" y="285.0" width="57.0" height="22" rx="4"/><text x="360.0" y="301.0" text-anchor="middle">attacks</text></g>
+      <g class="n n-plc" style="--i:3" tabindex="0" role="img" aria-label="OpenPLC. OpenPLC, the PLC runtime, at 192.168.95.2." data-tip="OpenPLC, the PLC runtime, at 192.168.95.2.">
+        <rect x="670" y="82" width="300" height="94" rx="10"/>
+        <use href="#dgi-lever" x="680" y="107" width="44" height="44"/>
+        <text class="nt" x="734" y="109">OpenPLC</text><text class="ns" x="734" y="129">PLC runtime</text><text class="nip" x="958" y="109" text-anchor="end">.2</text></g>
+      <path class="e e-clean e-draw" style="--i:4" pathLength="1" d="M820 176 V204" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:4"><rect x="834.4" y="179.0" width="63.2" height="22" rx="4"/><text x="866.0" y="195.0" text-anchor="middle">controls</text></g>
+      <g class="n n-plant" style="--i:3" tabindex="0" role="img" aria-label="Chemical plant. The simulated chemical plant process, at 192.168.95.45." data-tip="The simulated chemical plant process, at 192.168.95.45.">
+        <rect x="670" y="206" width="300" height="94" rx="10"/>
+        <use href="#dgi-tank" x="680" y="231" width="44" height="44"/>
+        <text class="nt" x="734" y="233">Chemical plant</text><text class="ns" x="734" y="253">simulated process</text><text class="nip" x="958" y="233" text-anchor="end">.45</text></g>
+      <g class="n n-" style="--i:3" tabindex="0" role="img" aria-label="Engineering workstation. The engineering workstation, at 192.168.95.5." data-tip="The engineering workstation, at 192.168.95.5.">
+        <rect x="670" y="330" width="300" height="94" rx="10"/>
+        <use href="#dgi-desk" x="680" y="355" width="44" height="44"/>
+        <text class="nt" x="734" y="357">Engineering workstation</text><text class="ns" x="734" y="377">EWS</text><text class="nip" x="958" y="357" text-anchor="end">.5</text></g>
+      <path class="e e-plan" style="--i:6" d="M500 324 V366" marker-end="url(#ar-plan)"/>
+      <g class="et et-plan" style="--i:6"><rect x="520.4" y="334.0" width="63.2" height="22" rx="4"/><text x="552.0" y="350.0" text-anchor="middle">inspects</text></g>
+      <g class="n n-plan" style="--i:6" tabindex="0" role="img" aria-label="Suricata IDS. Planned: Suricata with custom rules for Modbus/TCP (port 502), the next phase." data-tip="Planned: Suricata with custom rules for Modbus/TCP (port 502), the next phase.">
+        <rect x="392" y="368" width="216" height="100" rx="10"/>
+        <use href="#dgi-lantern" x="402" y="396" width="44" height="44"/>
+        <text class="nt" x="456" y="395">Suricata IDS</text><text class="ns" x="456" y="415">custom Modbus rules,</text><text class="ns" x="456" y="432">planned</text></g>
+      <g class="z z-violet" style="--i:7"><rect class="wash" x="290" y="500" width="420" height="136" rx="16"/>
+        <g class="ztag"><rect x="300" y="510" width="83.4" height="22" rx="4"/><text x="308" y="525.5">Monitoring</text></g></g>
+      <path class="e e-plan" style="--i:7" d="M500 468 V546" marker-end="url(#ar-plan)"/>
+      <g class="et et-plan" style="--i:7"><rect x="526.6" y="479.0" width="50.9" height="22" rx="4"/><text x="552.0" y="495.0" text-anchor="middle">alerts</text></g>
+      <g class="n n-siem" style="--i:7" tabindex="0" role="img" aria-label="Wazuh SIEM. Wazuh: the manager and three agents collect the alerts." data-tip="Wazuh: the manager and three agents collect the alerts.">
+        <rect x="310" y="548" width="380" height="74" rx="10"/>
+        <use href="#dgi-lighthouse" x="320" y="563" width="44" height="44"/>
+        <text class="nt" x="374" y="575">Wazuh SIEM</text><text class="ns" x="374" y="595">manager + 3 agents, collects alerts</text></g></g>
+          </svg>
+          <svg class="dg-tall" viewBox="0 0 380 1160" role="group" aria-labelledby="ott-t ott-d">
+            <title id="ott-t">GRFICSv3 blue team lab architecture</title>
+            <desc id="ott-d">Two Docker networks from the GRFICSv3 compose file. The DMZ, c-dmz-net 192.168.90.0/24, holds the Scada-LTS HMI (.107), the Kali attacker (.6) and Caldera (.250). The ICS network, b-ics-net 192.168.95.0/24, holds OpenPLC (.2), the chemical plant simulation (.45) and the engineering workstation (.5). The router container sits between them as an SSH-hardened firewall; the HMI talks Modbus/TCP on port 502 to OpenPLC through it. Wazuh collects alerts from three agents. Planned: Suricata with custom Modbus rules on the router, sending alerts to Wazuh.</desc>
+            <g class="paper-ink">
+      <g class="z z-cool" style="--i:0"><rect class="wash" x="10" y="10" width="360" height="302" rx="16"/>
+        <g class="ztag"><rect x="20" y="20" width="209.4" height="22" rx="4"/><text x="28" y="35.5">DMZ: c-dmz-net, 192.168.90.0/24</text></g></g>
+      <g class="n n-" style="--i:1" tabindex="0" role="img" aria-label="Caldera. MITRE Caldera for adversary emulation, at 192.168.90.250." data-tip="MITRE Caldera for adversary emulation, at 192.168.90.250.">
+        <rect x="24" y="44" width="332" height="82" rx="10"/>
+        <use href="#dgi-cauldron" x="34" y="63" width="44" height="44"/>
+        <text class="nt" x="88" y="71">Caldera</text><text class="ns" x="88" y="91">adversary emulation</text><text class="nip" x="344" y="71" text-anchor="end">.250</text></g>
+      <g class="n n-hmi" style="--i:1" tabindex="0" role="img" aria-label="Scada-LTS. Scada-LTS, the HMI operators use, at 192.168.90.107 in the DMZ." data-tip="Scada-LTS, the HMI operators use, at 192.168.90.107 in the DMZ.">
+        <rect x="24" y="140" width="160" height="156" rx="10"/>
+        <use href="#dgi-board" x="34" y="202" width="32" height="32"/>
+        <text class="nt" x="76" y="167">Scada-LTS</text><text class="ns" x="76" y="187">HMI,</text><text class="ns" x="76" y="204">operator</text><text class="ns" x="76" y="221">screens</text><text class="ns" x="76" y="238">.107</text></g>
+      <g class="n n-attack" style="--i:1" tabindex="0" role="img" aria-label="Kali Linux. Kali Linux, the attacker workstation, at 192.168.90.6." data-tip="Kali Linux, the attacker workstation, at 192.168.90.6.">
+        <rect x="196" y="140" width="160" height="156" rx="10"/>
+        <use href="#dgi-hood" x="206" y="202" width="32" height="32"/>
+        <text class="nt" x="248" y="167">Kali Linux</text><text class="ns" x="248" y="187">attacker</text><text class="ns" x="248" y="204">workstation</text><text class="ns" x="248" y="221">.6</text></g>
+      <path class="e e-clean e-draw" style="--i:4" pathLength="1" d="M104 296 V372" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:4"><rect x="61.1" y="317.5" width="85.8" height="37" rx="4"/><text x="104.0" y="333.5" text-anchor="middle">Modbus/TCP</text><text x="104.0" y="348.5" text-anchor="middle">port 502</text></g>
+      <path class="e e-attack e-draw" style="--i:5" pathLength="1" d="M276 296 V372" marker-end="url(#ar-attack)"/>
+      <g class="et et-attack" style="--i:5"><rect x="247.5" y="325.0" width="57.0" height="22" rx="4"/><text x="276.0" y="341.0" text-anchor="middle">attacks</text></g>
+      <g class="n n-fw" style="--i:2" tabindex="0" role="img" aria-label="router. The router container is the firewall between the DMZ and the ICS network, with SSH hardened." data-tip="The router container is the firewall between the DMZ and the ICS network, with SSH hardened.">
+        <rect x="24" y="374" width="332" height="104" rx="10"/>
+        <use href="#dgi-signpost" x="34" y="404" width="44" height="44"/>
+        <text class="nt" x="88" y="401">router</text><text class="ns" x="88" y="421">firewall between DMZ</text><text class="ns" x="88" y="438">and ICS, SSH hardened</text></g>
+      <path class="e e-clean e-draw" style="--i:4" pathLength="1" d="M104 478 V554" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:4"><rect x="61.1" y="489.0" width="85.8" height="22" rx="4"/><text x="104.0" y="505.0" text-anchor="middle">Modbus/TCP</text></g>
+      <path class="e e-plan" style="--i:6" d="M292 478 V554" marker-end="url(#ar-plan)"/>
+      <g class="et et-plan" style="--i:6"><rect x="260.4" y="505.0" width="63.2" height="22" rx="4"/><text x="292.0" y="521.0" text-anchor="middle">inspects</text></g>
+      <g class="z z-green" style="--i:0"><rect class="wash" x="10" y="524" width="196" height="436" rx="16"/>
+        <g class="ztag"><rect x="20" y="534" width="104.4" height="22" rx="4"/><text x="28" y="549.5">ICS: b-ics-net</text></g></g>
+      <g class="n n-plc" style="--i:3" tabindex="0" role="img" aria-label="OpenPLC. OpenPLC, the PLC runtime, at 192.168.95.2." data-tip="OpenPLC, the PLC runtime, at 192.168.95.2.">
+        <rect x="22" y="556" width="172" height="104" rx="10"/>
+        <use href="#dgi-lever" x="32" y="593" width="30" height="30"/>
+        <text class="nt" x="72" y="583">OpenPLC</text><text class="ns" x="72" y="603">PLC runtime,</text><text class="ns" x="72" y="620">192.168.95.2</text></g>
+      <path class="e e-clean e-draw" style="--i:4" pathLength="1" d="M108 660 V700" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:4"><rect x="118.4" y="669.0" width="63.2" height="22" rx="4"/><text x="150.0" y="685.0" text-anchor="middle">controls</text></g>
+      <g class="n n-plant" style="--i:3" tabindex="0" role="img" aria-label="Plant. The simulated chemical plant process, at 192.168.95.45." data-tip="The simulated chemical plant process, at 192.168.95.45.">
+        <rect x="22" y="702" width="172" height="104" rx="10"/>
+        <use href="#dgi-tank" x="32" y="739" width="30" height="30"/>
+        <text class="nt" x="72" y="729">Plant</text><text class="ns" x="72" y="749">chemical process,</text><text class="ns" x="72" y="766">simulated, .45</text></g>
+      <g class="n n-" style="--i:3" tabindex="0" role="img" aria-label="EWS. The engineering workstation, at 192.168.95.5." data-tip="The engineering workstation, at 192.168.95.5.">
+        <rect x="22" y="828" width="172" height="116" rx="10"/>
+        <use href="#dgi-desk" x="32" y="871" width="30" height="30"/>
+        <text class="nt" x="72" y="855">EWS</text><text class="ns" x="72" y="875">engineering</text><text class="ns" x="72" y="892">workstation,</text><text class="ns" x="72" y="909">.5</text></g>
+      <g class="n n-plan" style="--i:6" tabindex="0" role="img" aria-label="Suricata. Planned: Suricata with custom rules for Modbus/TCP (port 502), the next phase." data-tip="Planned: Suricata with custom rules for Modbus/TCP (port 502), the next phase.">
+        <rect x="216" y="556" width="154" height="136" rx="10"/>
+        <use href="#dgi-lantern" x="226" y="609" width="30" height="30"/>
+        <text class="nt" x="266" y="583">Suricata</text><text class="ns" x="266" y="603">custom</text><text class="ns" x="266" y="620">Modbus rules,</text><text class="ns" x="266" y="637">planned</text></g>
+      <path class="e e-plan" style="--i:7" d="M344 692 V798" marker-end="url(#ar-plan)"/>
+      <g class="et et-plan" style="--i:7"><rect x="310.6" y="729.0" width="50.9" height="22" rx="4"/><text x="336.0" y="745.0" text-anchor="middle">alerts</text></g>
+      <g class="z z-violet" style="--i:7"><rect class="wash" x="212" y="770" width="162" height="190" rx="16"/>
+        <g class="ztag"><rect x="222" y="780" width="83.4" height="22" rx="4"/><text x="230" y="795.5">Monitoring</text></g></g>
+      <g class="n n-siem" style="--i:7" tabindex="0" role="img" aria-label="Wazuh. Wazuh: the manager and three agents collect the alerts." data-tip="Wazuh: the manager and three agents collect the alerts.">
+        <rect x="220" y="800" width="146" height="144" rx="10"/>
+        <use href="#dgi-lighthouse" x="230" y="857" width="30" height="30"/>
+        <text class="nt" x="270" y="827">Wazuh</text><text class="ns" x="270" y="847">manager +</text><text class="ns" x="270" y="864">3 agents,</text><text class="ns" x="270" y="881">collects</text><text class="ns" x="270" y="898">alerts</text></g></g>
+          </svg>
+              <p class="dg-tip" aria-hidden="true" hidden></p>
+            </div>
+            <figcaption>
+              <span class="dg-legend"><span class="lg"><i class="lg-attack"></i>attack traffic</span><span class="lg"><i class="lg-clean"></i>control traffic</span><span class="lg"><i class="lg-plan"></i>planned</span></span>
+              <span class="dg-note">Point at or tap a part of the map to read what it does.</span>
+            </figcaption>
+          </figure>
+          <!-- TODO(confirm): MITRE ID T0855 -->
+          <ul class="tags" aria-label="Tools"><li class="tag">GRFICSv3</li><li class="tag">OpenPLC</li><li class="tag">Scada-LTS</li><li class="tag">Modbus/TCP</li><li class="tag">Wazuh</li><li class="tag">Docker</li><li class="tag">NIST CSF 2.0</li><li class="tag mitre">T0855</li></ul>
+          <div class="btn-row">
+            <!-- TODO: GRFICS repo URL -->
+          <!-- The button stays hidden while href is "#". Paste the repo URL and remove "hidden". -->
+          <a class="btn btn-primary" href="#" target="_blank" rel="noopener" hidden>View on GitHub<span class="visually-hidden">: Industrial Cybersecurity Lab</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pd" id="aws" aria-labelledby="aws-h" style="--dc:var(--d-cloud)">
+        <header class="pd-head">
+          <h2 id="aws-h">Secure Static Hosting on AWS (S3 + CloudFront + OAC)</h2>
+          
+          <p class="pd-meta">Academic project, 2025 to 2026, supervised by Mme Chaimae Kissi.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">CloudFront is the only public entry point and enforces HTTPS. Origin Access Control and a bucket policy let only CloudFront read the private, encrypted S3 bucket: the direct S3 URL returns access denied. A dedicated IAM user with S3 and CloudFront permissions only replaces the root account for daily work.</p>
+          <figure class="dg" id="aws-dg">
+            <div class="dg-frame">
+          <svg class="dg-wide" viewBox="0 0 1000 540" role="group" aria-labelledby="awsw-t awsw-d">
+            <title id="awsw-t">Secure static hosting on AWS</title>
+            <desc id="awsw-d">A visitor on the internet reaches Amazon CloudFront over HTTPS; plain HTTP is redirected to HTTPS. CloudFront is the only public entry point and reads the private Amazon S3 bucket through Origin Access Control. The bucket blocks all public access, has ACLs disabled, is encrypted at rest and has a policy that only allows CloudFront. A direct request to the S3 URL is denied. A dedicated least-privilege IAM user manages S3 and CloudFront. AWS WAF is a possible next step.</desc>
+            <g class="paper-ink">
+      <g class="z z-attack" style="--i:0"><rect class="wash" x="15" y="90" width="214" height="210" rx="16"/>
+        <g class="ztag"><rect x="25" y="100" width="70.6" height="22" rx="4"/><text x="33" y="115.5">Internet</text></g></g>
+      <g class="z z-cool" style="--i:0"><rect class="wash" x="252" y="20" width="734" height="504" rx="16"/>
+        <g class="ztag"><rect x="262" y="30" width="45.4" height="22" rx="4"/><text x="270" y="45.5">AWS</text></g></g>
+      <g class="z z-green" style="--i:1"><rect class="wash" x="600" y="84" width="372" height="236" rx="16"/>
+        <g class="ztag"><rect x="610" y="94" width="106.0" height="22" rx="4"/><text x="618" y="109.5">Private origin</text></g></g>
+      <g class="n n-" style="--i:1" tabindex="0" role="img" aria-label="Visitor. A visitor’s web browser on the internet." data-tip="A visitor’s web browser on the internet.">
+        <rect x="28" y="136" width="188" height="104" rx="10"/>
+        <use href="#dgi-traveler" x="38" y="166" width="44" height="44"/>
+        <text class="nt" x="92" y="163">Visitor</text><text class="ns" x="92" y="183">web browser</text></g>
+      <g class="n n-plan" style="--i:5" tabindex="0" role="img" aria-label="AWS WAF. AWS WAF in front of the distribution is a possible next step (left off on purpose, as a paid feature)." data-tip="AWS WAF in front of the distribution is a possible next step (left off on purpose, as a paid feature).">
+        <rect x="330" y="30" width="246" height="72" rx="10"/>
+        <use href="#dgi-castle" x="340" y="44" width="44" height="44"/>
+        <text class="nt" x="394" y="57">AWS WAF</text><text class="ns" x="394" y="77">possible next step</text></g>
+      <path class="e e-clean e-draw" style="--i:2" pathLength="1" d="M216 186 H284" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:2"><rect x="219.5" y="151.0" width="61.0" height="22" rx="4"/><text x="250.0" y="167.0" text-anchor="middle">HTTPS</text></g>
+      <g class="n n-cdn" style="--i:2" tabindex="0" role="img" aria-label="Amazon CloudFront. Amazon CloudFront: the only public entry point; it caches at the edge, hides the origin and redirects HTTP to HTTPS." data-tip="Amazon CloudFront: the only public entry point; it caches at the edge, hides the origin and redirects HTTP to HTTPS.">
+        <rect x="286" y="122" width="268" height="134" rx="10"/>
+        <use href="#dgi-cloud" x="296" y="167" width="44" height="44"/>
+        <text class="nt" x="350" y="149">Amazon CloudFront</text><text class="ns" x="350" y="169">only public entry point</text><text class="ns" x="350" y="186">edge cache, hides origin</text><text class="ns" x="350" y="203">HTTP → HTTPS redirect</text></g>
+      <path class="e e-clean e-draw" style="--i:3" pathLength="1" d="M554 186 H616" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:3"><rect x="549.0" y="151.0" width="70.1" height="22" rx="4"/><text x="584.0" y="167.0" text-anchor="middle">OAC read</text></g>
+      <g class="n n-s3" style="--i:3" tabindex="0" role="img" aria-label="Amazon S3 bucket. The private S3 bucket: Block All Public Access, ACLs disabled, encrypted at rest, and a bucket policy that only lets CloudFront read it." data-tip="The private S3 bucket: Block All Public Access, ACLs disabled, encrypted at rest, and a bucket policy that only lets CloudFront read it.">
+        <rect x="618" y="122" width="336" height="170" rx="10"/>
+        <use href="#dgi-chest" x="628" y="185" width="44" height="44"/>
+        <text class="nt" x="682" y="149">Amazon S3 bucket</text><text class="ns" x="682" y="169">Block All Public Access</text><text class="ns" x="682" y="186">ACLs disabled</text><text class="ns" x="682" y="203">encrypted at rest</text><text class="ns" x="682" y="220">policy: CloudFront only</text></g>
+      <path class="e e-deny" style="--i:4" d="M122 240 V350 H786 V294" marker-end="url(#ar-deny)"/>
+      <g class="et et-deny" style="--i:4"><rect x="187.1" y="331.5" width="105.8" height="37" rx="4"/><text x="240.0" y="347.5" text-anchor="middle">direct S3 URL:</text><text x="240.0" y="362.5" text-anchor="middle">access denied</text></g>
+      <g class="n n-" style="--i:5" tabindex="0" role="img" aria-label="IAM user. A dedicated IAM user with only S3 and CloudFront permissions; the root account is no longer used day to day." data-tip="A dedicated IAM user with only S3 and CloudFront permissions; the root account is no longer used day to day.">
+        <rect x="286" y="396" width="318" height="104" rx="10"/>
+        <use href="#dgi-key" x="296" y="426" width="44" height="44"/>
+        <text class="nt" x="350" y="423">IAM user</text><text class="ns" x="350" y="443">S3 + CloudFront permissions only</text><text class="ns" x="350" y="460">root account not used day to day</text></g>
+      <path class="e e-thin" style="--i:5" d="M420 394 V258" marker-end="url(#ar-thin)"/>
+      <g class="et et-thin" style="--i:5"><rect x="391.5" y="289.0" width="57.0" height="22" rx="4"/><text x="420.0" y="305.0" text-anchor="middle">manages</text></g>
+      <path class="e e-thin" style="--i:5" d="M604 448 H880 V294" marker-end="url(#ar-thin)"/>
+      <g class="et et-thin" style="--i:5"><rect x="713.5" y="437.0" width="57.0" height="22" rx="4"/><text x="742.0" y="453.0" text-anchor="middle">manages</text></g></g>
+          </svg>
+          <svg class="dg-tall" viewBox="0 0 380 870" role="group" aria-labelledby="awst-t awst-d">
+            <title id="awst-t">Secure static hosting on AWS</title>
+            <desc id="awst-d">A visitor on the internet reaches Amazon CloudFront over HTTPS; plain HTTP is redirected to HTTPS. CloudFront is the only public entry point and reads the private Amazon S3 bucket through Origin Access Control. The bucket blocks all public access, has ACLs disabled, is encrypted at rest and has a policy that only allows CloudFront. A direct request to the S3 URL is denied. A dedicated least-privilege IAM user manages S3 and CloudFront. AWS WAF is a possible next step.</desc>
+            <g class="paper-ink">
+      <g class="z z-attack" style="--i:0"><rect class="wash" x="10" y="10" width="360" height="124" rx="16"/>
+        <g class="ztag"><rect x="20" y="20" width="70.6" height="22" rx="4"/><text x="28" y="35.5">Internet</text></g></g>
+      <g class="n n-" style="--i:1" tabindex="0" role="img" aria-label="Visitor. A visitor’s web browser on the internet." data-tip="A visitor’s web browser on the internet.">
+        <rect x="60" y="40" width="296" height="80" rx="10"/>
+        <use href="#dgi-traveler" x="70" y="58" width="44" height="44"/>
+        <text class="nt" x="124" y="67">Visitor</text><text class="ns" x="124" y="87">web browser</text></g>
+      <g class="z z-cool" style="--i:0"><rect class="wash" x="10" y="150" width="360" height="706" rx="16"/>
+        <g class="ztag"><rect x="50" y="160" width="45.4" height="22" rx="4"/><text x="58" y="175.5">AWS</text></g></g>
+      <path class="e e-clean e-draw" style="--i:2" pathLength="1" d="M140 120 V260" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:2"><rect x="73.6" y="187.5" width="112.9" height="37" rx="4"/><text x="130.0" y="203.5" text-anchor="middle">HTTPS</text><text x="130.0" y="218.5" text-anchor="middle">HTTP → HTTPS</text></g>
+      <g class="n n-plan" style="--i:5" tabindex="0" role="img" aria-label="AWS WAF. AWS WAF in front of the distribution is a possible next step (left off on purpose, as a paid feature)." data-tip="AWS WAF in front of the distribution is a possible next step (left off on purpose, as a paid feature).">
+        <rect x="206" y="172" width="150" height="82" rx="10"/>
+        <use href="#dgi-castle" x="216" y="199" width="28" height="28"/>
+        <text class="nt" x="254" y="199">AWS WAF</text><text class="ns" x="254" y="219">possible</text><text class="ns" x="254" y="236">next step</text></g>
+      <g class="n n-cdn" style="--i:2" tabindex="0" role="img" aria-label="CloudFront. Amazon CloudFront: the only public entry point; it caches at the edge, hides the origin and redirects HTTP to HTTPS." data-tip="Amazon CloudFront: the only public entry point; it caches at the edge, hides the origin and redirects HTTP to HTTPS.">
+        <rect x="60" y="262" width="296" height="128" rx="10"/>
+        <use href="#dgi-cloud" x="70" y="304" width="44" height="44"/>
+        <text class="nt" x="124" y="289">CloudFront</text><text class="ns" x="124" y="309">only public entry point</text><text class="ns" x="124" y="326">edge cache, hides origin</text><text class="ns" x="124" y="343">HTTP → HTTPS redirect</text></g>
+      <path class="e e-clean e-draw" style="--i:3" pathLength="1" d="M208 390 V478" marker-end="url(#ar-clean)"/>
+      <g class="et et-clean" style="--i:3"><rect x="173.0" y="421.0" width="70.1" height="22" rx="4"/><text x="208.0" y="437.0" text-anchor="middle">OAC read</text></g>
+      <g class="z z-green" style="--i:1"><rect class="wash" x="50" y="452" width="314" height="198" rx="16"/>
+        <g class="ztag"><rect x="60" y="462" width="106.0" height="22" rx="4"/><text x="68" y="477.5">Private origin</text></g></g>
+      <g class="n n-s3" style="--i:3" tabindex="0" role="img" aria-label="S3 bucket. The private S3 bucket: Block All Public Access, ACLs disabled, encrypted at rest, and a bucket policy that only lets CloudFront read it." data-tip="The private S3 bucket: Block All Public Access, ACLs disabled, encrypted at rest, and a bucket policy that only lets CloudFront read it.">
+        <rect x="60" y="484" width="296" height="150" rx="10"/>
+        <use href="#dgi-chest" x="70" y="537" width="44" height="44"/>
+        <text class="nt" x="124" y="511">S3 bucket</text><text class="ns" x="124" y="531">Block All Public Access</text><text class="ns" x="124" y="548">ACLs disabled</text><text class="ns" x="124" y="565">encrypted at rest</text><text class="ns" x="124" y="582">policy: CloudFront only</text></g>
+      <path class="e e-deny" style="--i:4" d="M60 80 H30 V560 H58" marker-end="url(#ar-deny)"/>
+      <g class="et et-deny" style="--i:4"><rect x="4.6" y="296.5" width="50.9" height="67" rx="4"/><text x="30.0" y="312.5" text-anchor="middle">direct</text><text x="30.0" y="327.5" text-anchor="middle">S3</text><text x="30.0" y="342.5" text-anchor="middle">URL:</text><text x="30.0" y="357.5" text-anchor="middle">denied</text></g>
+      <g class="n n-" style="--i:5" tabindex="0" role="img" aria-label="IAM user. A dedicated IAM user with only S3 and CloudFront permissions; the root account is no longer used day to day." data-tip="A dedicated IAM user with only S3 and CloudFront permissions; the root account is no longer used day to day.">
+        <rect x="60" y="700" width="296" height="120" rx="10"/>
+        <use href="#dgi-key" x="70" y="738" width="44" height="44"/>
+        <text class="nt" x="124" y="727">IAM user</text><text class="ns" x="124" y="747">S3 + CloudFront</text><text class="ns" x="124" y="764">permissions only, root</text><text class="ns" x="124" y="781">not used day to day</text></g>
+      <path class="e e-thin" style="--i:5" d="M208 698 V636" marker-end="url(#ar-thin)"/>
+      <g class="et et-thin" style="--i:5"><rect x="179.5" y="657.0" width="57.0" height="22" rx="4"/><text x="208.0" y="673.0" text-anchor="middle">manages</text></g>
+      <path class="e e-thin" style="--i:5" d="M356 760 H366 V326 H358" marker-end="url(#ar-thin)"/></g>
+          </svg>
+              <p class="dg-tip" aria-hidden="true" hidden></p>
+            </div>
+            <figcaption>
+              <span class="dg-legend"><span class="lg"><i class="lg-clean"></i>clean request</span><span class="lg"><i class="lg-deny"></i>blocked request</span><span class="lg"><i class="lg-thin"></i>management</span><span class="lg"><i class="lg-plan"></i>planned</span></span>
+              <span class="dg-note">Point at or tap a part of the map to read what it does.</span>
+            </figcaption>
+          </figure>
+          
+          <ul class="tags" aria-label="Tools"><li class="tag">AWS S3</li><li class="tag">CloudFront</li><li class="tag">Origin Access Control</li><li class="tag">IAM</li><li class="tag">Least privilege</li><li class="tag">Encryption at rest &amp; in transit</li></ul>
+          <div class="btn-row">
+            <!-- TODO: AWS repo URL -->
+          <!-- The button stays hidden while href is "#". Paste the repo URL and remove "hidden". -->
+          <a class="btn btn-primary" href="#" target="_blank" rel="noopener" hidden>View on GitHub<span class="visually-hidden">: Secure Static Hosting on AWS (S3 + CloudFront + OAC)</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pd" id="ad" aria-labelledby="ad-h" style="--dc:var(--d-soc)">
+        <header class="pd-head">
+          <h2 id="ad-h">Active Directory Attack &amp; Threat Hunting Lab</h2>
+          
+          <p class="pd-meta">Lab project.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">A Windows domain attacked on purpose, then investigated from the SIEM side.</p>
+          <ul>
+            <li>Lab Active Directory on Windows Server with Kerberos attack scenarios (Golden Ticket).</li>
+            <li>Threat hunting in Splunk across Windows Server, Ubuntu and Kali Linux hosts.</li>
+          </ul>
+          
+          <!-- TODO(confirm): MITRE ID T1558.001 -->
+        <ul class="tags" aria-label="Tools"><li class="tag mitre">T1558.001 Golden Ticket</li><li class="tag">Kerberos</li><li class="tag">Splunk</li></ul>
+        </div>
+      </article>
+
+      <article class="pd" id="cti" aria-labelledby="cti-h" style="--dc:var(--d-soc)">
+        <header class="pd-head">
+          <h2 id="cti-h">Cyber Threat Intelligence &amp; Security Automation</h2>
+          
+          <p class="pd-meta">Personal project, ongoing.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">Automating the steps around an alert: enrichment and reporting today, case management next.</p>
+          <ul>
+            <li>n8n workflows for alert enrichment and reporting.</li>
+            <li>Splunk SOAR, TheHive and Cortex integrations under development.</li>
+          </ul>
+          
+          <ul class="tags" aria-label="Tools"><li class="tag">n8n</li><li class="tag">Splunk SOAR</li><li class="tag">TheHive</li><li class="tag">Cortex</li></ul>
+        </div>
+      </article>
+
+      <article class="pd" id="iso" aria-labelledby="iso-h" style="--dc:var(--d-grc)">
+        <header class="pd-head">
+          <h2 id="iso-h">ISO/IEC 27001:2022 ISMS Implementation &amp; Gap Analysis</h2>
+          
+          <p class="pd-meta">Personal project, simulation.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">An information security management system for a fictional organization, from gap analysis to roadmap.</p>
+          <ul>
+            <li>Compliance gap analysis against ISO/IEC 27001:2022.</li>
+            <!-- TODO(confirm): number of Annex A controls and whether the project is finished -->
+            <li>Assessment of the Annex A controls.</li>
+            <li>Statement of Applicability (clause 6.1.3), security policies and an implementation roadmap.</li>
+          </ul>
+          
+          <ul class="tags" aria-label="Tools"><li class="tag"><abbr>ISO/IEC 27001:2022</abbr></li><li class="tag">Annex A</li><li class="tag">Clause 6.1.3 SoA</li></ul>
+        </div>
+      </article>
+
+      <article class="pd" id="risk" aria-labelledby="risk-h" style="--dc:var(--d-grc)">
+        <header class="pd-head">
+          <h2 id="risk-h">IT Risk Assessment &amp; Management</h2>
+          
+          <p class="pd-meta">Personal project, simulation.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">A full risk cycle following ISO 27005 and ISO 31000, from asset inventory to the indicators that track residual risk.</p>
+          <ul>
+            <li>Asset, threat and vulnerability identification; impact and likelihood assessment.</li>
+            <li>Inherent and residual risk, risk register and heat map.</li>
+            <li>Treatment strategies, risk owners and Key Risk Indicators (KRI).</li>
+          </ul>
+          
+          <ul class="tags" aria-label="Tools"><li class="tag">ISO 27005</li><li class="tag">ISO 31000</li><li class="tag">KRI</li></ul>
+        </div>
+      </article>
+
+      <article class="pd" id="paloalto" aria-labelledby="paloalto-h" style="--dc:var(--d-net)">
+        <header class="pd-head">
+          <h2 id="paloalto-h">Multi-Site Palo Alto NGFW &amp; Route-Based IPsec VPN (EVE-NG)</h2>
+          
+          <p class="pd-meta">Academic project, 2025 to 2026.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">Two sites joined by an encrypted tunnel across a simulated ISP, each behind a Palo Alto VM-Series firewall.</p>
+          <p>Supervised by Mme Chaimae Kissi.</p>
+          <ul>
+            <li>Two sites connected over a simulated public ISP backbone (Cisco 7206VXR as the ISP core), each protected by a Palo Alto VM-Series NGFW, built in EVE-NG with management through the Cloud0 bridge.</li>
+            <li>Route-based site-to-site IPsec VPN using tunnel interfaces (tunnel.1, zone <code>VPN</code>): IKEv2, AES-256, SHA-256.</li>
+            <li>Zone-based security with Trust, Untrust and VPN zones and granular least-privilege permit rules for cross-site traffic.</li>
+            <li>Interface Management Profiles limiting HTTPS, SSH and Ping to specific interfaces, protecting the control plane.</li>
+            <li>Virtual router separating underlay (ISP reachability) from overlay (tunnel) routing; static and default routes force internal traffic through the encryption engine.</li>
+            <li>LAN 1 <code>10.1.1.0/24</code> to LAN 2 <code>20.1.1.0/24</code> across the tunnel.</li>
+          </ul>
+          <figure class="topo">
+            <a href="assets/topologies/paloalto-site-to-site-vpn.png" target="_blank" rel="noopener">
+              <img src="assets/topologies/paloalto-site-to-site-vpn.png" loading="lazy" width="714" height="272" alt="EVE-NG topology: LAN 1 (10.1.1.0/24) and LAN 2 (20.1.1.0/24), each behind a router and a Palo Alto VM-Series firewall, connected through a Cisco 7206VXR ISP core router by a site-to-site IPsec VPN; each firewall also has a management access link.">
+            </a>
+            <figcaption>EVE-NG topology of the two sites and the IPsec tunnel. Open the image to see it full size.</figcaption>
+          </figure>
+          
+          <ul class="tags" aria-label="Tools"><li class="tag">Palo Alto NGFW</li><li class="tag">IPsec/IKEv2</li><li class="tag"><abbr>EVE-NG</abbr></li><li class="tag">Zero Trust zones</li></ul>
+        </div>
+      </article>
+
+      <article class="pd" id="hospital" aria-labelledby="hospital-h" style="--dc:var(--d-net)">
+        <header class="pd-head">
+          <h2 id="hospital-h">Hospital City Network Design (Cisco Packet Tracer)</h2>
+          
+          <p class="pd-meta">Academic team project.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">One secure, redundant network for a medical city of four hospitals, designed for a Ministry of Health scenario.</p>
+          <p>Team of four, supervised by Mme Kissi. A national health plan funds a medical city with four hospitals (General, 582 beds; Maternity &amp; Children, 347; High-Security Forensic Psychiatry, 100; Physiotherapy &amp; Rehabilitation, 150), and the Ministry of Health needs one secure network across all sites.</p>
+          <ul>
+            <li>Hierarchical, redundant design: each site has a core router, two multilayer (L3) switches and access switches per department; HQ and branch linked over serial WAN; dual ISP with a main default route and a floating backup static route.</li>
+            <li>One VLAN and subnet per department with VLSM: /25 for departments of about 100 hosts, /27 for about 25, /28 for the server segment, /30 for point-to-point links.</li>
+            <li>OSPF (area 0) on routers and L3 switches, inter-VLAN routing on the L3 switches, DHCP servers in the server room with <code>ip helper-address</code>, static IPs for servers.</li>
+            <li>SSH only on routers and L3 switches (RSA keys, local login, <code>transport input ssh</code>), <code>service password-encryption</code> and banners.</li>
+            <li>Port security on the server-department switch: sticky MAC, one device maximum, shutdown on violation.</li>
+            <li>Site-to-site IPsec VPN with an extended ACL between HQ and branch; PAT and ACLs on the edge routers.</li>
+            <li>A Cisco ASA firewall between locations with security levels (trusted 100, untrusted 50), static routes, ACLs and ICMP inspection.</li>
+            <li>A wireless network per department.</li>
+            <li>Second part: a healthcare-segment design (private ward, general ward, clinical area, IT department, entrance reception, lobby, parking and cafeteria) with VLSM and DHCP, DNS, HTTP(S), SMTP, FTP and Wi-Fi services.</li>
+          </ul>
+          <figure class="topo">
+            <a href="assets/topologies/hospital-network-packet-tracer.png" target="_blank" rel="noopener">
+              <img src="assets/topologies/hospital-network-packet-tracer.png" loading="lazy" width="1412" height="452" alt="Cisco Packet Tracer topology of the healthcare segment: private ward, general ward, clinical area and IT department, each with a switch and a router linked by serial WAN links; an entrance reception area; a wireless lobby, parking and cafeteria area; and HTTP/DNS and SMTP/FTP servers in the IT department.">
+            </a>
+            <figcaption>Packet Tracer topology of the healthcare segment (second part). Open the image to see it full size.</figcaption>
+          </figure>
+          
+          <ul class="tags" aria-label="Tools"><li class="tag">OSPF</li><li class="tag">VLANs</li><li class="tag">IPsec VPN</li><li class="tag">Cisco ASA</li><li class="tag">Port security</li><li class="tag">PAT</li></ul>
+        </div>
+      </article>
+
+      <article class="pd" id="azure" aria-labelledby="azure-h" style="--dc:var(--d-cloud)">
+        <header class="pd-head">
+          <h2 id="azure-h">Azure Cloud Security Posture Management (CSPM)</h2>
+          
+          <p class="pd-meta">Engineering project, starting.</p>
+        </header>
+        <div class="pd-body">
+          <p class="sum">A read-only platform that inspects an Azure subscription for misconfigurations: it observes and reports, it never writes.</p>
+          <ul>
+            <li>Read-only by design: the platform observes and reports, it never writes.</li>
+            <li>Being built step by step from an engineering handbook, on Windows with PowerShell.</li>
+          </ul>
+          
+          <ul class="tags" aria-label="Tools"><li class="tag">Azure</li><li class="tag">CSPM</li><li class="tag">PowerShell</li></ul>
+        </div>
+      </article>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot" id="contact">
+  <div class="fireflies" aria-hidden="true"><i style="--x:6%;--y:14px;--d:9s;--dl:-0s"></i><i style="--x:14%;--y:40px;--d:11s;--dl:-1.7s"></i><i style="--x:22%;--y:8px;--d:8s;--dl:-3.4s"></i><i style="--x:31%;--y:52px;--d:12s;--dl:-5.1s"></i><i style="--x:39%;--y:22px;--d:10s;--dl:-6.8s"></i><i style="--x:47%;--y:60px;--d:9s;--dl:-8.5s"></i><i style="--x:55%;--y:12px;--d:11s;--dl:-10.2s"></i><i style="--x:63%;--y:44px;--d:8s;--dl:-3.9000000000000004s"></i><i style="--x:71%;--y:26px;--d:12s;--dl:-1.5999999999999996s"></i><i style="--x:79%;--y:58px;--d:10s;--dl:-5.299999999999999s"></i><i style="--x:87%;--y:16px;--d:9s;--dl:-8s"></i><i style="--x:94%;--y:38px;--d:11s;--dl:-7.699999999999999s"></i></div>
+  <svg class="foot-edge" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M-20 60V34c160-26 330-30 520-14s360 22 540 4 260-24 420-8V60Z"/>
+  </svg>
+  <div class="foot-in">
+    <div class="container foot-grid">
+      <div class="foot-about">
+        <p class="foot-name">Jihad Mohamed Alahiane</p>
+        <p>Cybersecurity engineering student at ENSA Kénitra, looking for a SOC internship (PFE) from 2027 in Rabat or Casablanca.</p>
+      </div>
+      <ul class="foot-links" aria-label="Contact">
+        <li><a href="mailto:jihadalahiane99@gmail.com"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg>jihadalahiane99@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/jihad-mohamed-alahiane" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg>LinkedIn</a></li>
+        <li><a href="https://github.com/Drag990" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-github"/></svg>GitHub</a></li>
+      </ul>
+      <p class="foot-small">© 2026 Jihad Mohamed Alahiane. Background art drawn for this site.</p>
+    </div>
+  </div>
+</footer>
+
+<svg class="dg-sprite" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="dgi-hood" viewBox="0 0 48 48"><path style="fill:var(--sunset)" d="M24 6c-8 0-13 7-13 15 0 5 2 8 2 12l-4 9h30l-4-9c0-4 2-7 2-12 0-8-5-15-13-15Z"/><path style="fill:var(--dg-dark)" d="M24 14c-4 0-7 4-7 8 0 3 3 5 7 5s7-2 7-5c0-4-3-8-7-8Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M24 6c-8 0-13 7-13 15 0 5 2 8 2 12l-4 9h30l-4-9c0-4 2-7 2-12 0-8-5-15-13-15Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M17 33c2 2 4 3 7 3s5-1 7-3"/></symbol>
+<symbol id="dgi-gate" viewBox="0 0 48 48"><path style="fill:var(--dg-stone)" d="M7 42V16l4-3h26l4 3v26h-9V27a8 8 0 0 0-16 0v15Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M7 42V16l4-3h26l4 3v26h-9V27a8 8 0 0 0-16 0v15Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M7 22h9M32 22h9M7 31h9M32 31h9M12 13v9M36 13v9M24 13v6M19 19h10"/><path style="fill:var(--dg-wood)" d="M16.5 42V28a7.5 7.5 0 0 1 15 0v14Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M24 21v21M16.5 33h15"/></symbol>
+<symbol id="dgi-castle" viewBox="0 0 48 48"><path style="fill:var(--dg-stone)" d="M6 42V14h6v4h4v-4h6v4h4v-4h6v4h4v-4h6v28Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M6 42V14h6v4h4v-4h6v4h4v-4h6v4h4v-4h6v28Z"/><path style="fill:var(--dg-wood)" d="M17 42V31a7 7 0 0 1 14 0v11Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M17 42V31a7 7 0 0 1 14 0v11M20.5 26v16M24 24v18M27.5 26v16M17 33h14M17 37h14"/><path style="fill:var(--sunset)" d="M22 6l6 2-6 2Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M22 6v8"/></symbol>
+<symbol id="dgi-tower" viewBox="0 0 48 48"><path style="fill:var(--dg-wood)" d="M14 42 17 20h14l3 22Z"/><path style="fill:var(--dg-roof)" d="M10 21 24 8l14 13Z"/><rect style="fill:var(--dg-glow)" x="19" y="22" width="10" height="7" rx="1"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M10 21 24 8l14 13ZM14 42 17 21h14l3 21M14 42h20M15.5 33h17M19 22h10v7H19Z"/></symbol>
+<symbol id="dgi-lighthouse" viewBox="0 0 48 48"><path style="fill:var(--dg-stone)" d="M17 42 19.5 16h9L31 42Z"/><path style="fill:var(--sunset)" d="M18.4 29h11.2l.5 5h-12.2Z"/><rect style="fill:var(--dg-glow)" x="19" y="9" width="10" height="7" rx="1"/><path style="fill:var(--dg-roof)" d="M18 9 24 4l6 5Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M17 42 19.5 16h9L31 42ZM19 9h10v7H19ZM18 9l6-5 6 5M13 42h22"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M10 12l6 1M38 12l-6 1"/></symbol>
+<symbol id="dgi-lantern" viewBox="0 0 48 48"><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M24 4v5M20 9h8"/><path style="fill:var(--dg-dark)" d="M16 13h16l-2-4H18Z"/><rect style="fill:var(--dg-glow)" x="17" y="14" width="14" height="20" rx="2"/><path style="fill:var(--dg-dark)" d="M15 34h18l-2 5H17Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M16 13h16l-2-4H18ZM17 14h14v20H17ZM15 34h18l-2 5H17ZM24 14v20"/><path style="fill:var(--sunset)" d="M24 21c2 2 2 5 0 7-2-2-2-5 0-7Z"/></symbol>
+<symbol id="dgi-house" viewBox="0 0 48 48"><path style="fill:var(--paper)" d="M10 42V22l14-11 14 11v20Z"/><path style="fill:var(--dg-roof)" d="M6 24 24 9l18 15-3 2-15-12L9 26Z"/><rect style="fill:var(--dg-wood)" x="21" y="30" width="7" height="12"/><rect style="fill:var(--dg-glow)" x="13" y="27" width="6" height="6"/><rect style="fill:var(--dg-glow)" x="31" y="27" width="5" height="6"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M10 42V23M38 42V23M6 24 24 9l18 15M7 42h34M21 42V30h7v12M13 27h6v6h-6ZM31 27h5v6h-5Z"/></symbol>
+<symbol id="dgi-person" viewBox="0 0 48 48"><circle style="fill:var(--dg-skin)" cx="24" cy="14" r="6"/><path style="fill:var(--forest-soft)" d="M13 42c0-10 4-17 11-17s11 7 11 17Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M13 42c0-10 4-17 11-17s11 7 11 17M18 14a6 6 0 1 0 12 0 6 6 0 1 0-12 0"/><path style="fill:var(--paper)" d="M17 33h14v8H17Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M17 33h14v8H17ZM24 33v8"/></symbol>
+<symbol id="dgi-mill" viewBox="0 0 48 48"><circle style="fill:var(--dg-wood)" cx="24" cy="24" r="16"/><circle style="fill:var(--dg-stone)" cx="24" cy="24" r="5"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M8 24a16 16 0 1 0 32 0 16 16 0 1 0-32 0M19 24a5 5 0 1 0 10 0 5 5 0 1 0-10 0M24 8v11M24 29v11M8 24h11M29 24h11M12.7 12.7l7.8 7.8M27.5 27.5l7.8 7.8M35.3 12.7l-7.8 7.8M20.5 27.5l-7.8 7.8"/><path style="fill:var(--sky)" d="M4 44c5-3 9-3 14 0s9 3 14 0 9-3 12 0"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M4 44c5-3 9-3 14 0s9 3 14 0 9-3 12 0"/></symbol>
+<symbol id="dgi-scroll" viewBox="0 0 48 48"><path style="fill:var(--paper)" d="M12 8h22c3 0 4 2 4 4v28H16c-3 0-4-2-4-4Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M12 8h22c3 0 4 2 4 4v28H16c-3 0-4-2-4-4ZM12 8c-3 0-4 2-4 4h8"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M18 17h14M18 22h14M18 27h10"/><path style="fill:var(--sunset)" d="M30 30 42 6l2 1-11 25Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M30 30 42 6l2 1-11 25Z"/></symbol>
+<symbol id="dgi-cloud" viewBox="0 0 48 48"><path style="fill:var(--paper)" d="M13 36c-5 0-8-3-8-7s3-7 8-7c1-6 6-10 12-10 6 0 10 4 11 9 4 0 7 3 7 7s-3 8-8 8Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M13 36c-5 0-8-3-8-7s3-7 8-7c1-6 6-10 12-10 6 0 10 4 11 9 4 0 7 3 7 7s-3 8-8 8Z"/><path style="fill:var(--sky)" d="M16 41h16l-2-4H18Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M19 37v4M24 37v4M29 37v4"/></symbol>
+<symbol id="dgi-chest" viewBox="0 0 48 48"><path style="fill:var(--dg-wood)" d="M7 22h34v18H7Z"/><path style="fill:var(--dg-roof)" d="M7 22c0-7 7-11 17-11s17 4 17 11Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M7 22h34v18H7ZM7 22c0-7 7-11 17-11s17 4 17 11M7 28h34"/><rect style="fill:var(--dg-glow)" x="20" y="25" width="8" height="8" rx="1"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M20 25h8v8h-8ZM24 28v2"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M13 12v28M35 12v28"/></symbol>
+<symbol id="dgi-key" viewBox="0 0 48 48"><circle style="fill:var(--dg-glow)" cx="15" cy="24" r="8"/><circle style="fill:var(--paper)" cx="15" cy="24" r="3"/><path style="fill:var(--dg-glow)" d="M22 22h20v4h-3v5h-4v-5h-3v4h-4v-4h-6Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M7 24a8 8 0 1 0 16 0 8 8 0 1 0-16 0M12 24a3 3 0 1 0 6 0 3 3 0 1 0-6 0M22 22h20v4h-3v5h-4v-5h-3v4h-4v-4h-6"/></symbol>
+<symbol id="dgi-signpost" viewBox="0 0 48 48"><path style="fill:var(--dg-wood)" d="M22 8h4v34h-4Z"/><path style="fill:var(--paper)" d="M10 12h22l5 4-5 4H10Z"/><path style="fill:var(--paper)" d="M38 24H16l-5 4 5 4h22Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M22 8h4v34h-4ZM10 12h22l5 4-5 4H10ZM38 24H16l-5 4 5 4h22ZM16 42h16"/><path style="fill:var(--sunset)" d="M14 15h12v2H14Z"/><path style="fill:var(--forest-soft)" d="M20 27h14v2H20Z"/></symbol>
+<symbol id="dgi-board" viewBox="0 0 48 48"><rect style="fill:var(--dg-wood)" x="7" y="9" width="34" height="24" rx="2"/><rect style="fill:var(--paper)" x="10" y="12" width="28" height="18"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M7 9h34v24H7ZM10 12h28v18H10ZM18 33l-4 9M30 33l4 9"/><path style="fill:var(--forest-soft)" d="M13 26l5-5 4 3 6-7 6 5v6H13Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M13 26l5-5 4 3 6-7 6 5"/></symbol>
+<symbol id="dgi-lever" viewBox="0 0 48 48"><rect style="fill:var(--dg-stone)" x="8" y="20" width="32" height="20" rx="2"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M8 20h32v20H8Z"/><circle style="fill:var(--sunset)" cx="16" cy="30" r="3"/><circle style="fill:var(--forest-soft)" cx="24" cy="30" r="3"/><circle style="fill:var(--dg-glow)" cx="32" cy="30" r="3"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M13 30a3 3 0 1 0 6 0 3 3 0 1 0-6 0M21 30a3 3 0 1 0 6 0 3 3 0 1 0-6 0M29 30a3 3 0 1 0 6 0 3 3 0 1 0-6 0"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M30 20l6-12"/><circle style="fill:var(--sunset)" cx="36.5" cy="7" r="3"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M33.5 7a3 3 0 1 0 6 0 3 3 0 1 0-6 0"/></symbol>
+<symbol id="dgi-tank" viewBox="0 0 48 48"><path style="fill:var(--dg-stone)" d="M8 16c0-3 5-5 11-5s11 2 11 5v24H8Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M8 16c0-3 5-5 11-5s11 2 11 5v24H8ZM8 16c0 3 5 5 11 5s11-2 11-5M8 28h22"/><path style="fill:var(--sunset)" d="M35 10h5v30h-5Z"/><path style="fill:var(--paper)" d="M35 16h5v4h-5Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M35 10h5v30h-5ZM30 32h5M4 40h40"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M37.5 10c-1-3 1-5 3-6"/></symbol>
+<symbol id="dgi-desk" viewBox="0 0 48 48"><path style="fill:var(--dg-wood)" d="M5 28h38v4H5Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M5 28h38v4H5ZM9 32v10M39 32v10"/><rect style="fill:var(--paper)" x="14" y="14" width="18" height="12" rx="1"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M14 14h18v12H14ZM20 26v2M26 26v2"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M17 18h8M17 21h12"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M36 28V16l4-4"/><path style="fill:var(--dg-glow)" d="M37 10l6 2-3 4Z"/></symbol>
+<symbol id="dgi-cauldron" viewBox="0 0 48 48"><path style="fill:var(--dg-dark)" d="M8 22h32c0 10-6 17-16 17S8 32 8 22Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M8 22h32c0 10-6 17-16 17S8 32 8 22ZM6 22h36M14 38l-3 4M34 38l3 4"/><path style="fill:var(--forest-soft)" d="M12 22c2-3 5-4 8-2 2-3 6-3 8 0 3-2 6-1 8 2Z"/><circle style="fill:var(--sky)" cx="20" cy="12" r="3"/><circle style="fill:var(--sky)" cx="28" cy="8" r="2"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M17 12a3 3 0 1 0 6 0 3 3 0 1 0-6 0M26 8a2 2 0 1 0 4 0 2 2 0 1 0-4 0"/></symbol>
+<symbol id="dgi-traveler" viewBox="0 0 48 48"><circle style="fill:var(--dg-skin)" cx="21" cy="11" r="5"/><path style="fill:var(--sky)" d="M13 40l3-13c1-4 3-6 5-6s5 2 6 6l2 13Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M16 11a5 5 0 1 0 10 0 5 5 0 1 0-10 0M13 40l3-13c1-4 3-6 5-6s5 2 6 6l2 13M17 40v4M25 40v4"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M34 16v28"/><path style="fill:var(--sunset)" d="M30 22h7v8h-7Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M30 22h7v8h-7Z"/></symbol>
+<symbol id="dgi-map" viewBox="0 0 48 48"><path style="fill:var(--paper)" d="M6 10l11-4 14 4 11-4v32l-11 4-14-4-11 4Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.8" d="M6 10l11-4 14 4 11-4v32l-11 4-14-4-11 4ZM17 6v32M31 10v32"/><path style="fill:var(--sage)" d="M8 22l7-3v12l-7 3Z"/><path style="fill:var(--sunset)" d="M33 17l7-3v8l-7 3Z"/><path style="fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round;stroke-width:1.2" d="M20 18l3 3 5-5M20 30h8"/></symbol>
+</defs></svg>
+
+<dialog class="modal" id="projectModal">
+  <div class="modal-inner">
+    <button type="button" class="modal-close" aria-label="Close project">
+      <svg class="ic" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>
+    </button>
+    <div class="modal-slot"></div>
+  </div>
+</dialog>
+</body>
+</html>

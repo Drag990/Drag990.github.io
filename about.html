@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About</title>
+<meta name="description" content="About Jihad Mohamed Alahiane: ENSA Kénitra, internships at ONDA and DXC Technology, skills and certifications.">
+<meta name="theme-color" content="#F6EFE0">
+<meta property="og:title" content="Jihad Mohamed Alahiane | Cybersecurity portfolio">
+<meta property="og:description" content="Cybersecurity engineering student at ENSA Kénitra, focused on SOC and blue team work.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://drag990.github.io/images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Painted watchtower with glowing monitors overlooking a valley village at sunset">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<script>
+  // Before paint: tell the CSS that JS runs and whether motion is welcome.
+  (function () {
+    var d = document.documentElement;
+    d.classList.remove('no-js'); d.classList.add('js');
+    try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion'); } catch (e) {}
+    // Pause animations (WCAG 2.2.2): the visitor's saved choice applies before anything moves.
+    try { if (localStorage.getItem('jma-calm') === '1') d.classList.add('calm'); } catch (e) { /* not remembered */ }
+    // Home: the stacked-text intro plays once per session (after the cover, if the cover shows).
+    // intro-on hides the hero copy until js/site.js has played it; the timer is a safety net.
+    if ((location.pathname.split('/').pop() === '' || location.pathname.split('/').pop() === 'index.html') && d.classList.contains('motion')) {
+      try {
+        if (!sessionStorage.getItem('jma-intro')) {
+          sessionStorage.setItem('jma-intro', '1');
+          d.classList.add('intro-on');
+          setTimeout(function () { d.classList.remove('intro-on'); }, 5000);
+        }
+      } catch (e) { /* storage blocked: no intro */ }
+    }
+    // Home: decide now whether the book cover shows (once per session, never with reduced motion).
+    // cover-wait paints a plain cover-coloured screen until js/cover.js builds the real cover;
+    // if that script never runs, the safety timer below shows the page anyway.
+    var last = location.pathname.split('/').pop();
+    if ((last === '' || last === 'index.html') && d.classList.contains('motion')) {
+      try {
+        if (!sessionStorage.getItem('jma-cover')) {
+          sessionStorage.setItem('jma-cover', '1');
+          d.classList.add('cover-wait', 'cover-on');
+          setTimeout(function () { d.classList.remove('cover-wait', 'cover-on'); }, 2500);
+        }
+      } catch (e) { /* storage blocked: no cover */ }
+    }
+    // Page turns: forward in book order (Home, Projects, About) turns the page forward, back turns it back.
+    var ORDER = ['index', 'projects', 'about'];
+    var pos = function (u) {
+      var p = new URL(u, location.href).pathname.split('/').pop().replace(/\.html$/, '') || 'index';
+      return Math.max(0, ORDER.indexOf(p));
+    };
+    window.addEventListener('pagereveal', function (e) {
+      if (!e.viewTransition) return;
+      try {
+        var from = (window.navigation && navigation.activation && navigation.activation.from) ? navigation.activation.from.url : document.referrer;
+        if (from) { var dir = pos(location.href) < pos(from) ? 'backward' : 'forward'; d.setAttribute('data-turn', dir); e.viewTransition.types.add(dir); }
+      } catch (x) { /* no transition types: the default forward turn is used */ }
+    });
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..650&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous" defer></script>
+<script src="js/site.js" defer></script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<!-- Decorative background. The sky changes from morning to golden hour to dusk as the page scrolls
+     (three fixed layers crossfaded with opacity); clouds, hills and the sun move in depth (js/site.js). -->
+<div class="sky-time" aria-hidden="true">
+  <div class="st st-morning"></div>
+  <div class="st st-golden"></div>
+  <div class="st st-dusk"></div>
+</div>
+<div class="sky" aria-hidden="true">
+  <svg class="cloud c1" viewBox="0 0 220 80"><use href="#cloud"/></svg>
+  <svg class="cloud c2" viewBox="0 0 220 80"><use href="#cloud"/></svg>
+  <svg class="cloud c3" viewBox="0 0 220 80"><use href="#cloud"/></svg>
+  <svg class="cloud c4" viewBox="0 0 220 80"><use href="#cloud"/></svg>
+  <div class="rays"><i style="--a:16deg;--w:70px;--rd:0s"></i><i style="--a:27deg;--w:130px;--rd:-3.5s"></i><i style="--a:39deg;--w:48px;--rd:-6s"></i></div>
+</div>
+<!-- birds cross the whole window, behind the content -->
+<div class="birds" aria-hidden="true"></div>
+<div class="leaves" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="wash" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5"/>
+    </filter>
+    <symbol id="cloud" viewBox="0 0 220 80">
+      <path d="M28 66c-14 0-22-8-22-17 0-10 9-17 21-16 3-13 15-21 29-19 7-10 20-15 33-12 13 3 21 12 23 22 6-5 15-6 22-2 7 4 10 10 10 16 13-1 25 6 25 15 0 8-8 13-19 13Z"/>
+    </symbol>
+<symbol id="seal" viewBox="0 0 64 64"><path stroke="currentColor" d="M61.75 32.00L61.31 35.86L60.37 39.60L59.07 43.21L57.39 46.66L55.26 49.85L52.65 52.65L49.61 54.96L46.33 56.82L42.92 58.36L39.41 59.67L35.78 60.70L32.00 61.27L28.15 61.21L24.37 60.48L20.74 59.18L17.30 57.47L14.04 55.41L11.04 52.96L8.45 50.07L6.44 46.76L5.04 43.17L4.16 39.46L3.62 35.74L3.35 32.00L3.41 28.24L3.96 24.49L5.11 20.86L6.81 17.46L8.93 14.30L11.35 11.35L14.06 8.62L17.13 6.24L20.57 4.40L24.30 3.26L28.16 2.80L32.00 2.87L35.78 3.31L39.48 4.07L43.09 5.23L46.50 6.89L49.59 9.08L52.33 11.67L54.78 14.52L57.01 17.56L59.00 20.82L60.57 24.34L61.52 28.11Z" fill="none" stroke-width="2.2"/><path stroke="currentColor" d="M58.25 32.00L57.93 35.41L57.25 38.77L56.17 42.01L54.60 45.05L52.57 47.78L50.18 50.18L47.58 52.30L44.82 54.21L41.90 55.90L38.76 57.25L35.44 58.10L32.00 58.36L28.57 58.08L25.20 57.37L21.93 56.31L18.80 54.87L15.90 52.99L13.36 50.64L11.28 47.90L9.63 44.92L8.30 41.81L7.23 38.64L6.44 35.36L6.05 32.00L6.17 28.60L6.83 25.26L7.94 22.04L9.40 18.95L11.16 16.01L13.27 13.27L15.80 10.89L18.72 9.00L21.92 7.67L25.25 6.82L28.62 6.34L32.00 6.16L35.38 6.33L38.71 6.95L41.91 8.08L44.90 9.66L47.67 11.57L50.27 13.73L52.69 16.12L54.83 18.82L56.53 21.84L57.66 25.13L58.20 28.55Z" fill="none" stroke-width="0.9"/><path fill="currentColor" d="M27.41 38.67L27.41 38.67Q27.41 40.51 25.85 41.61Q24.29 42.71 21.65 42.71L21.65 42.71Q19.20 42.71 17.87 41.74Q16.53 40.77 16.53 39.20L16.53 39.20Q16.53 38.21 17.07 37.59Q17.61 36.98 18.57 36.98L18.57 36.98Q19.35 36.98 19.85 37.55Q20.36 38.12 20.36 39.13L20.36 39.13L20.36 40.25Q20.36 41.02 20.72 41.46Q21.08 41.90 21.90 41.90L21.90 41.90Q22.76 41.90 23.30 41.36Q23.84 40.82 23.84 39.81L23.84 39.81Q23.84 39.06 23.50 38.38Q23.16 37.69 22.70 36.92Q22.25 36.16 21.90 35.18Q21.56 34.20 21.56 32.87L21.56 32.87L21.56 23.12Q21.56 22.80 21.41 22.62Q21.27 22.43 20.96 22.39L20.96 22.39L19.79 22.20Q19.53 22.14 19.42 22.03Q19.31 21.92 19.31 21.73L19.31 21.73Q19.31 21.52 19.45 21.40Q19.59 21.29 19.88 21.29L19.88 21.29L27.51 21.29Q27.81 21.29 27.95 21.40Q28.10 21.52 28.10 21.71L28.10 21.71Q28.10 22.04 27.59 22.19L27.59 22.19L26.63 22.39Q26.31 22.46 26.15 22.62Q26.00 22.77 26.00 23.04L26.00 23.04L26.00 32.69Q26.00 33.73 26.21 34.50Q26.42 35.27 26.70 35.91Q26.99 36.56 27.20 37.21Q27.41 37.87 27.41 38.67ZM31.82 34.94L31.91 33.95L40.22 33.95L40.28 34.94L31.82 34.94ZM33.25 41.87L33.25 41.87Q33.25 42.05 33.11 42.17Q32.98 42.29 32.69 42.29L32.69 42.29L27.95 42.29Q27.67 42.29 27.53 42.17Q27.40 42.05 27.40 41.87L27.40 41.87Q27.40 41.72 27.49 41.62Q27.58 41.52 27.77 41.44L27.77 41.44L28.30 41.24Q28.76 41.05 29.11 40.61Q29.47 40.17 29.78 39.19L29.78 39.19L34.60 23.69Q34.79 23.06 34.66 22.74Q34.54 22.41 34.04 22.23L34.04 22.23Q33.74 22.10 33.61 21.99Q33.47 21.88 33.47 21.71L33.47 21.71Q33.47 21.50 33.61 21.39Q33.76 21.29 34.04 21.29L34.04 21.29L40.70 21.29Q40.99 21.29 41.13 21.39Q41.27 21.50 41.27 21.71L41.27 21.71Q41.27 21.88 41.14 22.00Q41.02 22.11 40.73 22.22L40.73 22.22Q40.34 22.31 40.27 22.50Q40.19 22.68 40.34 23.14L40.34 23.14L45.86 40.14Q46.04 40.70 46.30 40.98Q46.55 41.26 46.99 41.36L46.99 41.36Q47.27 41.46 47.37 41.58Q47.47 41.69 47.47 41.87L47.47 41.87Q47.47 42.05 47.32 42.17Q47.18 42.29 46.90 42.29L46.90 42.29L40.28 42.29Q40.00 42.29 39.85 42.17Q39.71 42.05 39.71 41.87L39.71 41.87Q39.71 41.70 39.82 41.61Q39.92 41.51 40.15 41.44L40.15 41.44L40.94 41.28Q41.32 41.16 41.35 40.93Q41.39 40.70 41.23 40.20L41.23 40.20L35.71 22.98L36.14 22.48L31.00 39.08Q30.80 39.70 30.88 40.12Q30.95 40.53 31.28 40.80Q31.61 41.08 32.18 41.28L32.18 41.28L32.83 41.44Q33.04 41.51 33.14 41.61Q33.25 41.70 33.25 41.87Z"/></symbol>
+
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9.1 6.2c.2 3.9.1 7.8-.1 11.6M15 6c-.1 4-.1 8 .1 12"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.4 6.1c3.4 1.7 6.6 3.7 9.5 5.9-2.9 2.1-6 4-9.4 5.8-.3-3.9-.3-7.8-.1-11.7Z"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4.1 9.6c1.3-.1 2.4-.1 3.6 0L12 5.9c.3 4.1.3 8.1 0 12.2l-4.3-3.6c-1.2.1-2.4.1-3.6 0-.2-1.7-.2-3.3 0-4.9Z"/><path d="M15.4 9.1c1.2 1.9 1.2 4 0 5.8M18.1 6.7c2.4 3.4 2.4 7.2-.1 10.6"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4.1 9.6c1.3-.1 2.4-.1 3.6 0L12 5.9c.3 4.1.3 8.1 0 12.2l-4.3-3.6c-1.2.1-2.4.1-3.6 0-.2-1.7-.2-3.3 0-4.9Z"/><path d="M15.7 9.6c1.6 1.5 3.1 3.1 4.6 4.8M20.3 9.5c-1.5 1.6-2.9 3.3-4.4 4.9"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3.8 6.6c5.5-.4 11-.4 16.5 0 .3 3.6.3 7.2 0 10.8-5.5.4-11 .4-16.5 0-.3-3.6-.3-7.2 0-10.8Z"/><path d="M4.4 7.4c2.6 2.2 5 3.9 7.6 5.4 2.6-1.5 5-3.2 7.6-5.4"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M4.3 4.5c5.1-.3 10.2-.3 15.3 0 .3 5 .3 10 0 15-5.1.3-10.2.3-15.3 0-.3-5-.3-10 0-15Z"/><path d="M8.2 10.6c.1 2 .1 4.1 0 6.1M8.2 7.6v.1M11.9 16.7c.1-2 .1-4 0-6M11.9 13.2c.2-1.8 1.4-2.7 2.7-2.6 1.3.1 2 1 2 2.8.1 1.1.1 2.2 0 3.3"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19.2c-3.6 1-3.8-1.6-5.4-2.1M15 21v-3.4c0-1 .1-1.5-.5-2.1 2.7-.3 5.4-1.3 5.4-5.9 0-1.2-.4-2.3-1.2-3.2.1-1 .1-2.1-.2-3.1 0 0-1.1-.3-3.4 1.3a11.6 11.6 0 0 0-6.1 0C7.6 3 6.6 3.3 6.6 3.3c-.4 1-.4 2.1-.2 3.1-.8.9-1.2 2-1.2 3.2 0 4.6 2.7 5.6 5.4 5.9-.6.6-.6 1.2-.5 2.1V21"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.4 6.2c3.8 3.9 7.4 7.7 11.2 11.6M17.7 6.3c-3.9 3.8-7.6 7.6-11.3 11.4"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4.5 7.2c5-.3 10-.2 15 .1M4.4 12c5 .2 10.1.1 15.1-.1M4.6 16.9c5-.2 10-.2 15 .1"/></symbol>
+    <symbol id="i-sprig" viewBox="0 0 24 24"><path d="M12.2 20.4c.2-5.3 2.3-10.4 6.6-14.4-5.6.4-9.7 4.2-10.1 9.4M12.2 20.4c-.7-3.5-2.9-6.4-6.4-7.7"/></symbol>
+    <symbol id="i-enlarge" viewBox="0 0 24 24"><path d="M4.6 9.4c-.1-1.6-.1-3.2 0-4.8 1.6-.1 3.2-.1 4.8 0M19.4 9.4c.1-1.6.1-3.2 0-4.8-1.6-.1-3.2-.1-4.8 0M4.6 14.6c-.1 1.6-.1 3.2 0 4.8 1.6.1 3.2.1 4.8 0M19.4 14.6c.1 1.6.1 3.2 0 4.8-1.6.1-3.2.1-4.8 0"/></symbol>
+    <symbol id="leaf" viewBox="0 0 24 24">
+      <path d="M4 20C4 10 10 4 21 3c0 11-6 17-16 17Z"/>
+      <path class="vein" d="M5 19 16 8" fill="none"/>
+    </symbol>
+    <!-- arrowheads for the architecture diagrams -->
+    <marker id="ar-attack" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#A6512A"/></marker>
+    <marker id="ar-clean" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#3E3A33"/></marker>
+    <marker id="ar-log" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#2F5F7A"/></marker>
+    <marker id="ar-plan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#D07A45"/></marker>
+    <marker id="ar-deny" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#A6512A"/></marker>
+    <marker id="ar-thin" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#6B6459"/></marker>
+  </defs>
+</svg>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" aria-hidden="true" focusable="false"><use href="#seal"/></svg>
+      <span>Jihad Alahiane</span>
+    </a>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav" hidden>
+      <svg class="ic ic-menu" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg><svg class="ic ic-x" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>
+      <span class="menu-label">Menu</span>
+    </button>
+    <div class="nav-tools">
+      <button type="button" class="tool-btn calm-btn" aria-pressed="false" aria-label="Pause animations" title="Pause animations" hidden>
+        <svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg>
+      </button>
+      <button type="button" class="tool-btn music-btn" aria-pressed="false" aria-label="Background music" title="Background music" hidden>
+        <svg class="ic ic-on" aria-hidden="true" focusable="false"><use href="#i-sound"/></svg><svg class="ic ic-off" aria-hidden="true" focusable="false"><use href="#i-mute"/></svg>
+      </button>
+    </div>
+    <nav id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="about.html" aria-current="page">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="page-head" aria-labelledby="page-h">
+  <div class="container about-head">
+    <div>
+      <h1 id="page-h">I learn security by building it.</h1>
+      <div class="about-text">
+        <p>My labs run the same chain a real SOC depends on: <mark>segmented networks behind a firewall</mark>, <mark>a WAF and an IDS</mark> in front of exposed services, <mark>logs forwarded to a SIEM</mark>, and alerts tuned until they are worth an analyst’s time.</p>
+        <p>On the governance side, I work with <mark>ISO/IEC&nbsp;27001, ISO&nbsp;27005 and NIST CSF&nbsp;2.0</mark> to decide which risks and controls matter in the first place.</p>
+      </div>
+    </div>
+    <dl class="facts">
+      <div><dt>Based in</dt><dd>Rabat, Morocco</dd></div>
+      <div><dt>Graduation</dt><dd>Expected July 2027</dd></div>
+      <div><dt>Languages</dt><dd>Arabic (native), French and English (professional)</dd></div>
+    </dl>
+  </div>
+
+  <div class="hills hills-page" aria-hidden="true">
+    <div class="hl hl-far"><svg class="hl-shape" viewBox="0 0 1440 220" preserveAspectRatio="none" focusable="false"><path filter="url(#wash)" d="M-20 150C120 92 260 84 420 112s300 40 460 4 330-70 580-18V240H-20Z"/></svg><svg class="tree" viewBox="0 0 30 90" style="left:15%;bottom:54%;--ts:0.4;--sd:7.9s;--sdl:-2.7s;--tk:0.6" focusable="false"><g class="sway">
+    <path class="tk" d="M13.6 90c.4-6 .4-10 .2-14h2.4c-.2 4-.2 8 .2 14z"/>
+    <path class="c1" d="M15 3c8 14 11 33 10 51-1 14-5 21-10 23-5-2-9-9-10-23C4 36 7 17 15 3z"/>
+    <path class="c2" d="M15 10c5 12 7 28 6 43-1 10-3 16-6 18 4-9 4-22 2-36-1-10-2-18-2-25z"/>
+    <path class="c3" d="M13 14c-3 10-4 22-3 32 1-10 2-20 5-30z"/></g></svg></div>
+    <div class="hl hl-mid"><svg class="hl-shape" viewBox="0 0 1440 220" preserveAspectRatio="none" focusable="false"><path filter="url(#wash)" d="M-20 178c170-50 330-58 520-28s320 34 520 6 290-30 440-6V240H-20Z"/></svg><svg class="tree" viewBox="0 0 70 90" style="left:86%;bottom:37%;--ts:0.42;--sd:6.9s;--sdl:-4.8s;--tk:0.8" focusable="false"><g class="sway">
+    <path class="tk" d="M33 90c.6-12 .5-22 0-30h4.6c-.6 8-.6 18 .2 30z"/><path class="tk" d="M35 66c-5-4-9-8-12-14l2-1c3 5 7 9 11 12z"/>
+    <ellipse class="c1" cx="24" cy="44" rx="17" ry="15"/><ellipse class="c1" cx="44" cy="36" rx="20" ry="18"/>
+    <ellipse class="c2" cx="50" cy="46" rx="13" ry="10"/><ellipse class="c2" cx="18" cy="36" rx="10" ry="8"/>
+    <ellipse class="c3" cx="40" cy="25" rx="9" ry="7"/><ellipse class="c3" cx="21" cy="33" rx="6" ry="5"/></g></svg><svg class="tree flower" viewBox="0 0 40 50" style="left:30%;bottom:26%;--ts:0.34;--sd:6s;--sdl:-1s;--tk:1.6" focusable="false"><g class="sway">
+    <path class="fl-stem" d="M9 50c0-12-1-22-1-32M19 50c0-10 1-19 2-26M30 50c0-14 1-26 2-36"/>
+    <path class="fl-leaf" d="M11 50c-1-6-4-9-8-10 2 3 5 6 6 10zM21 50c2-6 5-9 9-9-3 2-6 5-7 9z"/>
+    <g class="fl-lav"><ellipse cx="8" cy="15" rx="1.8" ry="2.6"/><ellipse cx="8" cy="19.5" rx="2" ry="2.6"/><ellipse cx="8" cy="24" rx="2.1" ry="2.6"/>
+    <ellipse cx="32" cy="10" rx="1.8" ry="2.6"/><ellipse cx="32" cy="14.5" rx="2" ry="2.6"/><ellipse cx="31.8" cy="19" rx="2.1" ry="2.6"/></g>
+    <circle class="fl-cup" cx="21" cy="22" r="3.6"/><circle class="fl-eye" cx="21" cy="22" r="1.3"/></g></svg><svg class="tree flower" viewBox="0 0 40 50" style="left:62%;bottom:24%;--ts:0.32;--sd:5.5s;--sdl:-2s;--tk:1.6" focusable="false"><g class="sway">
+    <path class="fl-stem" d="M10 50c0-10-1-20-2-28M22 50c0-12 0-22 2-32M31 50c0-8-1-14-3-20"/>
+    <path class="fl-leaf" d="M12 50c-2-7-6-10-10-10 3 3 6 6 8 10zM24 50c2-8 6-12 11-12-4 3-7 7-9 12z"/>
+    <path class="fl-poppy" d="M3 21c0-4 3-6 5-6s5 2 5 6c0 3-2 5-5 5s-5-2-5-5z"/><circle class="fl-dark" cx="8" cy="21" r="1.4"/>
+    <path class="fl-poppy" d="M18 18c0-5 3-7 6-7s6 2 6 7c0 3-3 6-6 6s-6-3-6-6z"/><circle class="fl-dark" cx="24" cy="18" r="1.7"/>
+    <path class="fl-poppy" d="M26 27c0-3 2-5 4-5s3 2 3 5c0 2-1 3-3 3s-4-1-4-3z"/></g></svg><svg class="tree flower" viewBox="0 0 40 50" style="left:74%;bottom:25%;--ts:0.28;--sd:6.3s;--sdl:-3s;--tk:1.6" focusable="false"><g class="sway">
+    <path class="fl-stem" d="M9 50c0-12-1-22-1-32M19 50c0-10 1-19 2-26M30 50c0-14 1-26 2-36"/>
+    <path class="fl-leaf" d="M11 50c-1-6-4-9-8-10 2 3 5 6 6 10zM21 50c2-6 5-9 9-9-3 2-6 5-7 9z"/>
+    <g class="fl-lav"><ellipse cx="8" cy="15" rx="1.8" ry="2.6"/><ellipse cx="8" cy="19.5" rx="2" ry="2.6"/><ellipse cx="8" cy="24" rx="2.1" ry="2.6"/>
+    <ellipse cx="32" cy="10" rx="1.8" ry="2.6"/><ellipse cx="32" cy="14.5" rx="2" ry="2.6"/><ellipse cx="31.8" cy="19" rx="2.1" ry="2.6"/></g>
+    <circle class="fl-cup" cx="21" cy="22" r="3.6"/><circle class="fl-eye" cx="21" cy="22" r="1.3"/></g></svg></div>
+    <div class="hl hl-near"><svg class="hl-shape" viewBox="0 0 1440 220" preserveAspectRatio="none" focusable="false"><path filter="url(#wash)" d="M-20 206c210-30 420-34 640-14s420 18 600 2 180-8 240-4V760H-20Z"/></svg></div>
+  </div>
+</section>
+
+<section class="section journey" aria-labelledby="journey-h">
+  <div class="container">
+    <div class="sec-head center">
+      <h2 id="journey-h">My path so far</h2>
+      <p class="sec-note">From school to the SOC, oldest first.</p>
+    </div>
+    <ol class="timeline">
+      <li class="tl" data-reveal>
+        <figure class="tl-art"><img src="images/timeline-ensa.webp" width="1200" height="900" loading="lazy" alt="Painted view of the ENSA Kénitra courtyard, with a fountain between palm trees and two campus buildings"></figure>
+        <div class="tl-body">
+          <!-- TODO: add the start year, e.g. "Sep 20XX to Jul 2027" (not in my notes yet) -->
+          <p class="when"><mark class="mk">Graduating July 2027</mark></p>
+          <h3>ENSA Kénitra: cybersecurity engineering</h3>
+          <p class="org"><mark class="mk">Networks &amp; Telecommunications Systems (RST), Ibn Tofail University</mark></p>
+          <p>An engineering degree in Networks &amp; Telecommunications Systems with a <mark class="mk">cybersecurity specialization</mark>. It is where I learned to build security labs step by step, validating each phase before the next.</p>
+        </div>
+      </li>
+      <li class="tl" data-reveal>
+        <figure class="tl-art"><img src="images/timeline-onda.webp" width="1200" height="900" loading="lazy" alt="Painted view of the Marrakech airport terminal, with its curved white canopy and red flags"></figure>
+        <div class="tl-body">
+          
+          <p class="when"><mark class="mk">July to August 2025</mark></p>
+          <h3>ONDA, SITA office Marrakech: technical intern</h3>
+          <p class="org"><mark class="mk">Network Infrastructure &amp; Firewall Security, Office National des Aéroports</mark></p>
+          <p>I studied the enterprise network infrastructure and firewall security with <mark class="mk">Fortinet FortiGate</mark>, including the IPsec VPN architecture used for secure communications. I simulated network topologies in EVE-NG, ran controlled security tests and wrote the technical documentation.</p>
+        </div>
+      </li>
+      <li class="tl" data-reveal>
+        <figure class="tl-art"><img src="images/timeline-cris.webp" width="1200" height="900" loading="lazy" style="object-position:center" alt="Painted group photo of CRIS Cybersecurity Club members in a conference hall, under a large screen showing a shield emblem"></figure>
+        <div class="tl-body">
+          
+          <p class="when"><mark class="mk">September 2025 to September 2026</mark></p>
+          <h3>CRIS Cybersecurity Club: president</h3>
+          <p class="org"><mark class="mk">ENSA Kénitra</mark></p>
+          <p>For a year I led the school’s cybersecurity club. I organized technical workshops and cybersecurity events, including <mark class="mk">CTF competitions</mark>.</p>
+        </div>
+      </li>
+      <li class="tl" data-reveal>
+        <figure class="tl-art"><img src="images/timeline-dxc.webp" width="1200" height="900" loading="lazy" alt="Painted view of the DXC Technology office entrance, a glass and stone building framed by two palm trees"></figure>
+        <div class="tl-body">
+          
+          <p class="when"><mark class="mk">July to August 2026</mark></p>
+          <h3>DXC Technology Rabat: SOC team</h3>
+          <p class="org"><mark class="mk">Assistant Engineer Intern (Ingénieur adjoint), Security Department</mark></p>
+          <p>I built a SOC lab for web threat detection with a ModSecurity WAF, Suricata IDS and Splunk Enterprise SIEM, tested with simulated attacks from Kali Linux. I created and tuned <mark class="mk">Splunk correlation alerts (WAF bypass, port scan)</mark> to reduce false positives, mapped detections to MITRE ATT&amp;CK and built a security monitoring dashboard.</p>
+        </div>
+      </li>
+      <li class="tl tl-next tl-noart" data-reveal>
+        
+        <div class="tl-body">
+          
+          <p class="when"><mark class="mk">From 2027</mark></p>
+          <h3>Next: a PFE in a SOC team</h3>
+          <p class="org"><mark class="mk">End-of-studies internship, Rabat or Casablanca</mark></p>
+          <p>I am looking for an end-of-studies internship (PFE) in a SOC team, starting in 2027, in Rabat or Casablanca. I want to put my detection engineering and alert tuning to work on a real environment. <a href="mailto:jihadalahiane99@gmail.com">Email me</a> if your team has a place.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section skills" aria-labelledby="skills-h">
+  <div class="container">
+    <div class="sec-head">
+      <h2 id="skills-h">Skills and certifications</h2>
+    </div>
+    <div class="skills-layout">
+      <div class="skill-groups">
+        <div class="skill-group" style="--dc:var(--d-grc)">
+          <h3>GRC &amp; IT risk</h3>
+          <ul class="tags"><li class="tag"><abbr>ISO/IEC 27001:2022</abbr></li><li class="tag">ISO 27005</li><li class="tag">ISO 31000</li><li class="tag"><abbr>NIST CSF 2.0</abbr></li><li class="tag">ISMS</li><li class="tag">Risk assessment &amp; treatment</li><li class="tag">Risk register</li><li class="tag">Gap analysis</li><li class="tag">Statement of Applicability</li><li class="tag">Controls &amp; compliance assessment</li><li class="tag">Internal audit fundamentals</li><li class="tag">Security policies</li></ul>
+        </div>
+        <div class="skill-group" style="--dc:var(--d-soc)">
+          <h3>SOC &amp; detection</h3>
+          <ul class="tags"><li class="tag">Splunk Enterprise (SIEM)</li><li class="tag">Wazuh</li><li class="tag">Suricata IDS</li><li class="tag">ModSecurity WAF</li><li class="tag"><abbr>OWASP CRS</abbr></li><li class="tag">Nginx</li><li class="tag">Log analysis</li><li class="tag">Alert correlation &amp; tuning</li><li class="tag">Threat hunting</li><li class="tag">Detection engineering</li><li class="tag">Incident response</li><li class="tag"><abbr>MITRE ATT&amp;CK</abbr></li><li class="tag">OWASP Top 10</li><li class="tag">AD &amp; Kerberos security</li></ul>
+        </div>
+        <div class="skill-group" style="--dc:var(--d-soc)">
+          <h3>Automation &amp; response</h3>
+          <ul class="tags"><li class="tag">n8n</li><li class="tag">Splunk SOAR</li><li class="tag">TheHive</li><li class="tag">Cortex</li></ul>
+        </div>
+        <div class="skill-group" style="--dc:var(--d-ot)">
+          <h3>ICS/OT</h3>
+          <ul class="tags"><li class="tag">GRFICSv3</li><li class="tag">OpenPLC</li><li class="tag">Scada-LTS</li><li class="tag">Modbus/TCP</li></ul>
+        </div>
+        <div class="skill-group" style="--dc:var(--d-cloud)">
+          <h3>Cloud, systems &amp; code</h3>
+          <ul class="tags"><li class="tag">AWS (S3, CloudFront, OAC, IAM)</li><li class="tag">Azure</li><li class="tag">Windows Server</li><li class="tag">Ubuntu</li><li class="tag">Kali Linux</li><li class="tag">Python</li><li class="tag">C/C++</li><li class="tag">PHP</li><li class="tag"><abbr>HTML/CSS</abbr></li><li class="tag">PowerShell</li></ul>
+        </div>
+        <div class="skill-group" style="--dc:var(--d-net)">
+          <h3>Networking &amp; security</h3>
+          <ul class="tags"><li class="tag"><abbr>TCP/IP</abbr></li><li class="tag">VLANs</li><li class="tag">OSPF</li><li class="tag">ACLs</li><li class="tag"><abbr>NAT/PAT</abbr></li><li class="tag">Palo Alto NGFW</li><li class="tag">Fortinet FortiGate</li><li class="tag">pfSense</li><li class="tag">Cisco ASA</li><li class="tag">IPsec/IKEv2 VPN</li><li class="tag">Segmentation</li><li class="tag">Port security</li><li class="tag"><abbr>EVE-NG</abbr></li><li class="tag">Cisco Packet Tracer</li><li class="tag">Wireshark</li><li class="tag">Cisco IOS</li></ul>
+        </div>
+      </div>
+      <div class="certs">
+        <div>
+        <h3>Cisco Networking Academy courses</h3>
+        <ul>
+        <li><b>CCNA 1</b> Introduction to Networks</li>
+        <li><b>CCNA 2</b> Switching, Routing and Wireless Essentials</li>
+        <li><b>CCNA 3</b> Enterprise Networking, Security and Automation</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-foot" id="contact">
+  <div class="fireflies" aria-hidden="true"><i style="--x:6%;--y:14px;--d:9s;--dl:-0s"></i><i style="--x:14%;--y:40px;--d:11s;--dl:-1.7s"></i><i style="--x:22%;--y:8px;--d:8s;--dl:-3.4s"></i><i style="--x:31%;--y:52px;--d:12s;--dl:-5.1s"></i><i style="--x:39%;--y:22px;--d:10s;--dl:-6.8s"></i><i style="--x:47%;--y:60px;--d:9s;--dl:-8.5s"></i><i style="--x:55%;--y:12px;--d:11s;--dl:-10.2s"></i><i style="--x:63%;--y:44px;--d:8s;--dl:-3.9000000000000004s"></i><i style="--x:71%;--y:26px;--d:12s;--dl:-1.5999999999999996s"></i><i style="--x:79%;--y:58px;--d:10s;--dl:-5.299999999999999s"></i><i style="--x:87%;--y:16px;--d:9s;--dl:-8s"></i><i style="--x:94%;--y:38px;--d:11s;--dl:-7.699999999999999s"></i></div>
+  <svg class="foot-edge" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M-20 60V34c160-26 330-30 520-14s360 22 540 4 260-24 420-8V60Z"/>
+  </svg>
+  <div class="foot-in">
+    <div class="container foot-grid">
+      <div class="foot-about">
+        <p class="foot-name">Jihad Mohamed Alahiane</p>
+        <p>Cybersecurity engineering student at ENSA Kénitra, looking for a SOC internship (PFE) from 2027 in Rabat or Casablanca.</p>
+      </div>
+      <ul class="foot-links" aria-label="Contact">
+        <li><a href="mailto:jihadalahiane99@gmail.com"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg>jihadalahiane99@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/jihad-mohamed-alahiane" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg>LinkedIn</a></li>
+        <li><a href="https://github.com/Drag990" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-github"/></svg>GitHub</a></li>
+      </ul>
+      <p class="foot-small">© 2026 Jihad Mohamed Alahiane. Background art drawn for this site.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
