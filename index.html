@@ -25,6 +25,8 @@
     try { if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion'); } catch (e) {}
     // Pause animations (WCAG 2.2.2): the visitor's saved choice applies before anything moves.
     try { if (localStorage.getItem('jma-calm') === '1') d.classList.add('calm'); } catch (e) { /* not remembered */ }
+    // Theme: the visitor's saved choice, else the system setting (night version of the countryside).
+    try { var th = localStorage.getItem('jma-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); d.setAttribute('data-theme', th); } catch (e) { d.setAttribute('data-theme', 'light'); }
     // Home: the stacked-text intro plays once per session (after the cover, if the cover shows).
     // intro-on hides the hero copy until js/site.js has played it; the timer is a safety net.
     if ((location.pathname.split('/').pop() === '' || location.pathname.split('/').pop() === 'index.html') && d.classList.contains('motion')) {
@@ -45,7 +47,7 @@
         if (!sessionStorage.getItem('jma-cover')) {
           sessionStorage.setItem('jma-cover', '1');
           d.classList.add('cover-wait', 'cover-on');
-          setTimeout(function () { d.classList.remove('cover-wait', 'cover-on'); }, 2500);
+          setTimeout(function () { d.classList.remove('cover-wait', 'cover-on'); }, 6000);   // the forest door takes about 2.5 s
         }
       } catch (e) { /* storage blocked: no cover */ }
     }
@@ -140,6 +142,9 @@
       <span class="menu-label">Menu</span>
     </button>
     <div class="nav-tools">
+      <button type="button" class="tool-btn theme-btn" aria-pressed="false" aria-label="Dark mode" title="Dark mode" hidden>
+        <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19.6 14.6A7.9 7.9 0 0 1 9.4 4.4a8 8 0 1 0 10.2 10.2Z"/></svg><svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/></svg>
+      </button>
       <button type="button" class="tool-btn calm-btn" aria-pressed="false" aria-label="Pause animations" title="Pause animations" hidden>
         <svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg>
       </button>

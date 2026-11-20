@@ -396,6 +396,27 @@
       document.dispatchEvent(new Event('calmchange'));
     });
   }
+  /* ---------- Day / night theme (the head script applies the saved or system choice before paint) ---------- */
+  var themeBtn = $('.theme-btn');
+  if (themeBtn) {
+    themeBtn.hidden = false;
+    var metaTheme = $('meta[name="theme-color"]');
+    var syncTheme = function () {
+      var dark = root.getAttribute('data-theme') === 'dark';
+      themeBtn.setAttribute('aria-pressed', String(dark));
+      themeBtn.title = dark ? 'Light mode' : 'Dark mode';
+      themeBtn.setAttribute('aria-label', 'Dark mode');
+      if (metaTheme) metaTheme.setAttribute('content', dark ? '#161A17' : '#F6EFE0');
+    };
+    syncTheme();
+    themeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('jma-theme', next); } catch (e) { /* not remembered */ }
+      syncTheme();
+    });
+  }
+
   var syncHidden = function () { root.classList.toggle('tab-hidden', document.hidden); };
   document.addEventListener('visibilitychange', syncHidden);
   syncHidden();

@@ -46,11 +46,17 @@
   --star: #FFF8E1;
   --bird: #3E3A33;
 
-  /* book cover */
-  --cover: #34573A;
-  --gold: #D9B866;
-  --gold-light: #E9CF8A;
-  --gold-deep: #B8893A;
+  /* wooden cover and cursor */
+  --wood: #A06C3E;
+  --wood-light: #E2B07A;
+  --wood-dark: #6B4224;
+  --wood-deep: #3E2412;
+  --wood-ink: #2A170A;        /* burned lettering, 3.9:1 on --wood (large text) */
+  --wood-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.07 0.004' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .24 0 0 0 0 .13 0 0 0 0 .06 1.4 0 0 0 -.38'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --cur-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23C8915A'/%3E%3Cstop offset='1' stop-color='%237A4A26'/%3E%3C/linearGradient%3E%3Cpath d='M3 2v23l6-5.5 4 9.5 4.5-2-4-9H22z' fill='url(%23a)' stroke='%233B2412' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M5.6 7c.5 5 .3 9 .7 14M8.2 10.5c.5 2.5.4 4.5.9 6.5M11 14.5c.4 1 .7 2 1 3' stroke='%235A3519' stroke-width='.8' fill='none'/%3E%3C/svg%3E") 3 2;
+  --cur-hand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23E6B47C'/%3E%3Cstop offset='1' stop-color='%23955E30'/%3E%3C/linearGradient%3E%3Cpath d='M3 2v23l6-5.5 4 9.5 4.5-2-4-9H22z' fill='url(%23a)' stroke='%233B2412' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M24 23l5 7h-10z' fill='%23C8915A' stroke='%233B2412' stroke-width='1.2' stroke-linejoin='round'/%3E%3Cpath d='M24 23v7' stroke='%233B2412' stroke-width='.9'/%3E%3C/svg%3E") 3 2;
+  --cur: var(--cur-arrow), auto;
+  --cur-pointer: var(--cur-hand), pointer;
 
   /* domain and wheel areas (bands, dots, segment washes, never body text) */
   --d-soc: #6F9DBB; --d-grc: #A58BC0; --d-net: #6E9A5E; --d-ot: #D9A04A; --d-cloud: #8DB0D0;
@@ -100,6 +106,9 @@
    ========================================================= */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-padding-top: calc(var(--nav-h) + var(--s4)); -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
+/* the wooden cursor (pointer devices only show it); clickable things get the one with a little pyramid */
+html { cursor: var(--cur); }
+a:any-link, button:not(:disabled), summary, label[for], [role="tab"] { cursor: var(--cur-pointer); }
 html.modal-open { overflow: hidden; }
 html, body { overflow-x: clip; }
 body {
@@ -331,7 +340,7 @@ html.motion .ribbon.swing { animation: ribbon-swing 1.7s var(--ease-soft) 380ms 
 
 .menu-btn, .tool-btn {
   display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none; padding: 0;
-  background: transparent; border: 0; border-radius: var(--r-ctl); color: var(--ink); cursor: pointer;
+  background: transparent; border: 0; border-radius: var(--r-ctl); color: var(--ink); cursor: var(--cur-pointer);
 }
 .menu-btn:hover, .tool-btn:hover { color: var(--forest); }
 .menu-btn { display: none; grid-auto-flow: column; gap: var(--s2); width: auto; min-width: 44px; padding: 0 var(--s2); font-weight: 700; }
@@ -386,7 +395,7 @@ html.motion .ribbon.swing { animation: ribbon-swing 1.7s var(--ease-soft) 380ms 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
   min-height: 48px; padding: 0 var(--s6); border: 0; border-radius: var(--r-ctl);
-  font-family: var(--sans); font-weight: 700; font-size: 1rem; line-height: 1.2; text-decoration: none; cursor: pointer; white-space: nowrap;
+  font-family: var(--sans); font-weight: 700; font-size: 1rem; line-height: 1.2; text-decoration: none; cursor: var(--cur-pointer); white-space: nowrap;
   color: var(--cream); background: var(--forest);
   transition: transform var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease);
 }
@@ -508,7 +517,7 @@ html.js .tk-b .tk-track { transform: translateX(-50%); }
 .wheel-head h2 { margin-bottom: var(--s3); }
 .wheel-dial { position: relative; width: min(100%, 440px); justify-self: center; }
 .wheel-svg { width: 100%; height: auto; overflow: visible; }
-.ws { cursor: pointer; }
+.ws { cursor: var(--cur-pointer); }
 .ws-ring { fill: color-mix(in srgb, var(--wc) 32%, var(--paper)); stroke: var(--paper); stroke-width: 2; transition: fill var(--t-fast) var(--ease); }
 .ws > * { transition: transform 300ms var(--ease); }
 .ws.on > * { transform: translate(var(--dx), var(--dy)); }
@@ -537,7 +546,7 @@ html.js.motion .wheel-ready .wp.on { animation: rise 400ms var(--ease) both; }
   background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-card);
   transition: border-color var(--t-fast) var(--ease);
 }
-html.js .card:has(.open) { cursor: pointer; }
+html.js .card:has(.open) { cursor: var(--cur-pointer); }
 .card:hover { border-color: var(--line-2); }
 .card.tilting { will-change: transform; }
 .card-art { aspect-ratio: 16 / 10; overflow: hidden; background: var(--sage-wash); border-bottom: 1px solid var(--line); }
@@ -556,7 +565,7 @@ html.js .card:has(.open) { cursor: pointer; }
 .filter {
   display: inline-flex; align-items: center; gap: var(--s2); min-height: 44px; padding: 0 var(--s4);
   background: var(--paper); border: 1px solid var(--line-2); border-radius: var(--r-ctl);
-  font-weight: 700; font-size: 0.95rem; color: var(--ink); cursor: pointer;
+  font-weight: 700; font-size: 0.95rem; color: var(--ink); cursor: var(--cur-pointer);
   transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
 }
 .filter::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--dc, var(--forest-soft)); }
@@ -702,7 +711,7 @@ html.motion .modal[open]::backdrop { animation: fade-in 350ms var(--ease) both; 
 .modal-close {
   position: absolute; top: var(--s3); right: var(--s3); z-index: 4;
   display: inline-grid; place-items: center; width: 44px; height: 44px;
-  background: var(--paper); border: 0; border-radius: var(--r-ctl); color: var(--ink); cursor: pointer;
+  background: var(--paper); border: 0; border-radius: var(--r-ctl); color: var(--ink); cursor: var(--cur-pointer);
 }
 .modal-close:hover { color: var(--forest); }
 
@@ -813,63 +822,134 @@ html.js.motion [data-reveal] { opacity: 0; transform: translateY(22px); transiti
 html.js.motion [data-reveal].in { opacity: 1; transform: none; }
 
 /* =========================================================
-   Book cover intro (Home, once per session, built by js/cover.js)
+   Forest door intro (Home, once per session, built by js/cover.js)
+   An old double door in a timber frame under a pyramid gable, standing in the woods at night.
+   Light: moonlight from the top left (cool shafts, shadows fall down and right) and a lantern on
+   the right (warm). On open the doors swing in, light spills out and the scene fades; the name sits
+   above the door, so nothing ever covers it. Deliberately still: no ambient motion.
    ========================================================= */
-html.cover-wait body::after { content: ""; position: fixed; inset: 0; z-index: 1001; background: var(--cover); }
-.book { position: fixed; inset: 0; z-index: 1000; perspective: 2000px; cursor: pointer; overflow: hidden; }
-.book-shade {
-  position: absolute; inset: 0; opacity: 0; pointer-events: none;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ink) 32%, transparent) 22%, color-mix(in srgb, var(--ink) 12%, transparent) 48%, transparent 72%);
+html.cover-wait body::after { content: ""; position: fixed; inset: 0; z-index: 1001; background: #12221F; }
+.book {
+  --k: 1;
+  --dw: min(30vh, 52vw);                                 /* door opening width */
+  --dh: calc(var(--dw) * 1.7);
+  --gy: 13vh;                                            /* the sill, above the bottom of the screen */
+  --dcy: calc(100vh - var(--gy) - var(--dh) / 2);        /* door centre: where the view zooms to */
+  position: fixed; inset: 0; z-index: 1000; overflow: hidden; cursor: var(--cur-pointer); background: #0B1514;
 }
-.book-cover { position: absolute; inset: 0; transform-origin: left center; transform-style: preserve-3d; }
-.bc-front, .bc-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.bc-front {      /* cloth: woven texture, light falloff, spine shadow */
-  display: grid; place-items: center; padding: var(--s12);
+.wd-scene { position: absolute; inset: 0; transform-origin: 50% var(--dcy); }
+.wd-scene > * { position: absolute; }
+.wd-sky {
+  inset: 0;
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--ink-hover) 70%, transparent), color-mix(in srgb, var(--ink-hover) 25%, transparent) 2.5%, color-mix(in srgb, var(--paper) 7%, transparent) 4%, color-mix(in srgb, var(--ink-hover) 14%, transparent) 5.5%, transparent 9%),
-    radial-gradient(120% 90% at 60% 35%, color-mix(in srgb, var(--paper) 10%, transparent), transparent 60%),
-    radial-gradient(140% 120% at 50% 50%, transparent 55%, color-mix(in srgb, var(--ink-hover) 50%, transparent)),
-    repeating-linear-gradient(0deg, color-mix(in srgb, var(--paper) 4%, transparent) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink-hover) 8%, transparent) 0 1px, transparent 1px 3px),
-    var(--cover);
+    radial-gradient(60% 50% at 20% 6%, #3E5E66 0%, transparent 62%),
+    linear-gradient(180deg, #1C3338 0%, #183030 45%, #12221F 75%, #0C1613 100%);
 }
-.bc-front::after {      /* gold inset border */
-  content: ""; position: absolute; inset: clamp(16px, 3.5vw, 40px); left: clamp(32px, 6vw, 72px);
-  border: 1.5px solid var(--gold-deep); border-radius: 6px;
-  box-shadow: inset 0 0 0 6px transparent, inset 0 0 0 7px color-mix(in srgb, var(--gold) 55%, transparent);
-  pointer-events: none;
+.wd-moon {
+  left: 15%; top: 8%; width: clamp(38px, 4.6vw, 70px); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 38% 36%, #FFFBEA, #E9E2C8 58%, #CFC6A6);
+  box-shadow: 0 0 36px 14px rgb(220 232 222 / 0.14), 0 0 140px 60px rgb(150 196 196 / 0.1);
 }
-.bc-inner { position: relative; display: grid; justify-items: center; gap: var(--s5); text-align: center; max-width: min(90vw, 980px); }
-.bc-emblem { width: clamp(72px, 9vw, 104px); height: auto; color: var(--gold); }
-.bc-name, .bc-sub { margin: 0; font-family: var(--serif); color: var(--gold-light); }
-.bc-name { font-size: clamp(2rem, 5vw, 4rem); font-weight: 600; line-height: 1.08; }
-.bc-sub { font-size: clamp(1rem, 1.4vw, 1.25rem); color: var(--gold); }
-.bc-back {      /* the endpaper inside the cover */
-  transform: rotateY(180deg);
+.wd-trees { inset: 0; width: 100%; height: 100%; }
+.wd-far { opacity: 0.92; }
+.wd-ground {
+  left: 0; right: 0; bottom: 0; height: 21vh;
   background:
-    radial-gradient(circle at 12px 12px, color-mix(in srgb, var(--forest-soft) 18%, transparent) 2.2px, transparent 2.8px) 0 0 / 28px 28px,
-    radial-gradient(circle at 26px 26px, color-mix(in srgb, var(--sunset) 16%, transparent) 1.6px, transparent 2.2px) 0 0 / 28px 28px,
-    linear-gradient(90deg, color-mix(in srgb, var(--ink) 12%, transparent), transparent 12%),
-    var(--paper-2);
+    radial-gradient(34% 60% at 58% 0%, rgb(255 186 104 / 0.12), transparent 70%),     /* lantern light on the ground */
+    linear-gradient(180deg, #1A2B1E 0%, #14211A 40%, #0A120E 100%);
 }
+.wd-ground::before {   /* the worn path up to the step */
+  content: ""; position: absolute; left: 50%; bottom: 0; width: calc(var(--dw) * 2.8); height: calc(var(--gy) + 2px); translate: -50% 0;
+  clip-path: polygon(26% 0, 74% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, #3A3022, #2A2318 70%, #1A160F);
+}
+/* light pouring out of the open door onto the path */
+.wd-spill {
+  left: 50%; bottom: 0; width: calc(var(--dw) * 2.8); height: var(--gy); translate: -50% 0; opacity: 0; pointer-events: none;
+  clip-path: polygon(32% 0, 68% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, rgb(255 228 170 / 0.8), rgb(255 200 120 / 0.2) 75%, transparent);
+  mix-blend-mode: screen;
+}
+
+.wd-door { left: 50%; bottom: var(--gy); width: var(--dw); height: var(--dh); translate: -50% 0; container-type: inline-size; }
+/* the shadow of the door, thrown down and to the right by the moon */
+.wd-cast {
+  position: absolute; left: -12%; top: 100%; width: 124%; height: calc(var(--gy) * 0.8);
+  transform-origin: top; transform: skewX(38deg);
+  background: linear-gradient(180deg, rgb(0 0 0 / 0.6), transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
+/* the opening: warm light behind the doors */
+.wd-hole {
+  position: absolute; inset: 0; overflow: hidden; perspective: calc(var(--dw) * 3);
+  background: radial-gradient(70% 55% at 50% 55%, #FFF7E2 0%, #FFE2A8 40%, #E9A75C 75%, #9A5A26 100%);
+}
+.wd-hole::after {      /* the doors sit back in the frame: shadow along the top and left */
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  box-shadow: inset 5px 7px 12px rgb(0 0 0 / 0.6), inset -2px -2px 6px rgb(0 0 0 / 0.35);
+}
+.door { position: absolute; top: 0; bottom: 0; width: 50%; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.door-l { left: 0; transform-origin: left center; }
+.door-r { right: 0; transform-origin: right center; }
+.door-face {
+  position: absolute; top: 0; bottom: 0; width: 200%;
+  background:
+    radial-gradient(55% 40% at 100% 8%, rgb(255 184 100 / 0.3), transparent 70%),        /* the lantern */
+    linear-gradient(118deg, rgb(200 226 216 / 0.1), transparent 45%),                     /* moonlight */
+    linear-gradient(0deg, rgb(8 5 2 / 0.6), transparent 24%),                             /* damp, darker near the ground */
+    repeating-linear-gradient(90deg, rgb(20 10 4 / 0.75) 0 1.5px, rgb(226 176 122 / 0.14) 1.5px 2.5px, transparent 2.5px 12.5%),   /* planks */
+    repeating-linear-gradient(90deg, rgb(20 10 4 / 0.12) 0 12.5%, transparent 12.5% 25%),
+    var(--wood-grain) 0 0 / 240px 100%,
+    #6A4426;
+}
+.door-r .door-face { left: -100%; }
+.door-face svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.door-l::after, .door-r::after { content: ""; position: absolute; top: 0; bottom: 0; width: 4px; pointer-events: none; }
+.door-l::after { right: 0; background: linear-gradient(90deg, transparent, rgb(10 5 2 / 0.85)); }
+.door-r::after { left: 0; background: linear-gradient(90deg, rgb(226 176 122 / 0.28), transparent); }
+.wd-frame {
+  position: absolute; left: -30%; top: calc(-66 / 170 * 100%); width: 160%; height: calc(250 / 170 * 100%); overflow: visible;
+  filter: drop-shadow(0.5cqi 0.7cqi 1.2cqi rgb(0 0 0 / 0.6));
+}
+.wd-web { fill: none; stroke: #EEE8DA; stroke-opacity: 0.5; stroke-width: 0.28; }
+/* the lantern light on the frame and the right-hand door */
+.wd-glow {
+  position: absolute; left: 115%; top: calc(22 / 170 * 100%); width: 140%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgb(255 206 128 / 0.6) 0, rgb(255 176 90 / 0.22) 28%, transparent 66%);
+  mix-blend-mode: screen;
+}
+
+.wd-vig { inset: 0; pointer-events: none; background: radial-gradient(120% 95% at 50% 58%, transparent 48%, rgb(0 0 0 / 0.62)); }
+
+.wd-title { left: 0; right: 0; top: clamp(18px, 4vh, 48px); display: grid; justify-items: center; gap: 0.35em; padding-inline: 16px; text-align: center; }
+.wd-name {
+  margin: 0; font-family: var(--serif); font-weight: 650; font-size: clamp(1.45rem, 4.2vw, 3.4rem); line-height: 1.06; letter-spacing: 0.01em;
+  background: linear-gradient(180deg, #FFF3C4 0%, #F0CF7A 38%, #C29236 58%, #F6DC8E 78%, #B9862E 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 1px rgb(0 0 0 / 0.8)) drop-shadow(0 6px 16px rgb(0 0 0 / 0.6));
+}
+.wd-sub { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(0.95rem, 1.4vw, 1.2rem); color: #E7DCC0; text-shadow: 0 1px 2px #000, 0 2px 12px rgb(0 0 0 / 0.85); }
+
 .book-skip {
-  position: absolute; right: var(--s5); bottom: var(--s5); z-index: 2;
-  min-height: 44px; padding: 0 var(--s4); border-radius: var(--r-ctl); cursor: pointer;
-  font-family: var(--sans); font-weight: 700; font-size: 0.95rem; color: var(--cover); background: var(--gold-light); border: 0;
+  position: absolute; left: 50%; bottom: clamp(16px, 3vh, 32px); transform: translateX(-50%); z-index: 2;
+  min-height: 44px; padding: 0 var(--s5); border-radius: var(--r-ctl); cursor: var(--cur-pointer);
+  font-family: var(--sans); font-weight: 700; font-size: 0.95rem; color: #2A1A08; border: 1px solid #6E4C14;
+  background: linear-gradient(180deg, #FFF1B5, #E8C25E 45%, #B98A34);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.5), 0 3px 8px rgb(0 0 0 / 0.55);
 }
-.book-skip:hover { background: var(--gold); }
-.book-skip:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
-.book.open { pointer-events: none; }
-.book.open .book-skip { opacity: 0; transition: opacity 200ms; }
-.book.open .book-cover { animation: cover-open 1.2s cubic-bezier(0.3, 0.1, 0.2, 1) forwards; }
-.book.open .bc-front, .book.open .bc-back { animation: cover-fade 1.2s linear forwards; }
-.book.open .book-shade { animation: cover-shade 1.2s ease-out forwards; }
-.book-small { --spine-to: 30vw; }
-.book-small.open .book-cover, .book-small.open .bc-front, .book-small.open .bc-back { animation-duration: 0.8s; }
-.book-small.open .book-shade { display: none; }
-@keyframes cover-open { from { transform: translateX(0) rotateY(0); } to { transform: translateX(var(--spine-to, 42vw)) rotateY(-160deg); } }
-@keyframes cover-fade { 0%, 78% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes cover-shade { 0% { opacity: 0; transform: translateX(-30%); } 35% { opacity: 1; } 100% { opacity: 0; transform: translateX(70%); } }
+.book-skip:hover { background: linear-gradient(180deg, #FFF6CC, #F0CF72 45%, #C99A40); }
+.book-skip:focus-visible { outline: 3px solid #FFF1B5; outline-offset: 3px; }
+
+/* opening: the doors swing in (darkening as they turn from the light), light spills onto the path, and the scene fades into the page */
+.book.open { pointer-events: none; animation: wd-out calc(500ms * var(--k)) ease calc(800ms * var(--k)) forwards; }
+.book.open .book-skip, .book.open .wd-title { transition: opacity 400ms; opacity: 0; }
+.book.open .door-l { animation: wd-door-l calc(900ms * var(--k)) cubic-bezier(0.45, 0, 0.25, 1) forwards; }
+.book.open .door-r { animation: wd-door-r calc(900ms * var(--k)) cubic-bezier(0.45, 0, 0.25, 1) forwards; }
+.book.open .wd-spill { animation: wd-in calc(600ms * var(--k)) ease-out calc(150ms * var(--k)) forwards; }
+@keyframes wd-door-l { to { transform: rotateY(100deg); filter: brightness(0.4); } }
+@keyframes wd-door-r { to { transform: rotateY(-100deg); filter: brightness(0.4); } }
+@keyframes wd-in { to { opacity: 1; } }
+@keyframes wd-out { to { opacity: 0; } }
 
 /* =========================================================
    Page turns (cross-document view transitions; other browsers just load the page)
@@ -905,6 +985,76 @@ html.calm .tree { rotate: 0deg; }
   .book, .intro { display: none !important; }
   .fireflies i { opacity: 0.45; }
 }
+
+/* =========================================================
+   Night: the same countryside after dark (html[data-theme="dark"], toggled in the nav)
+   Light text on deep green-black; buttons flip to light fills with dark text. Moon instead of sun.
+   ========================================================= */
+.theme-btn .ic-sun, .theme-btn[aria-pressed="true"] .ic-moon { display: none; }
+.theme-btn[aria-pressed="true"] .ic-sun { display: block; }
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cream: #161A17;  --cream-dark: #20251F;  --paper: #1F241F;  --paper-2: #262C25;
+  --forest: #9CC58F;  --forest-hover: #B6D8AA;  --forest-soft: #7FA873;  --forest-deep: #0D110E;
+  --sage: #557650;  --sage-wash: #27321F;  --sky: #4D6C80;  --sky-wash: #1C2830;
+  --rust: #EBA273;  --rust-hover: #F4B88F;  --focus: #F4B88F;
+  --ink: #ECE4D2;  --ink-hover: #FFF8E8;  --ink-soft: #B8AF9C;
+  --lake: #8EC0DD;  --line: #2E352D;  --line-2: #414A3F;
+  --hill-far: #1D2A21;  --bark: #3A2B1F;  --leaf-mid: #355233;  --cloud-white: #2A3140;
+  --sun-1: #EFE8D2;  --sunset: #D98A5A;
+  --morning-1: #1A2333; --morning-2: #18201E;
+  --golden-1: #1E2131; --golden-2: #1F1E28; --golden-3: #1D1F1C;
+  --dusk-1: #1B1A2B; --dusk-2: #201C27; --dusk-3: #1E1D20; --dusk-4: #191D18;
+  --bird: #0B0E0C;
+  --z-attack: #382822; --z-attack-line: #8A5A40;  --z-cool: #1E2B34; --z-cool-line: #4F7186;
+  --z-green: #213021; --z-green-ink: #A8C99E;  --z-violet: #2A2434; --z-violet-line: #6B5A86;
+  --n-violet: #B49BD8; --n-violet-ink: #C9B3EA; --n-fill: #1F241F; --n-ochre: #E0A85A; --n-ochre-wash: #2E2718;
+  --n-blue: #8CB8D6; --n-blue-wash: #1C262D; --n-rust-wash: #33231B; --plan: #E59866;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 22px -10px rgb(0 0 0 / 0.7);
+  --shadow-2: 0 2px 6px rgb(0 0 0 / 0.45), 0 22px 46px -18px rgb(0 0 0 / 0.85);
+}
+/* stars over the night sky, and a pale moon where the sun was */
+html[data-theme="dark"] .sky-time::before {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  background:
+    radial-gradient(1.3px 1.3px at 8% 12%, #FFF8E1 50%, transparent 100%), radial-gradient(1px 1px at 19% 31%, #FFF8E1cc 50%, transparent 100%),
+    radial-gradient(1.6px 1.6px at 33% 8%, #FFF8E1 50%, transparent 100%), radial-gradient(1px 1px at 46% 24%, #FFF8E1aa 50%, transparent 100%),
+    radial-gradient(1.2px 1.2px at 58% 14%, #FFF8E1 50%, transparent 100%), radial-gradient(1px 1px at 69% 36%, #FFF8E1bb 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 77% 6%, #FFF8E1 50%, transparent 100%), radial-gradient(1px 1px at 88% 27%, #FFF8E1cc 50%, transparent 100%),
+    radial-gradient(1.2px 1.2px at 94% 44%, #FFF8E1aa 50%, transparent 100%), radial-gradient(1px 1px at 4% 48%, #FFF8E1aa 50%, transparent 100%),
+    radial-gradient(1.1px 1.1px at 26% 52%, #FFF8E199 50%, transparent 100%), radial-gradient(1px 1px at 52% 46%, #FFF8E188 50%, transparent 100%);
+  opacity: 0.85;
+}
+html[data-theme="dark"] .portrait::before { background: radial-gradient(circle at 42% 40%, #FBF6E6, #E4DCC4 52%, color-mix(in srgb, #E4DCC4 25%, transparent) 62%, transparent 72%); opacity: 0.9; }
+html[data-theme="dark"] .portrait::after { display: none; }
+html[data-theme="dark"] .cloud { fill: #2A3140; opacity: 0.55; }
+html[data-theme="dark"] .sky { background: radial-gradient(38% 34% at 82% 8%, rgb(196 214 232 / 0.13), transparent 70%); }   /* cool moonlight, not a grey haze */
+html[data-theme="dark"] .tree .c1 { fill: #2C452B; }
+html[data-theme="dark"] .tree .c2 { fill: #36533A; }
+html[data-theme="dark"] .tree .c3 { fill: #4B6A47; opacity: 0.6; }
+html[data-theme="dark"] .hl-mid path { fill: #24331F; opacity: 1; }
+html[data-theme="dark"] .rays i { opacity: 0.12; }
+html[data-theme="dark"] .birds { opacity: 0.2; }
+html[data-theme="dark"] mark { color: #1E1B16; }                 /* the marker stays a light wash: dark text on it */
+html[data-theme="dark"] .topbar { border-bottom-color: var(--line-2); }
+html[data-theme="dark"] .modal { border-color: var(--line-2); }
+html[data-theme="dark"] .modal::backdrop { background: rgb(0 0 0 / 0.6); }
+html[data-theme="dark"] .site-foot, html[data-theme="dark"] .foot-links a { color: var(--ink); }
+html[data-theme="dark"] .foot-links a:hover { color: var(--forest); }
+html[data-theme="dark"] :is(.card-art img, .tl-art img, .portrait img) { filter: brightness(0.86) saturate(0.92); }
+html[data-theme="dark"] .card::before { background: linear-gradient(315deg, var(--cream) 0 47%, rgb(0 0 0 / 0.5) 49%, #2E352D 51%, var(--paper-2) 72%, var(--paper) 100%); }
+
+/* =========================================================
+   Depth: soft shadows under every raised surface (both themes)
+   ========================================================= */
+.card, .wp, .facts, .skill-group, .dg-frame, .topo a, .certs > div { box-shadow: var(--shadow-1); }
+.card { transition: border-color var(--t-fast) var(--ease), box-shadow 300ms var(--ease); }
+.card:hover { box-shadow: var(--shadow-2); }
+.btn, .split, .filter { box-shadow: 0 1px 1px color-mix(in srgb, var(--forest-deep) 18%, transparent), 0 6px 14px -8px color-mix(in srgb, var(--forest-deep) 55%, transparent); }
+.topbar { box-shadow: 0 6px 18px -14px color-mix(in srgb, var(--forest-deep) 60%, transparent); }
+.modal { box-shadow: var(--shadow-2); }
+.hero-name { text-shadow: 0 2px 0 color-mix(in srgb, var(--cream) 60%, transparent), 0 10px 26px color-mix(in srgb, var(--forest-deep) 18%, transparent); }
 
 /* =========================================================
    Responsive
